@@ -12,4 +12,6 @@ class Entry < ActiveRecord::Base
 
   has_many :show_stopper_entry_stories
   has_many :show_stopper_stories, through: :show_stopper_entry_stories, source: :story
+
+  has_many :work_intervals
 end

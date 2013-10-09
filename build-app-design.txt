@@ -1,3 +1,15 @@
+
+# ===== Wed Oct  9 12:02:05 PDT 2013
+
+./bin/rails g migration add_notes_to_entries notes:text
+bundle exec rake db:migrate db:migrate:status
+
+./bin/rails g scaffold WorkInterval entry_id:integer started_at:datetime ended_at:datetime 
+bundle exec rake db:migrate db:migrate:status VERSION=20131009190403
+bundle exec rake db:migrate db:migrate:status
+
+
+
 # ===== Tue Oct  8 09:18:46 PDT 2013
 
 ./bin/rails g scaffold Entry recorded_for:date title:string yesterdays_log:text todays_log:text show_stopper_log:text

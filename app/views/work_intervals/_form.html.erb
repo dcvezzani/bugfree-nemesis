@@ -1,0 +1,29 @@
+<%= form_for(@work_interval, url: [[@entry, :work_intervals]]) do |f| %>
+  <% if @work_interval.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@work_interval.errors.count, "error") %> prohibited this work_interval from being saved:</h2>
+
+      <ul>
+      <% @work_interval.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :entry_id %><br />
+    <%= f.number_field :entry_id %>
+  </div>
+  <div class="field">
+    <%= f.label :started_at %><br />
+    <%= f.datetime_select :started_at %>
+  </div>
+  <div class="field">
+    <%= f.label :ended_at %><br />
+    <%= f.datetime_select :ended_at %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

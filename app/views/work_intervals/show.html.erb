@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Entry:</b>
+  <%= @work_interval.entry_id %>
+</p>
+
+<p>
+  <b>Started at:</b>
+  <%= @work_interval.started_at %>
+</p>
+
+<p>
+  <b>Ended at:</b>
+  <%= @work_interval.ended_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_work_interval_path(@work_interval) %> |
+<%= link_to 'Back', work_intervals_path %>
