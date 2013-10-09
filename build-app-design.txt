@@ -1,3 +1,37 @@
+# ===== Tue Oct  8 09:18:46 PDT 2013
+
+./bin/rails g scaffold Entry recorded_for:date title:string yesterdays_log:text todays_log:text show_stopper_log:text
+bundle exec rake db:migrate db:migrate:status
+
+./bin/rails g scaffold Story due_on:date title:string description:text hours_est:float hours_worked:float hours_todo:float stopped_since:date
+./bin/rails g migration add_type_to_stories type:string
+./bin/rails g scaffold YesterdayStory due_on:date title:string description:text hours_est:float hours_worked:float hours_todo:float stopped_since:date
+./bin/rails g scaffold TodayStory due_on:date title:string description:text hours_est:float hours_worked:float hours_todo:float stopped_since:date
+./bin/rails g scaffold ShowStopperStory due_on:date title:string description:text hours_est:float hours_worked:float hours_todo:float stopped_since:date
+
+./bin/rails destroy scaffold YesterdayStory due_on:date title:string description:text hours_est:float hours_worked:float hours_todo:float stopped_since:date
+./bin/rails destroy scaffold TodayStory due_on:date title:string description:text hours_est:float hours_worked:float hours_todo:float stopped_since:date
+./bin/rails destroy scaffold ShowStopperStory due_on:date title:string description:text hours_est:float hours_worked:float hours_todo:float stopped_since:date
+
+./bin/rake db:migrate:down db:migrate:status VERSION=20131008190945
+bundle exec rake db:migrate:status
+
+./bin/rails g model EntryStory entry_id:integer story_id:integer
+bundle exec rake db:migrate db:migrate:status
+
+./bin/rails g migration add_type_to_entry_stories type:string
+bundle exec rake db:migrate db:migrate:status
+
+./bin/rails g model YesterdayEntryStory entry_id:integer story_id:integer
+./bin/rails g model TodayEntryStory entry_id:integer story_id:integer
+./bin/rails g model ShowStopperEntryStory entry_id:integer story_id:integer
+
+rm db/migrate/20131008192840_create_yesterday_entry_stories.rb db/migrate/20131008192849_create_today_entry_stories.rb db/migrate/20131008192858_create_show_stopper_entry_stories.rb
+
+
+
+# ===== ARCHIVE
+
 BUNDLE_GEMFILE=/Users/davidvezzani/rails-app/clean-start/Gemfile bundle exec rails new clf-004 -T
 git clone -b master clean-start clf-004
 

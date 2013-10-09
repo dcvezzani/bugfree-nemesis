@@ -1,9 +1,9 @@
 # open local web server home page in browser
-echo -e "open http://localhost:3672" > open.sh
+echo -e "open http://localhost:3680" > open.sh
 chmod 755 open.sh
 
 # start the web server
-echo -e "#GMAIL_USERNAME=asdf GMAIL_PASSWORD=asdf RAILS_ENV=development bundle exec rails s -p 3672\nRAILS_ENV=development bundle exec rails s -p 3672" > start.sh
+echo -e "#GMAIL_USERNAME=asdf GMAIL_PASSWORD=asdf RAILS_ENV=development bundle exec rails s -p 3680\nRAILS_ENV=development bundle exec rails s -p 3680" > start.sh
 chmod 755 start.sh
 
 # Procfile (to go with 'thin' server)
@@ -26,7 +26,7 @@ chmod 755 watcher.sh
   # config.action_mailer.perform_deliveries = false
   # END
 
-  config.action_mailer.default_url_options = { :host => 'localhost:3672' }
+  config.action_mailer.default_url_options = { :host => 'localhost:3680' }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true

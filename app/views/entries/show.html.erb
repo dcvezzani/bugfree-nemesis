@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Recorded for:</b>
+  <%= @entry.recorded_for %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @entry.title %>
+</p>
+
+<p>
+  <b>Yesterdays log:</b>
+  <%= format_log(@entry.yesterdays_log) %>
+</p>
+
+<% if @entry.yesterdays_stories and @entry.yesterdays_stories.length > 0 %>
+<p>
+  <p>Related stories (est / worked / todo):</p>
+  <ul>
+  <% @entry.yesterdays_stories.each do |story| %>
+    <li><%= link_to "(#{format_date(story.due_on)}) #{story.title} : [#{story.hours_est} / #{story.hours_worked} / #{story.hours_todo}]", story %></li>
+  <% end %>
+  </ul>
+</p>
+<% end %>
+
+<p>
+  <b>Todays log:</b>
+  <%= @entry.todays_log %>
+</p>
+
+<% if @entry.todays_stories and @entry.todays_stories.length > 0 %>
+<p>
+  <p>Related stories (est / worked / todo):</p>
+  <ul>
+  <% @entry.todays_stories.each do |story| %>
+    <li><%= link_to "(#{format_date(story.due_on)}) #{story.title} : [#{story.hours_est} / #{story.hours_worked} / #{story.hours_todo}]", story %></li>
+  <% end %>
+  </ul>
+</p>
+<% end %>
+
+<% if @entry.show_stopper_log and @entry.show_stopper_log.length > 0 %>
+<p>
+  <b>Show stopper log:</b>
+  <%= @entry.show_stopper_log %>
+</p>
+<p>
+  <p>Show Stoppers:</p>
+  <ul>
+  <% @entry.show_stopper_stories.each do |story| %>
+    <li><%= link_to "(#{format_date(story.due_on)}) #{story.title} : [#{format_date(story.stopped_since)}]", story %></li>
+  <% end %>
+  </ul>
+</p>
+<% end %>
+
+<%= link_to 'Edit', edit_entry_path(@entry) %> |
+<%= link_to 'Back', entries_path %>

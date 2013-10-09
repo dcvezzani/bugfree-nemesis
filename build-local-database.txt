@@ -2,27 +2,28 @@
 psql -d postgres -U davidvezzani
 
 # create user and database
-create user clf004_admin with password 'pass13!#';
-CREATE DATABASE clf004_development OWNER clf004_admin;
-GRANT ALL ON DATABASE clf004_development TO clf004_admin; 
+create user ucjrn_admin with password 'pass13!#';
+CREATE DATABASE ucjrn_development OWNER ucjrn_admin;
+GRANT ALL ON DATABASE ucjrn_development TO ucjrn_admin; 
 
 # create test user and test database that can run with rspec tests
 CREATE USER rails with SUPERUSER CREATEDB password 'rails.pass13!#';
-CREATE DATABASE clf004_test OWNER rails;
-GRANT ALL ON DATABASE clf004_test TO rails; 
+CREATE DATABASE ucjrn_test OWNER rails;
+GRANT ALL ON DATABASE ucjrn_test TO rails; 
 
 # from command line
 # createuser -s rails -U davidvezzani
-createdb -O rails clf004_test -U davidvezzani
-createuser clf004_admin -U davidvezzani
-# createdb -O clf004_admin clf004_test -U davidvezzani
-createdb -O clf004_admin clf004_development -U davidvezzani
+createdb -O rails ucjrn_test -U davidvezzani
+createuser ucjrn_admin -U davidvezzani
+# createdb -O ucjrn_admin ucjrn_test -U davidvezzani
+createdb -O ucjrn_admin ucjrn_development -U davidvezzani
 
 # update config/database.yml
 # -e renders newlines (\n)
 # '!' escapes the history (!) character
-echo -e "development:\n  adapter: postgresql\n  database: clf004_development\n  username: clf004_admin\n  password: pass13"'!'"#\n  encoding: utf8\n  pool: 5\n \ntest: \n  adapter: postgresql\n  database: clf004_test\n  username: rails\n  password: rails.pass13"'!'"#\n  encoding: utf8\n  pool: 5" > config/database.yml
+echo -e "development:\n  adapter: postgresql\n  database: ucjrn_development\n  username: ucjrn_admin\n  password: pass13"'!'"#\n  encoding: utf8\n  pool: 5\n \ntest: \n  adapter: postgresql\n  database: ucjrn_test\n  username: rails\n  password: rails.pass13"'!'"#\n  encoding: utf8\n  pool: 5" > config/database.yml
 
 mkdir db/migrate
+bundle install --binstubs
 bundle exec rake db:migrate db:migrate:status
 

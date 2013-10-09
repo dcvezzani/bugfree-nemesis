@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Clf004</title>
+  <title><%= (content_for?(:title)) ? yield(:title) : "#{params[:action].capitalize} #{params[:controller].capitalize}" %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -38,9 +38,9 @@
 
 
     /* space at top of main body */
-    .container.controller-messages{
-      margin-top: 2em;
-    }
+    /* .container.controller-messages{ */
+    /*   margin-top: 2em; */
+    /* } */
 
     /* space at bottom of main body */
     .row.main-content{

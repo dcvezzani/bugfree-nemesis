@@ -1,0 +1,40 @@
+<h1>Listing entries</h1>
+
+<table class="entries">
+  <tr>
+    <th>Recorded for</th>
+    <th>Logs</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @entries.each do |entry| %>
+  <tr class="entry">
+    <td class="entry-recorded-for"><%= entry.recorded_for.strftime("%Y-%m-%d") %></td>
+    <td>
+      <h4><%= entry.title.capitalize %></h4>
+      <div style="clear: both; margin-bottom: 1em; "></div>
+
+      <p>Yesterday</p>
+      <%= format_log entry.yesterdays_log %>
+      <div style="clear: both; "></div>
+
+      <p>Today</p>
+      <%= format_log entry.todays_log %>
+      <div style="clear: both; "></div>
+
+      <p>Show Stoppers</p>
+      <%= format_log entry.show_stopper_log %>
+      <div style="clear: both; "></div>
+    </td>
+    <td><%= link_to 'Show', entry %></td>
+    <td><%= link_to 'Edit', edit_entry_path(entry) %></td>
+    <td><%= link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Entry', new_entry_path %>

@@ -1,0 +1,7 @@
+<%= form_for @associated_stories, url: {action: "index"}, html: {class: "associated_stories_form"} do |f| %>
+<ul>
+  <% @stories.each do |story| %>
+    <li><%= check_box_tag 'story_ids[]', story.id, false, id: "story_id_#{story.id}" %> <%= label_tag "story_id_#{story.id}", "(#{story.id}) #{story.title}" %></li>
+  <% end %>
+</ul>
+<% end %>

@@ -1,0 +1,2 @@
+<% value = story_reference.id %>
+<li><%= check_box_tag "#{category}_ids[]", value, true, id: "#{category}_id_#{value}" %> <%= label_tag "#{category}_id_#{value}", "(#{story_reference.id}) #{story_reference.title}" %></li>

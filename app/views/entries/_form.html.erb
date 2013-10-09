@@ -1,0 +1,150 @@
+<style type="text/css">
+#entry_title{
+  width: 100%;
+}
+
+.row .span4 .field textarea{
+  width: 90%;
+  height: 10em;
+}
+
+.row{
+  padding-top: 1em;
+}
+
+.related-stories label, .associated_stories_form label{
+  display: inline;
+}
+
+</style>
+
+<%= form_for(@entry) do |f| %>
+  <% if @entry.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@entry.errors.count, "error") %> prohibited this entry from being saved:</h2>
+
+      <ul>
+      <% @entry.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="span3">
+      <div class="field">
+        <%= f.label :recorded_for %><br />
+        <%= f.text_field :recorded_for, value: format_date(@entry.recorded_for, "%m/%d/%Y") %>
+        
+      </div>
+    </div>
+
+    <div class="span9">
+      <div class="field">
+        <%= f.label :title %><br />
+        <%= f.text_field :title %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span4">
+      <div class="field">
+        <%= f.label :yesterdays_log %><%= link_to "Stories", list_stories_path() %><br />
+        <%= f.text_area :yesterdays_log %>
+      </div>
+      <ul class="related-stories" id="yesterdays_related_stories">
+        <%= render partial: 'story_reference', collection: @entry.yesterdays_stories, locals: {category: "yesterdays_related_stories", } %>
+      </ul>
+    </div>
+    <div class="span4">
+      <div class="field">
+        <%= f.label :todays_log %><%= link_to "Stories", list_stories_path() %><br />
+        <%= f.text_area :todays_log %>
+      </div>
+      <ul class="related-stories" id="todays_related_stories">
+        <%= render partial: 'story_reference', collection: @entry.todays_stories, locals: {category: "todays_related_stories", } %>
+      </ul>
+    </div>
+    <div class="span4">
+      <div class="field">
+        <%= f.label :show_stopper_log %><%= link_to "Stories", list_stories_path() %><br />
+        <%= f.text_area :show_stopper_log %>
+      </div>
+      <ul class="related-stories" id="show_stopper_related_stories">
+        <%= render partial: 'story_reference', collection: @entry.show_stopper_stories, locals: {category: "show_stopper_related_stories", } %>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span12">
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 id="myModalLabel">Modal header</h3>
+  </div>
+  <div class="modal-body">
+  <p>One fine body…</p>
+  </div>
+  <div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  <button class="btn btn-primary">Save changes</button>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $( "#entry_recorded_for" ).datepicker();
+    //$( "#entry_recorded_for" ).datepicker({dateFormat: "yy-mm-dd", altFormat: "yy-mm-dd"});
+    // $( "#entry_recorded_for" ).datepicker( "option", "dateFormat", "mm/dd/yy" );
+    // $( "#entry_recorded_for" ).datepicker( "option", "altFormat", "yy-mm-dd" );
+    $( "#entry_recorded_for" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+
+
+    $("#entry_title").focus();
+    $("#entry_title").select();
+
+    $("a:contains('Stories')").click(function(){
+      var anchor = $(this);
+      var href = $(anchor).attr("href");
+      $.get(href, function(data){
+        $("#myModalLabel").html("Select associated stories");
+        $('#myModal .modal-body').html(data);
+        $('#myModal .btn-primary').unbind("click")
+
+        setTimeout(function(){
+          $('#myModal').modal('show');
+
+          $('#myModal .btn-primary').click(function(){
+            $("#myModal .modal-body input[type='checkbox']:checked").each(function(index, item){
+              var value = $(item).attr("value");
+              var name = $(item).attr("name");
+              var label = $(item).parent().text();
+
+              var target = $(anchor).closest(".field").parent().find(".related-stories");
+              var category = $(target).attr("id");
+
+              $(target).append("<li><input type='checkbox' id='" + category +  "_id_" + value + "' name='" + category +  "_ids[]' value='" + value + "' checked \/> <label for=\"" + category +  "_id_" + value + "\">" + label + "<\/label></li>");
+            });
+
+            setTimeout(function(){
+              $("#myModal").modal('hide');
+            });
+            
+            return false;
+          });
+        }, 150);
+      });
+      return false;
+    });
+  });
+</script>

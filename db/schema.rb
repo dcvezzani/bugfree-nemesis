@@ -11,7 +11,37 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121226192621) do
+ActiveRecord::Schema.define(:version => 20131008192716) do
+
+  create_table "entries", :force => true do |t|
+    t.date     "recorded_for"
+    t.string   "title"
+    t.text     "yesterdays_log"
+    t.text     "todays_log"
+    t.text     "show_stopper_log"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "entry_stories", :force => true do |t|
+    t.integer  "entry_id"
+    t.integer  "story_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "type"
+  end
+
+  create_table "stories", :force => true do |t|
+    t.date     "due_on"
+    t.string   "title"
+    t.text     "description"
+    t.float    "hours_est"
+    t.float    "hours_worked"
+    t.float    "hours_todo"
+    t.date     "stopped_since"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

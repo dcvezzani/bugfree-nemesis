@@ -1,0 +1,135 @@
+<style type="text/css">
+#story_title{
+  width: 100%;
+}
+
+.row .span8 .field textarea{
+  width: 90%;
+  height: 20em;
+}
+
+.row{
+  padding-top: 1em;
+}
+
+.header .header-content{
+  display: none; 
+}
+
+.main-content input[type='number']{
+  width: 4em;
+}
+#story_stopped_since{
+  width: 8em;
+}
+
+/*
+.main-content .right-col{
+  width: 100%; 
+  float: right; 
+  position: relative; 
+  border: 1px solid orange; 
+}
+
+.main-content .right-col .field{
+  float: left; 
+  width: 60%; 
+  position: relative; 
+}
+
+.main-content .field input[type='number']{
+  float: right; 
+  position: relative; 
+  clear: both; 
+}
+*/
+
+.main-content label{
+  display: inline-block;
+  width: 8em;
+}
+
+.main-content .actions{
+  margin-top: 2em; 
+}
+
+</style>
+
+<%= form_for(@story) do |f| %>
+  <% if @story.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@story.errors.count, "error") %> prohibited this story from being saved:</h2>
+
+      <ul>
+      <% @story.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="span3">
+      <div class="field">
+        <%= f.label :due_on %><br />
+        <%= f.text_field :due_on, value: format_date(@story.due_on, "%m/%d/%Y") %>
+      </div>
+    </div>
+    <div class="span9">
+      <div class="field">
+        <%= f.label :title %><br />
+        <%= f.text_field :title %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span8">
+      <div class="field">
+        <%= f.label :description %><br />
+        <%= f.text_area :description %>
+      </div>
+    </div>
+    <div class="span4">
+      <div class="right-col">
+      <div class=" field">
+        <%= f.label :hours_est %>
+        <%= f.number_field :hours_est %>
+      </div>
+      <div class=" field">
+        <%= f.label :hours_worked %>
+        <%= f.number_field :hours_worked %>
+      </div>
+      <div class=" field">
+        <%= f.label :hours_todo %>
+        <%= f.number_field :hours_todo %>
+      </div>
+      </div>
+
+      <div class=" field">
+        <%= f.label :stopped_since %>
+        <%= f.text_field :stopped_since %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(function() {
+      $( "#story_stopped_since" ).datepicker({ altFormat: "yy-mm-dd" });
+    });
+
+    $(function() {
+      $( "#story_due_on" ).datepicker({ altFormat: "yy-mm-dd" });
+    });
+
+    $("#story_title").focus();
+    $("#story_title").select();
+  });
+</script>
+

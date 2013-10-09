@@ -1,16 +1,33 @@
-           welcome_index GET    /welcome/index(.:format)       welcome#index
-          welcome_wizard GET    /welcome/wizard(.:format)      welcome#wizard
-        new_user_session GET    /users/sign_in(.:format)       devise/sessions#new
-            user_session POST   /users/sign_in(.:format)       devise/sessions#create
-    destroy_user_session DELETE /users/sign_out(.:format)      devise/sessions#destroy
-           user_password POST   /users/password(.:format)      devise/passwords#create
-       new_user_password GET    /users/password/new(.:format)  devise/passwords#new
-      edit_user_password GET    /users/password/edit(.:format) devise/passwords#edit
-                         PUT    /users/password(.:format)      devise/passwords#update
-cancel_user_registration GET    /users/cancel(.:format)        devise/registrations#cancel
-       user_registration POST   /users(.:format)               devise/registrations#create
-   new_user_registration GET    /users/sign_up(.:format)       devise/registrations#new
-  edit_user_registration GET    /users/edit(.:format)          devise/registrations#edit
-                         PUT    /users(.:format)               devise/registrations#update
-                         DELETE /users(.:format)               devise/registrations#destroy
-                    root        /                              welcome#index
+            list_stories        /stories/:entry_id/list(.:format)     stories#list
+                 stories GET    /stories(.:format)                    stories#index
+                         POST   /stories(.:format)                    stories#create
+               new_story GET    /stories/new(.:format)                stories#new
+              edit_story GET    /stories/:id/edit(.:format)           stories#edit
+                   story GET    /stories/:id(.:format)                stories#show
+                         PUT    /stories/:id(.:format)                stories#update
+                         DELETE /stories/:id(.:format)                stories#destroy
+    select_stories_entry POST   /entries/:id/select_stories(.:format) entries#select_stories
+                 entries GET    /entries(.:format)                    entries#index
+                         POST   /entries(.:format)                    entries#create
+               new_entry GET    /entries/new(.:format)                entries#new
+              edit_entry GET    /entries/:id/edit(.:format)           entries#edit
+                   entry GET    /entries/:id(.:format)                entries#show
+                         PUT    /entries/:id(.:format)                entries#update
+                         DELETE /entries/:id(.:format)                entries#destroy
+           welcome_index GET    /welcome/index(.:format)              welcome#index
+          wizard_welcome GET    /welcome/wizard(.:format)             welcome#wizard
+      wizard_bar_welcome GET    /welcome/wizard_bar(.:format)         welcome#wizard_bar
+        new_user_session GET    /users/sign_in(.:format)              devise/sessions#new
+            user_session POST   /users/sign_in(.:format)              devise/sessions#create
+    destroy_user_session DELETE /users/sign_out(.:format)             devise/sessions#destroy
+           user_password POST   /users/password(.:format)             devise/passwords#create
+       new_user_password GET    /users/password/new(.:format)         devise/passwords#new
+      edit_user_password GET    /users/password/edit(.:format)        devise/passwords#edit
+                         PUT    /users/password(.:format)             devise/passwords#update
+cancel_user_registration GET    /users/cancel(.:format)               devise/registrations#cancel
+       user_registration POST   /users(.:format)                      devise/registrations#create
+   new_user_registration GET    /users/sign_up(.:format)              devise/registrations#new
+  edit_user_registration GET    /users/edit(.:format)                 devise/registrations#edit
+                         PUT    /users(.:format)                      devise/registrations#update
+                         DELETE /users(.:format)                      devise/registrations#destroy
+                    root        /                                     welcome#index

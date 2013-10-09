@@ -1,4 +1,14 @@
 Clf004::Application.routes.draw do
+  match 'stories/list' => 'stories#list', :as => :list_stories
+  resources :stories do
+  end
+
+  resources :entries do
+    member do
+      post 'select_stories'
+    end
+  end
+
   get "welcome/index"
   get "welcome/wizard", as: :wizard_welcome
   get "welcome/wizard_bar", as: :wizard_bar_welcome
