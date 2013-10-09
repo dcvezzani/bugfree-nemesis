@@ -21,6 +21,32 @@ class EntriesController < ApplicationController
     end
   end
 
+  def copy_from_yesterday
+    recorded_for_raw = "2013-10-09"
+    recorded_for_raw = params[:recorded_for]
+
+    if(recorded_for_raw.match(/^\d{4}-\d{2}-\d{2}$/))
+      recorded_for_val = Date.strptime(recorded_for_raw, "%Y-%m-%d")
+      previous_entries = Entry.where{recorded_for < my{recorded_for_val}}.order{recorded_for.desc}.limit(1)
+
+      previous_entry = nil
+      if(previous_entries and previous_entries.length > 0)
+        previous_entry = previous_entries.first
+      end
+
+      respond_to do |format|
+        format.html { render partial: 'yesterdays_log_and_related_stories', locals: {entry: previous_entry} }
+        format.json { render json: @entry }
+      end
+
+    else
+      respond_to do |format|
+        format.html { render text: "", status: 412 }
+        format.json { render json: @entry }
+      end
+    end
+  end
+
   # GET /entries/new
   # GET /entries/new.json
   def new
@@ -123,8 +149,10 @@ private
       entry.yesterdays_stories.destroy_all
       YesterdayEntryStory
     when :today
+      entry.todays_stories.destroy_all
       TodayEntryStory
     when :show_stopper
+      entry.show_stopper_stories.destroy_all
       ShowStopperEntryStory
     else
       raise "unsupported category for #update_related_stories: " + category.inspect

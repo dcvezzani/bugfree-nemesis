@@ -16,6 +16,7 @@
 </p>
 
 <% if @entry.yesterdays_stories and @entry.yesterdays_stories.length > 0 %>
+<ul>
 <p>
   <p>Related stories (est / worked / todo):</p>
   <ul>
@@ -24,14 +25,16 @@
   <% end %>
   </ul>
 </p>
+</ul>
 <% end %>
 
 <p>
   <b>Todays log:</b>
-  <%= @entry.todays_log %>
+  <%= format_log(@entry.todays_log) %>
 </p>
 
 <% if @entry.todays_stories and @entry.todays_stories.length > 0 %>
+<ul>
 <p>
   <p>Related stories (est / worked / todo):</p>
   <ul>
@@ -40,13 +43,15 @@
   <% end %>
   </ul>
 </p>
+</ul>
 <% end %>
 
 <% if @entry.show_stopper_log and @entry.show_stopper_log.length > 0 %>
 <p>
   <b>Show stopper log:</b>
-  <%= @entry.show_stopper_log %>
+  <%= format_log(@entry.show_stopper_log) %>
 </p>
+<ul>
 <p>
   <p>Show Stoppers:</p>
   <ul>
@@ -55,6 +60,7 @@
   <% end %>
   </ul>
 </p>
+</ul>
 <% end %>
 
 <%= link_to 'Edit', edit_entry_path(@entry) %> |

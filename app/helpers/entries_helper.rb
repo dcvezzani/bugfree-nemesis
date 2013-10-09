@@ -26,4 +26,20 @@ module EntriesHelper
 
     raw(out)
   end
+
+  def format_text(content)
+    out = if(content.match(/<[^>]+>/))
+      content
+    else
+      items = content.split(/\r\n\r\n/).map { |item|
+        "<p>#{item}<\/p>"
+      }
+
+      "<div class=\"story-description\">\n#{items.join("\n")}\n<\/div>"
+
+    end
+
+    raw(out)
+  end
+
 end

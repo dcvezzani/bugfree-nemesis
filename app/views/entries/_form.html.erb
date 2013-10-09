@@ -51,7 +51,7 @@
   <div class="row">
     <div class="span4">
       <div class="field">
-        <%= f.label :yesterdays_log %><%= link_to "Stories", list_stories_path() %><br />
+        <%= f.label :yesterdays_log, "Yesterday's Log" %><%= link_to "Stories", list_stories_path() %> | <%= link_to "Copy from yesterday", copy_from_yesterdays_entry_path(recorded_for: "date_value_from_form") %><br />
         <%= f.text_area :yesterdays_log %>
       </div>
       <ul class="related-stories" id="yesterdays_related_stories">
@@ -60,7 +60,7 @@
     </div>
     <div class="span4">
       <div class="field">
-        <%= f.label :todays_log %><%= link_to "Stories", list_stories_path() %><br />
+        <%= f.label :todays_log, "Today's Plan" %><%= link_to "Stories", list_stories_path() %><br />
         <%= f.text_area :todays_log %>
       </div>
       <ul class="related-stories" id="todays_related_stories">
@@ -69,7 +69,7 @@
     </div>
     <div class="span4">
       <div class="field">
-        <%= f.label :show_stopper_log %><%= link_to "Stories", list_stories_path() %><br />
+        <%= f.label :show_stopper_log, "Show-Stoppers" %><%= link_to "Stories", list_stories_path() %><br />
         <%= f.text_area :show_stopper_log %>
       </div>
       <ul class="related-stories" id="show_stopper_related_stories">
@@ -101,6 +101,8 @@
   </div>
 </div>
 
+<div id="scratch-pad" style="display: none; "></div>
+
 <script type="text/javascript">
   $(document).ready(function(){
     $( "#entry_recorded_for" ).datepicker();
@@ -112,6 +114,32 @@
 
     $("#entry_title").focus();
     $("#entry_title").select();
+
+    $("a:contains('Copy from yesterday')").click(function(){
+      var anchor = $(this);
+      var entry_recorded_for = $("#entry_recorded_for").val();
+      var href = $(anchor).attr("href").replace(/date_value_from_form/, entry_recorded_for);
+      console.log("href: " + href);
+      $.get(href, function(data){
+        $("#scratch-pad").html(data);
+
+        setTimeout(function(){
+          var log_entry = $("#scratch-pad .copy-log-entry").html();
+          console.log("log_entry: " + log_entry);
+          var related_stories = $("#scratch-pad .copy-related-stories").html();
+
+          var current_entry = $("#entry_yesterdays_log").val();
+          if(current_entry && current_entry.length > 0){
+            current_entry = current_entry + "\n";
+          }
+
+          $("#entry_yesterdays_log").val(current_entry + log_entry);
+          $("#yesterdays_related_stories").append(related_stories);
+        }, 500);
+      });
+
+      return false;
+    });
 
     $("a:contains('Stories')").click(function(){
       var anchor = $(this);

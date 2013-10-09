@@ -1,0 +1,2 @@
+<div class="copy-log-entry"><%= raw(entry.todays_log) %></div>
+<ul class="copy-related-stories"><%= render partial: 'story_reference', collection: entry.todays_stories, locals: {category: "yesterdays_related_stories", } %></ul>

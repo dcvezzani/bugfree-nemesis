@@ -9,7 +9,7 @@
   <div class="span2">Due: <%= format_date story.due_on %></div>
 </div>
 <div class="row story entry">
-  <div class="span10"><%= story.description %></div>
+  <div class="span10"><%= format_text(story.description) %></div>
   <div class="span2">
     <ul>
       <li>Hrs Est: <span class="count"><%= story.hours_est %></span></li>
