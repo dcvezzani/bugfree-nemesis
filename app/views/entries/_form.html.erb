@@ -3,9 +3,14 @@
   width: 100%;
 }
 
+.row .field textarea{
+  height: 10em;
+}
 .row .span4 .field textarea{
   width: 90%;
-  height: 10em;
+}
+.row .span12 .field textarea{
+  width: 100%;
 }
 
 .row{
@@ -60,7 +65,7 @@
     </div>
     <div class="span4">
       <div class="field">
-        <%= f.label :todays_log, "Today's Plan" %><%= link_to "Stories", list_stories_path() %><br />
+        <%= f.label :todays_log, "Today's Goals" %><%= link_to "Stories", list_stories_path() %><br />
         <%= f.text_area :todays_log %>
       </div>
       <ul class="related-stories" id="todays_related_stories">
@@ -80,6 +85,20 @@
 
   <div class="row">
     <div class="span12">
+
+      <% if(@entry.notes.nil? or @entry.notes.length < 1) %>
+        <a id="add-notes" href="javascript: return void();">Add notes</a>
+        <div class="field field-notes" style="display: none; ">
+
+      <% else %>
+        <div class="field field-notes">
+      <% end %>
+
+        <%= f.label :notes, "Notes" %><br />
+        <%= f.text_area :notes %>
+      </div>
+    </div>
+    <div class="span12" style="margin-top: 1em;">
       <div class="actions">
         <%= f.submit %>
       </div>
@@ -111,12 +130,29 @@
     // $( "#entry_recorded_for" ).datepicker( "option", "altFormat", "yy-mm-dd" );
     $( "#entry_recorded_for" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
 
+    $("#add-notes").click(function(){
+      $(this).parent().find(".field-notes").fadeIn(); 
+      $(this).fadeOut();
+      return false;
+    });
+
 
     $("#entry_title").focus();
     $("#entry_title").select();
 
     $("a:contains('Copy from yesterday')").click(function(){
       var anchor = $(this);
+      var current_entry = $("#entry_yesterdays_log").val();
+      var current_related_stories = $("#yesterdays_related_stories").html().replace(/^[\s\r\n]+$/, "")
+
+      if((current_entry && current_entry.length > 0) || (current_related_stories && current_related_stories.length > 0)){
+        var ans = confirm("It looks like you've already logged some stuff in here; are you sure you want to append yesterday's goals?");
+
+        if(ans == false){
+          return false
+        }
+      }
+
       var entry_recorded_for = $("#entry_recorded_for").val();
       var href = $(anchor).attr("href").replace(/date_value_from_form/, entry_recorded_for);
       console.log("href: " + href);
@@ -128,7 +164,6 @@
           console.log("log_entry: " + log_entry);
           var related_stories = $("#scratch-pad .copy-related-stories").html();
 
-          var current_entry = $("#entry_yesterdays_log").val();
           if(current_entry && current_entry.length > 0){
             current_entry = current_entry + "\n";
           }

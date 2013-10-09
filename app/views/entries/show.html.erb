@@ -11,14 +11,14 @@
 </p>
 
 <p>
-  <b>Yesterdays log:</b>
+  <b>Yesterday's log:</b>
   <%= format_log(@entry.yesterdays_log) %>
 </p>
 
 <% if @entry.yesterdays_stories and @entry.yesterdays_stories.length > 0 %>
 <ul>
 <p>
-  <p>Related stories (est / worked / todo):</p>
+  <p>Related stories (due date) ... (est / worked / todo):</p>
   <ul>
   <% @entry.yesterdays_stories.each do |story| %>
     <li><%= link_to "(#{format_date(story.due_on)}) #{story.title} : [#{story.hours_est} / #{story.hours_worked} / #{story.hours_todo}]", story %></li>
@@ -29,14 +29,14 @@
 <% end %>
 
 <p>
-  <b>Todays log:</b>
+  <b>Today's Goals:</b>
   <%= format_log(@entry.todays_log) %>
 </p>
 
 <% if @entry.todays_stories and @entry.todays_stories.length > 0 %>
 <ul>
 <p>
-  <p>Related stories (est / worked / todo):</p>
+  <p>Related stories (due date) ... (est / worked / todo):</p>
   <ul>
   <% @entry.todays_stories.each do |story| %>
     <li><%= link_to "(#{format_date(story.due_on)}) #{story.title} : [#{story.hours_est} / #{story.hours_worked} / #{story.hours_todo}]", story %></li>
@@ -48,7 +48,7 @@
 
 <% if @entry.show_stopper_log and @entry.show_stopper_log.length > 0 %>
 <p>
-  <b>Show stopper log:</b>
+  <b>Show-stoppers:</b>
   <%= format_log(@entry.show_stopper_log) %>
 </p>
 <ul>
@@ -61,6 +61,15 @@
   </ul>
 </p>
 </ul>
+<% end %>
+
+<% if @entry.notes and @entry.notes.length > 0 %>
+<p>
+  <b>Notes:</b>
+<ul>
+  <%= format_text(@entry.notes) %>
+</ul>
+</p>
 <% end %>
 
 <%= link_to 'Edit', edit_entry_path(@entry) %> |
