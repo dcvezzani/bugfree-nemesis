@@ -4,6 +4,7 @@ Clf004::Application.routes.draw do
   resources :stories do
   end
 
+  match 'entries/:id/trigger_work_timer' => 'entries#trigger_work_timer', :via => :put, :as => :trigger_work_timer
   match 'entries/copy_from_yesterday' => 'entries#copy_from_yesterday', :via => :get, :as => :copy_from_yesterdays_entry
   resources :entries do
     resources :work_intervals

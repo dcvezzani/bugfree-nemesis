@@ -1,4 +1,5 @@
 class WorkIntervalsController < ApplicationController
+  layout "entries"
   before_filter :load_entry
 
   # GET /work_intervals

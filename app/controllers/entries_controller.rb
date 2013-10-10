@@ -128,6 +128,37 @@ class EntriesController < ApplicationController
     end
   end
 
+  def trigger_work_timer
+    @entry = Entry.find(params[:id])
+    switch_on = ("0" != params[:onoffswitch])
+    work_interval = @entry.most_recent_work_interval
+
+    # render json: {errors: work_interval.errors, msg: "The clock's busted; fix it!"}, status: :unprocessable_entity
+    # return false;
+
+    action = nil
+
+    if(work_interval.is_active? and !switch_on)
+      work_interval.ended_at = Time.now
+      action = "paused"
+    elsif(work_interval.is_complete? and switch_on)
+      work_interval = WorkInterval.new(entry_id: @entry.id, started_at: Time.now)
+      action = "started"
+    end
+
+    notice = "Your work timer was successfully #{action}."
+    respond_to do |format|
+      if work_interval.save
+        format.html { redirect_to @entry, notice: notice }
+        format.json { render json: {work_interval: work_interval, msg: notice}, status: :created, location: @entry }
+        # format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: work_interval.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # DELETE /entries/1
   # DELETE /entries/1.json
   def destroy

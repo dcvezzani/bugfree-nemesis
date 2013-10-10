@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :work_interval do
     entry_id 1
-    started_at "2013-10-09 14:36:03"
-    ended_at "2013-10-09 14:36:03"
+    started_at "2013-10-09 14:47:45"
+    ended_at "2013-10-09 14:47:45"
   end
 end

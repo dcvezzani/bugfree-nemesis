@@ -1,6 +1,23 @@
+<style type="text/css">
+  .onoffswitch-container{
+    float: right; 
+  }
+</style>
+
 <p id="notice"><%= notice %></p>
 
 <p>
+  <%= form_for @entry, url: trigger_work_timer_path(@entry), html: {class: "onoffswitch-container"} do |f| %>
+  <div class="onoffswitch">
+      <input type="hidden" name="onoffswitch" value="0">
+      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" <%= @entry.active_work_interval_exists? ? "checked" : "" %>>
+      <label class="onoffswitch-label" for="myonoffswitch">
+          <div class="onoffswitch-inner"></div>
+          <div class="onoffswitch-switch"></div>
+      </label>
+  </div>
+  <% end %>
+
   <b>Recorded for:</b>
   <%= @entry.recorded_for %>
 </p>
@@ -74,3 +91,34 @@
 
 <%= link_to 'Edit', edit_entry_path(@entry) %> |
 <%= link_to 'Back', entries_path %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#myonoffswitch").click(function(){
+      $(".alert").fadeOut();
+      var checkbox = $(this);
+
+      // assumes the checkbox has already been updated
+      current_state = $(checkbox).prop("checked");
+
+      var form = $(checkbox).closest("form");
+      var href = $(form).attr("action");
+      var data = $(form).serialize();
+
+      console.log("href: " + href);
+      console.log("data: " + data);
+      $.post(href, data, function(data){
+        $(".alert-success").html(data["msg"]);
+        $(".alert-success").fadeIn();
+        // alert("success");
+      }, "json")
+      .fail(function(jqXHR, textStatus, errorThrown){
+        $(checkbox).prop("checked", !current_state);
+        data = JSON.parse(jqXHR.responseText);
+        $(".alert-error").html(data["msg"]);
+        $(".alert-error").fadeIn();
+        // alert("error");
+      });
+    });
+  })
+</script>
