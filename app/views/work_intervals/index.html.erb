@@ -1,4 +1,5 @@
 <h1>Listing work_intervals</h1>
+<p>for Entry: <%= @entry.title %> (<%= format_date(@entry.recorded_for) %>)</p>
 
 <table>
   <tr>
@@ -13,15 +14,15 @@
 <% @work_intervals.each do |work_interval| %>
   <tr>
     <td><%= work_interval.entry_id %></td>
-    <td><%= work_interval.started_at %></td>
-    <td><%= work_interval.ended_at %></td>
-    <td><%= link_to 'Show', work_interval %></td>
-    <td><%= link_to 'Edit', edit_work_interval_path(work_interval) %></td>
-    <td><%= link_to 'Destroy', work_interval, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= in_time_zone(work_interval.started_at) %></td>
+    <td><%= in_time_zone(work_interval.ended_at) %></td>
+    <td><%= link_to 'Show', [@entry, work_interval] %></td>
+    <td><%= link_to 'Edit', [:edit, @entry, work_interval] %></td>
+    <td><%= link_to 'Destroy', [@entry, work_interval], method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Work interval', new_work_interval_path %>
+<%= link_to 'New Work interval', [:new, @entry, :work_interval] %>

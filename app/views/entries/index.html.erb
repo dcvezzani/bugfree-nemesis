@@ -30,9 +30,7 @@
       <%= entry.recorded_for.strftime("%Y-%m-%d") %>
 
       <ul class="work-intervals">
-      <% entry.work_intervals.each do |interval| %>
-        <li><%= "#{format_time(interval.started_at)} - #{format_time(interval.ended_at)}" %></li>
-      <% end %>
+        <%= render partial: 'show_work_intervals', locals: {entry: entry} %>
       </ul>
 
     </td>

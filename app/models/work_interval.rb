@@ -29,6 +29,29 @@ class WorkInterval < ActiveRecord::Base
       0
     end
   end
+
+  def update_times(attrs)
+    res = false
+
+    begin
+      if(!started_at.nil? and attrs.has_key?(:started_at))
+        us_pacific = ActiveSupport::TimeZone.us_zones.find{|x| x.name == "Pacific Time (US & Canada)"}
+
+        # started_at = us_pacific.parse(attrs[:started_at]) if(!attrs[:started_at].empty?)
+        # ended_at = us_pacific.parse(attrs[:ended_at]) if(!attrs[:ended_at].empty?)
+
+        self.started_at = us_pacific.parse(attrs[:started_at]) if(!attrs[:started_at].empty?)
+        self.ended_at = us_pacific.parse(attrs[:ended_at]) if(!attrs[:ended_at].empty?)
+        res = save
+      end
+
+    rescue Exception => e
+      Rails.logger.warn "Unable to parse time: #{e.message}"
+      Rails.logger.debug e.backtrace
+    end
+
+    return res
+  end
 end
 
 =begin

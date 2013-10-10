@@ -7,14 +7,15 @@
 
 <p>
   <b>Started at:</b>
-  <%= @work_interval.started_at %>
+  <%= in_time_zone @work_interval.started_at %>
 </p>
 
 <p>
   <b>Ended at:</b>
-  <%= @work_interval.ended_at %>
+  <%= in_time_zone @work_interval.ended_at %>
 </p>
 
 
-<%= link_to 'Edit', edit_work_interval_path(@work_interval) %> |
-<%= link_to 'Back', work_intervals_path %>
+<%= link_to 'Edit', [:edit, @entry, @work_interval] %>
+<%= link_to 'Back', [@entry, :work_intervals] %>
+

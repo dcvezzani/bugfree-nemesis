@@ -10,11 +10,19 @@ module EntriesHelper
     end
   end
 
-  def format_time(time, format="%H:%M")
+  def format_time_interval(time, format="%H:%M")
+    format_time(time, format)
+  end
+
+  def in_time_zone(time)
+    (time) ? time.in_time_zone : ""
+  end
+
+  def format_time(time, format="%H:%M:%S")
     return "" if time.nil?
 
     begin
-      time.strftime(format)
+      in_time_zone(time).strftime(format)
     rescue Exception => e
       Rails.logger.warn "unable to print non-nil time in the format \"#{format}\": #{time.inspect}"
       ""

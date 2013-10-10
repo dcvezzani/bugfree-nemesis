@@ -5,7 +5,7 @@ class WorkIntervalsController < ApplicationController
   # GET /work_intervals
   # GET /work_intervals.json
   def index
-    @work_intervals = WorkInterval.all
+    @work_intervals = WorkInterval.where{entry_id == my{@entry.id}}
 
     respond_to do |format|
       format.html # index.html.erb
@@ -28,6 +28,7 @@ class WorkIntervalsController < ApplicationController
   # GET /work_intervals/new.json
   def new
     @work_interval = WorkInterval.new
+    @url = [@entry, :work_intervals]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -38,12 +39,14 @@ class WorkIntervalsController < ApplicationController
   # GET /work_intervals/1/edit
   def edit
     @work_interval = WorkInterval.find(params[:id])
+    @url = [@entry, @work_interval]
   end
 
   # POST /work_intervals
   # POST /work_intervals.json
   def create
     @work_interval = WorkInterval.new(params[:work_interval])
+    @url = [@entry, :work_intervals]
 
     respond_to do |format|
       if @work_interval.save
@@ -60,9 +63,12 @@ class WorkIntervalsController < ApplicationController
   # PUT /work_intervals/1.json
   def update
     @work_interval = WorkInterval.find(params[:id])
+    @url = [@entry, @work_interval]
+
+    updated = @work_interval.update_times(params[:work_interval])
 
     respond_to do |format|
-      if @work_interval.update_attributes(params[:work_interval])
+      if updated
         format.html { redirect_to [@entry, @work_interval], notice: 'Work interval was successfully updated.' }
         format.json { head :no_content }
       else

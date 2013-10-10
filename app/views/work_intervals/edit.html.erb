@@ -2,5 +2,6 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @work_interval %> |
-<%= link_to 'Back', work_intervals_path %>
+<%= link_to 'Show', [@entry, @work_interval] %> |
+<%= link_to 'Back', [@entry, :work_intervals] %>
+

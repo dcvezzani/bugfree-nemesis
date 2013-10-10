@@ -1,4 +1,4 @@
       <% entry.work_intervals.each do |interval| %>
-        <li><%= "#{format_time(interval.started_at)} - #{format_time(interval.ended_at)}" %></li>
+        <li><%= "#{format_time_interval(interval.started_at)} - #{format_time_interval(interval.ended_at)}" %></li>
       <% end %>
 
