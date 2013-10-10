@@ -7,6 +7,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <% if(@entry.recorded_for == Date.today) %>
   <%= form_for @entry, url: trigger_work_timer_path(@entry), html: {class: "onoffswitch-container"} do |f| %>
   <div class="onoffswitch">
       <input type="hidden" name="onoffswitch" value="0">
@@ -17,15 +18,23 @@
       </label>
   </div>
   <% end %>
+  <% end %>
 
-  <b>Recorded for:</b>
-  <%= @entry.recorded_for %>
+  <h3><%= @entry.title.capitalize %></h3>
 </p>
 
-<p>
-  <b>Title:</b>
-  <%= @entry.title %>
-</p>
+<div class="row">
+  <div class="span7">
+    <b>Recorded for:</b>
+    <%= @entry.recorded_for %>
+  </div>
+  <div class="span3">
+      <b>Hours worked:</b>
+      <ul id="work-intervals">
+      <%= render partial: 'show_work_intervals', locals: {entry: @entry} %>
+      </ul>
+  </div>
+</div>
 
 <p>
   <b>Yesterday's log:</b>
@@ -92,33 +101,13 @@
 <%= link_to 'Edit', edit_entry_path(@entry) %> |
 <%= link_to 'Back', entries_path %>
 
+<div id="internal-references" style="display: none; ">
+<%= link_to 'show work intervals', show_work_intervals_entry_path(@entry) %>
+</div>
+
 <script type="text/javascript">
   $(document).ready(function(){
-    $("#myonoffswitch").click(function(){
-      $(".alert").fadeOut();
-      var checkbox = $(this);
-
-      // assumes the checkbox has already been updated
-      current_state = $(checkbox).prop("checked");
-
-      var form = $(checkbox).closest("form");
-      var href = $(form).attr("action");
-      var data = $(form).serialize();
-
-      console.log("href: " + href);
-      console.log("data: " + data);
-      $.post(href, data, function(data){
-        $(".alert-success").html(data["msg"]);
-        $(".alert-success").fadeIn();
-        // alert("success");
-      }, "json")
-      .fail(function(jqXHR, textStatus, errorThrown){
-        $(checkbox).prop("checked", !current_state);
-        data = JSON.parse(jqXHR.responseText);
-        $(".alert-error").html(data["msg"]);
-        $(".alert-error").fadeIn();
-        // alert("error");
-      });
-    });
+    init_work_timer();
   })
+
 </script>

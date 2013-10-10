@@ -2,6 +2,9 @@ Clf004::Application.routes.draw do
 
   match 'stories/list' => 'stories#list', :via => :get, :as => :list_stories
   resources :stories do
+    member do
+      put 'update_hours'
+    end
   end
 
   match 'entries/:id/trigger_work_timer' => 'entries#trigger_work_timer', :via => :put, :as => :trigger_work_timer
@@ -11,6 +14,7 @@ Clf004::Application.routes.draw do
   
     member do
       post 'select_stories'
+      get 'show_work_intervals'
     end
   end
 

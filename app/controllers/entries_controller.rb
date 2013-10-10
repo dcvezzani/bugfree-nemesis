@@ -21,6 +21,15 @@ class EntriesController < ApplicationController
     end
   end
 
+  def show_work_intervals
+    @entry = Entry.find(params[:id])
+
+    respond_to do |format|
+      format.html { render partial: 'show_work_intervals', locals: {entry: @entry} }
+      format.json { render json: @entry }
+    end
+  end
+
   def copy_from_yesterday
     recorded_for_raw = "2013-10-09"
     recorded_for_raw = params[:recorded_for]
@@ -138,12 +147,13 @@ class EntriesController < ApplicationController
 
     action = nil
 
-    if(work_interval.is_active? and !switch_on)
-      work_interval.ended_at = Time.now
-      action = "paused"
-    elsif(work_interval.is_complete? and switch_on)
+    if(work_interval.nil? or (work_interval.is_complete? and switch_on))
       work_interval = WorkInterval.new(entry_id: @entry.id, started_at: Time.now)
       action = "started"
+
+    elsif(work_interval.is_active? and !switch_on)
+      work_interval.ended_at = Time.now
+      action = "paused"
     end
 
     notice = "Your work timer was successfully #{action}."

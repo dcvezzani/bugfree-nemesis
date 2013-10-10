@@ -15,20 +15,23 @@
   <%= format_text(@story.description) %>
 </p>
 
+
+<%= form_for @story, url: update_hours_story_path(@story), html: {class: "update-hours"} do |f| %>
 <p>
   <b>Hours est:</b>
-  <%= @story.hours_est %>
+  <%= f.number_field :hours_est, value: format_float(@story.hours_est) %>
 </p>
 
 <p>
   <b>Hours worked:</b>
-  <%= @story.hours_worked %>
+  <%= f.number_field :hours_worked, value: format_float(@story.hours_worked) %>
 </p>
 
 <p>
   <b>Hours todo:</b>
-  <%= @story.hours_todo %>
+  <%= f.number_field :hours_todo, value: format_float(@story.hours_todo) %>
 </p>
+<% end %>
 
 <p>
   <b>Stopped since:</b>
@@ -38,3 +41,10 @@
 
 <%= link_to 'Edit', edit_story_path(@story) %> |
 <%= link_to 'Back', stories_path %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    init_hour_updater();
+  });
+</script>
+

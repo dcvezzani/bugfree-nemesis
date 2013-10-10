@@ -2,8 +2,6 @@ module EntriesHelper
   def format_date(date, format="%Y-%m-%d")
     return "" if date.nil?
 
-    format ||= "%Y-%m-%d"
-
     begin
       date.strftime(format)
     rescue Exception => e
@@ -12,11 +10,26 @@ module EntriesHelper
     end
   end
 
+  def format_time(time, format="%H:%M")
+    return "" if time.nil?
+
+    begin
+      time.strftime(format)
+    rescue Exception => e
+      Rails.logger.warn "unable to print non-nil time in the format \"#{format}\": #{time.inspect}"
+      ""
+    end
+  end
+
+  def format_float(float)
+    number_with_precision(float, :precision => 1) || 0
+  end
+
   def format_log(content)
     out = if(content.match(/<[^>]+>/))
       content
     else
-      items = content.split(/\n/).map { |item|
+      items = content.split(/[\n\r]+/).map { |item|
         "<li>#{item}<\/li>"
       }
 

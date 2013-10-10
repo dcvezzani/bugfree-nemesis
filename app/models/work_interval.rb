@@ -18,6 +18,17 @@ class WorkInterval < ActiveRecord::Base
   def is_complete?
     (entry_id and started_at and ended_at)
   end
+
+  def delta
+    if(is_complete?)
+      '%.2f' % ((ended_at - started_at) / 1.hour)
+      # ((ended_at - started_at) / 1.hour).round
+      # ((ended_at - started_at) / 1.hour).round(-2)
+      # ((ended_at - started_at) / 1.hour).roundTo(100)
+    else
+      0
+    end
+  end
 end
 
 =begin

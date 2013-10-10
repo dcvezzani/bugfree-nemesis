@@ -11,11 +11,14 @@
 <div class="row story entry">
   <div class="span10"><%= format_text(story.description) %></div>
   <div class="span2">
+    <%= form_for story, url: update_hours_story_path(story), html: {class: "update-hours"} do |f| %>
     <ul>
-      <li>Hrs Est: <span class="count"><%= story.hours_est %></span></li>
-      <li>Hrs Wrk: <span class="count"><%= story.hours_worked %></span></li>
-      <li>Hrs Tdo: <span class="count"><%= story.hours_todo %></span></li>
+
+      <li>Hrs Est: <span class="count"><%= f.number_field :hours_est, value: format_float(story.hours_est) %></span></li>
+      <li>Hrs Wrk: <span class="count"><%= f.number_field :hours_worked, value: format_float(story.hours_worked) %></span></li>
+      <li>Hrs Tdo: <span class="count"><%= f.number_field :hours_todo, value: format_float(story.hours_todo) %></span></li>
     </ul>
+    <% end %>
   </div>
 </div>
 
@@ -26,4 +29,10 @@
 <%= link_to 'New Story', new_story_path %>
 
 <%#= story.stopped_since %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    init_hour_updater();
+  });
+</script>
 

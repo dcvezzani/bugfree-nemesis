@@ -4,7 +4,7 @@ class StoriesController < ApplicationController
   # GET /stories
   # GET /stories.json
   def index
-    @stories = Story.all
+    @stories = Story.order{[due_on.asc, updated_at.desc]}
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class StoriesController < ApplicationController
   end
 
   def list
-    @stories = Story.all
+    @stories = Story.order{[due_on.asc, updated_at.desc]}
     @associated_stories = AssociatedStories.new
 
     respond_to do |format|
@@ -74,6 +74,36 @@ class StoriesController < ApplicationController
       if @story.update_attributes(params[:story])
         format.html { redirect_to @story, notice: 'Story was successfully updated.' }
         format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @story.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update_hours
+    @story = Story.find(params[:id])
+    no_errors = true
+    status = 200
+    notice = nil
+
+    if @story.same_attribute_values?(params[:story]) 
+      status = 304
+
+    else
+      no_errors = @story.update_attributes(params[:story])
+
+      if(no_errors)
+        notice = "Hours for story were successfully updated: (e: #{@story.hours_est}, w: #{@story.hours_worked}, t: #{@story.hours_todo})"
+      else
+        notice = "Hours were not updated for some reason."
+      end
+    end
+
+    respond_to do |format|
+      if no_errors 
+        format.html { redirect_to @story, notice: notice }
+        format.json { render json: {msg: notice}, status: status }
       else
         format.html { render action: "edit" }
         format.json { render json: @story.errors, status: :unprocessable_entity }
