@@ -19,12 +19,35 @@ class WorkInterval < ActiveRecord::Base
     (entry_id and started_at and ended_at)
   end
 
+##
+# rounds a Time or DateTime to the neares 15 minutes
+def round_to_15_minutes(minutes)
+  rounded = Time.at((minutes.to_i / 900.0).round * 900)
+  # t.is_a?(DateTime) ? rounded.to_datetime : rounded
+end
+
   def delta
     if(is_complete?)
-      '%.2f' % ((ended_at - started_at) / 1.hour)
-      # ((ended_at - started_at) / 1.hour).round
-      # ((ended_at - started_at) / 1.hour).round(-2)
-      # ((ended_at - started_at) / 1.hour).roundTo(100)
+      #'%.2f' % (((ended_at - started_at) / 30.minutes) / 1.hour)
+      # interval_min = (('%.2f' % ((ended_at - started_at) / 15.minutes)).to_f / 0.25).floor * 0.25
+      # [interval_min, interval_min * 15]
+
+      # interval_min = (('%.2f' % ((ended_at - started_at) / 30.minutes)).to_f / 0.5).ceil * 0.5
+      # [interval_min, interval_min * 30]
+      #
+      diff = ((ended_at - started_at) / 30.minutes)
+      floor = ((ended_at - started_at) / 30.minutes).floor
+      radix = diff - floor
+
+      res = if(radix > 0.5)
+        floor + 1
+      else
+        floor
+      end
+
+      [diff, res, radix]
+      (res / 2.0)
+
     else
       0
     end

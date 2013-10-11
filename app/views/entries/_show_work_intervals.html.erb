@@ -1,4 +1,5 @@
       <% entry.work_intervals.each do |interval| %>
-        <li><%= "#{format_time_interval(interval.started_at)} - #{format_time_interval(interval.ended_at)}" %></li>
+        <li><%= "#{format_time_interval(interval.started_at)} - #{format_time_interval(interval.ended_at)}" %> <span class="hours-worked">(<%= interval.delta %> hrs)</span></li>
       <% end %>
+        <li><b>Total hrs:</b> <span class="hours-worked hours-worked-total">(<%= entry.total_hours_worked %> hrs)</span></li>
 

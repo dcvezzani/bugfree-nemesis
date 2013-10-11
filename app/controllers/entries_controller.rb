@@ -2,7 +2,7 @@ class EntriesController < ApplicationController
   # GET /entries
   # GET /entries.json
   def index
-    @entries = Entry.all
+    @entries = Entry.order{ recorded_for.desc }
 
     respond_to do |format|
       format.html # index.html.erb

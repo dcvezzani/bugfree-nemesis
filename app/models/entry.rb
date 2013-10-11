@@ -41,4 +41,8 @@ class Entry < ActiveRecord::Base
   def active_work_interval_exists?
     (sorted_active_work_intervals.length > 0)
   end
+
+  def total_hours_worked
+    sorted_complete_work_intervals.inject(0.0){|a,b| a + b.delta}
+  end
 end
