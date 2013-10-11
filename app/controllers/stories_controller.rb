@@ -111,6 +111,22 @@ class StoriesController < ProjectController
     end
   end
 
+  def mark_as_done
+    @story = Story.find(params[:id])
+
+    respond_to do |format|
+      # if @story.update_attributes(params[:story])
+      if @story.close
+        format.html { redirect_to [@project, :stories], notice: 'Story was successfully marked as closed.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @story.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+
   # DELETE /stories/1
   # DELETE /stories/1.json
   def destroy

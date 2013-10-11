@@ -48,6 +48,9 @@ mvim -p app/views/projects/*
 
 ./bin/rails g migration add_slug_to_projects slug:string
 
+./bin/rails g migration add_status_to_stories status:string
+bundle exec rake db:migrate db:migrate:status
+
 
 # ===== Wed Oct  9 12:02:05 PDT 2013
 

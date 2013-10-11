@@ -1,13 +1,13 @@
-<p id="notice"><%= notice %></p>
-
+<div style="clear: both; margin-top: 1em; "></div>
 <p>
   <b>Due on:</b>
   <%= @story.due_on %>
+  <span class="story-status story-status-<%= @story.status.downcase %>">(<%= @story.status %>)</span>
 </p>
 
 <p>
   <b>Title:</b>
-  <%= @story.title %>
+  <%= @story.title %> 
 </p>
 
 <p>

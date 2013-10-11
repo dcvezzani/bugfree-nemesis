@@ -6,6 +6,7 @@ Clf004::Application.routes.draw do
     resources :stories do
       member do
         put 'update_hours'
+        put 'mark_as_done'
       end
     end
 

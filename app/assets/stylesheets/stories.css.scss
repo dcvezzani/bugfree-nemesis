@@ -1,3 +1,22 @@
 // Place all the styles related to the Stories controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.story-status{
+  font-weight: bold;
+  color: #2F3DA8;
+  display: block; 
+  float: right; 
+}
+
+.story-status-closed{
+  color: #A52E2E;
+}
+
+.story-status-active{
+  color: #2EA53E;
+}
+
+.row.story.entry h4{
+  display: inline-block;
+}

@@ -23,27 +23,6 @@
   width: 8em;
 }
 
-/*
-.main-content .right-col{
-  width: 100%; 
-  float: right; 
-  position: relative; 
-  border: 1px solid orange; 
-}
-
-.main-content .right-col .field{
-  float: left; 
-  width: 60%; 
-  position: relative; 
-}
-
-.main-content .field input[type='number']{
-  float: right; 
-  position: relative; 
-  clear: both; 
-}
-*/
-
 .main-content label{
   display: inline-block;
   width: 8em;
@@ -51,6 +30,15 @@
 
 .main-content .actions{
   margin-top: 2em; 
+}
+
+#status-field ul{
+  list-style: none; 
+  margin: 0; 
+  padding: 0; 
+}
+#status-field ul{
+  display: inline-block;
 }
 
 </style>
@@ -110,6 +98,20 @@
         <%= f.label :stopped_since %>
         <%= f.text_field :stopped_since %>
       </div>
+      <!-- <div class=" field"> -->
+      <!--   <%#= f.label :status %> -->
+      <!--   <%#= f.text_field :status %> -->
+      <!-- </div> -->
+
+      <!-- <a href="http://stackoverflow.com/questions/623051/radio-buttons-on-rails">kudos</a> -->
+      <div id="status-field" class="field">
+        <%= f.label :status %>
+        <ul>
+        <% Story::STATUS_VALUES.each do |status| %>
+          <li><%= radio_button_tag 'story[status]', status, @story.status == status %> <%= label_tag "story_status_#{status}".to_sym, status.humanize %></li>
+        <% end %>
+        </ul>
+      </div>
 
       <div class="actions">
         <%= f.submit %>
@@ -120,13 +122,12 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-    $(function() {
-      $( "#story_stopped_since" ).datepicker({ dateFormat: "yy-mm-dd" });
-    });
+    $( "#entry_recorded_for" ).datepicker();
+    $( "#entry_recorded_for" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
 
-    $(function() {
-      $( "#story_due_on" ).datepicker({ dateFormat: "yy-mm-dd" });
-    });
+    $( "#story_due_on" ).datepicker();
+    $( "#story_due_on" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+
 
     $("#story_title").focus();
     $("#story_title").select();

@@ -3,7 +3,9 @@
 <% @stories.each do |story| %>
 <div class="row story entry">
   <div class="span10"><h4>[<%= story.id %>] <%= story.title.capitalize %></h4>
-<%= link_to 'Show', [@project, story] %> | <%= link_to 'Edit', edit_project_story_path(@project, story) %> | <%= link_to 'Destroy', [@project, story], method: :delete, data: { confirm: 'Are you sure?' } %>
+  <span class="story-status story-status-<%= story.status.downcase %>">(<%= story.status %>)</span>
+<br/>
+<%= link_to 'Show', [@project, story] %> | <%= link_to 'Edit', edit_project_story_path(@project, story) %> | <%= link_to 'Destroy', [@project, story], method: :delete, data: { confirm: 'Are you sure?' } %> | <%= link_to 'Mark as Done', [:mark_as_done, @project, story], method: :put, data: { confirm: 'Are you sure?' } %>
   
   </div>
   <div class="span2">Due: <%= format_date story.due_on %></div>

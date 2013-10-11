@@ -14,8 +14,6 @@
   }
 </style>
 
-<p id="notice"><%= notice %></p>
-
 <p>
   <% if(@entry.recorded_for == Date.today) %>
   <%= form_for @entry, url: project_trigger_work_timer_path(@project, @entry), html: {class: "onoffswitch-container"} do |f| %>
