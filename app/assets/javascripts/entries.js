@@ -36,7 +36,7 @@
   function update_work_intervals(){
     var href = $("#internal-references a:contains('show work intervals')").attr("href");
     $.get(href, function(data){
-      $("#work-intervals").html(data);
+      $(".work-intervals").html(data);
     });
   }
 

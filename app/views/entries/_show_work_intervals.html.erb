@@ -1,4 +1,8 @@
-      <% entry.work_intervals.each do |interval| %>
+  <div class="row">
+    <div class="span4">
+      <b>Hours worked:</b>
+      <ul id="work-intervals">
+      <% entry.sorted_work_intervals.each do |interval| %>
 
         <% if interval.is_active? %>
         <% current_time = Time.zone.now %>
@@ -9,7 +13,16 @@
         <% end %>
 
       <% end %>
-        <li><b>Total hrs:</b> <span class="hours-worked hours-worked-total">(<%= entry.total_hours_worked(:estimate) %> hrs)</span></li>
+      </ul>
+    </div>
+
+    <div class="span4">
+      <b>Work Hours Summary:</b>
+      <ul id="work-intervals-summary">
+        <li><b>Total hrs:</b> <span class="hours-worked hours-worked-total">(<%= entry.total_hours_worked({estimate: true}) %> hrs)</span></li>
+        <li><b>Full day ends:</b> <span class="day-end-estimate"><%= format_time_interval(entry.work_day_ends_at()) %></span></li>
+      </ul>
+    </div>
 
 
 <script type="text/javascript">
@@ -22,3 +35,6 @@
     }
   });
 </script>
+
+  </div>
+

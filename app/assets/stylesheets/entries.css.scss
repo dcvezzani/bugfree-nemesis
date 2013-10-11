@@ -22,3 +22,24 @@
 .estimated-time-interval.active .current-time{
   font-style: italic;
 }
+
+.onoffswitch-container{
+  float: right; 
+}
+
+#work-intervals-summary li, 
+#work-intervals li{
+  width: 175px;
+}
+
+#work-intervals-summary li .day-end-estimate, 
+#work-intervals-summary li .hours-worked, 
+#work-intervals li .hours-worked{
+  float: right; 
+}
+
+#work-intervals-summary li .day-end-estimate, 
+#work-intervals-summary li .hours-worked-total{
+  font-weight: bold;
+}
+

@@ -28,31 +28,41 @@ class WorkInterval < ActiveRecord::Base
   #   # t.is_a?(DateTime) ? rounded.to_datetime : rounded
   # end
 
-  def delta(marked_at=ended_at)
-    if(is_complete?(marked_at) and (marked_at > started_at))
-      #'%.2f' % (((marked_at - started_at) / 30.minutes) / 1.hour)
-      # interval_min = (('%.2f' % ((marked_at - started_at) / 15.minutes)).to_f / 0.25).floor * 0.25
+  def delta(mrk_end_at=ended_at, mrk_start_at=started_at)
+    if(is_complete?(mrk_end_at) and (mrk_end_at > mrk_start_at))
+      #'%.2f' % (((mrk_end_at - mrk_start_at) / 30.minutes) / 1.hour)
+      # interval_min = (('%.2f' % ((mrk_end_at - mrk_start_at) / 15.minutes)).to_f / 0.25).floor * 0.25
       # [interval_min, interval_min * 15]
 
-      # interval_min = (('%.2f' % ((marked_at - started_at) / 30.minutes)).to_f / 0.5).ceil * 0.5
+      # interval_min = (('%.2f' % ((mrk_end_at - mrk_start_at) / 30.minutes)).to_f / 0.5).ceil * 0.5
       # [interval_min, interval_min * 30]
       #
-      diff = ((marked_at - started_at) / 30.minutes)
-      floor = ((marked_at - started_at) / 30.minutes).floor
-      radix = diff - floor
 
-      res = if(radix > 0.5)
-        floor + 1
-      else
-        floor
-      end
-
-      [diff, res, radix]
-      (res / 2.0)
+      WorkInterval.round_by((mrk_end_at - mrk_start_at))
 
     else
       0
     end
+  end
+
+  # ROUND_BY_INTERVAL=(7.5).minutes
+  ROUND_BY_INTERVAL=30.minutes
+  def self.round_by(delta, hour_interval=ROUND_BY_INTERVAL)
+    midpoint = (hour_interval.to_f / 1.hour.to_f)
+    final_conversion = 1 / midpoint.to_f
+
+    diff = (delta / hour_interval)
+    floor = (delta / hour_interval).floor
+    radix = diff - floor
+
+    res = if(radix > midpoint)
+      (floor.to_f + 1.0)
+    else
+      floor.to_f
+    end
+
+    # [diff, res, radix]
+    (res / final_conversion)
   end
 
   def update_times(attrs)
