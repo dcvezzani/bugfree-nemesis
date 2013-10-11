@@ -1,4 +1,9 @@
 module EntriesHelper
+
+  def hide_if?(expr)
+    (expr) ? raw(" style=\"display: none;\"") : ""
+  end
+
   def format_date(date, format="%Y-%m-%d")
     return "" if date.nil?
 

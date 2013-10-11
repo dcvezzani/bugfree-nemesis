@@ -25,12 +25,11 @@ class Story < ActiveRecord::Base
   end
 
   def close
-    debugger
-    if(is_open?)
+    # if(is_open?)
       self.status = CLOSED
       self.hours_worked += self.hours_todo
       self.hours_todo = 0.0
       save
-    end
+    # end
   end
 end

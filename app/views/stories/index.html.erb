@@ -1,16 +1,17 @@
 <h1>Listing stories</h1>
 
 <% @stories.each do |story| %>
-<div class="row story entry">
+<div class="story entry">
+<div class="row ">
   <div class="span10"><h4>[<%= story.id %>] <%= story.title.capitalize %></h4>
-  <span class="story-status story-status-<%= story.status.downcase %>">(<%= story.status %>)</span>
+  <span class="story-status story-status-<%= story.status.downcase %>" <%= hide_if?(params[:scope].nil?) %>>(<%= story.status %>)</span>
 <br/>
 <%= link_to 'Show', [@project, story] %> | <%= link_to 'Edit', edit_project_story_path(@project, story) %> | <%= link_to 'Destroy', [@project, story], method: :delete, data: { confirm: 'Are you sure?' } %> | <%= link_to 'Mark as Done', [:mark_as_done, @project, story], method: :put, data: { confirm: 'Are you sure?' } %>
   
   </div>
   <div class="span2">Due: <%= format_date story.due_on %></div>
 </div>
-<div class="row story entry">
+<div class="row ">
   <div class="span10"><%= format_text(story.description) %></div>
   <div class="span2">
     <%= form_for story, url: update_hours_project_story_path(@project, story), html: {class: "update-hours"} do |f| %>
@@ -22,6 +23,7 @@
     </ul>
     <% end %>
   </div>
+</div>
 </div>
 
 <% end %>
@@ -35,6 +37,26 @@
 <script type="text/javascript">
   $(document).ready(function(){
     init_hour_updater();
+
+    $("a:contains('Mark as Done')").click(function(){
+      var anchor = $(this);
+      var href = $(anchor).attr("href");
+      var csrf_token = $("meta[name='csrf-token']").attr("content");
+      var data = "_method=put&authenticity_token=" + csrf_token;
+
+      $.post(href, data, function(data){
+        $(anchor).closest(".story.entry").fadeOut();
+
+      }, "json")
+      .fail(function(jqXHR, textStatus, errorThrown){
+        data = JSON.parse(jqXHR.responseText);
+        $(".alert-error").html(data["msg"]);
+        $(".alert-error").fadeIn();
+        // alert("error");
+      });
+
+      return false;
+    })
   });
 </script>
 

@@ -4,7 +4,11 @@ class StoriesController < ProjectController
   # GET /stories
   # GET /stories.json
   def index
-    @stories = Story.where{project_id == my{@project.id}}.order{[due_on.asc, updated_at.desc]}
+    if(params[:scope] and params[:scope] == "all")
+      @stories = Story.where{(project_id == my{@project.id})}.order{[due_on.asc, updated_at.desc]}
+    else
+      @stories = Story.where{(project_id == my{@project.id}) and (status != "closed")}.order{[due_on.asc, updated_at.desc]}
+    end
 
     respond_to do |format|
       format.html # index.html.erb
