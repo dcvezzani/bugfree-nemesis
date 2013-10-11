@@ -50,13 +50,13 @@
       <%= format_log entry.show_stopper_log %>
       <div style="clear: both; "></div>
     </td>
-    <td><%= link_to 'Show', entry %></td>
-    <td><%= link_to 'Edit', edit_entry_path(entry) %></td>
-    <td><%= link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Show', [@project, entry] %></td>
+    <td><%= link_to 'Edit', edit_project_entry_path(@project, entry) %></td>
+    <td><%= link_to 'Destroy', [@project, entry], method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Entry', new_entry_path %>
+<%= link_to 'New Entry', new_project_entry_path(@project) %>

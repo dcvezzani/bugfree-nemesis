@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131009214735) do
+ActiveRecord::Schema.define(:version => 20131011120209) do
 
   create_table "entries", :force => true do |t|
     t.date     "recorded_for"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20131009214735) do
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
     t.text     "notes"
+    t.text     "project_id"
   end
 
   create_table "entry_stories", :force => true do |t|
@@ -30,6 +31,14 @@ ActiveRecord::Schema.define(:version => 20131009214735) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "type"
+    t.text     "project_id"
+  end
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "stories", :force => true do |t|
@@ -42,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20131009214735) do
     t.date     "stopped_since"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.text     "project_id"
   end
 
   create_table "users", :force => true do |t|
@@ -69,6 +79,7 @@ ActiveRecord::Schema.define(:version => 20131009214735) do
     t.datetime "ended_at"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.text     "project_id"
   end
 
 end

@@ -1,7 +1,7 @@
 class WorkInterval < ActiveRecord::Base
-  attr_accessible :ended_at, :entry_id, :started_at
+  attr_accessible :ended_at, :entry_id, :started_at, :project_id
 
-  validates :entry_id, presence: true
+  validates :project_id, :entry_id, presence: true
 
   validate :ended_at_must_follow_started_at, unless: "ended_at.nil? or started_at.nil?"
  
@@ -19,12 +19,12 @@ class WorkInterval < ActiveRecord::Base
     (entry_id and started_at and ended_at)
   end
 
-##
-# rounds a Time or DateTime to the neares 15 minutes
-def round_to_15_minutes(minutes)
-  rounded = Time.at((minutes.to_i / 900.0).round * 900)
-  # t.is_a?(DateTime) ? rounded.to_datetime : rounded
-end
+  # ##
+  # # rounds a Time or DateTime to the neares 15 minutes
+  # def round_to_15_minutes(minutes)
+  #   rounded = Time.at((minutes.to_i / 900.0).round * 900)
+  #   # t.is_a?(DateTime) ? rounded.to_datetime : rounded
+  # end
 
   def delta
     if(is_complete?)

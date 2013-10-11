@@ -1,20 +1,22 @@
 Clf004::Application.routes.draw do
 
-  match 'stories/list' => 'stories#list', :via => :get, :as => :list_stories
-  resources :stories do
-    member do
-      put 'update_hours'
+  resources :projects do
+    match 'stories/list' => 'stories#list', :via => :get, :as => :list_stories
+    resources :stories do
+      member do
+        put 'update_hours'
+      end
     end
-  end
 
-  match 'entries/:id/trigger_work_timer' => 'entries#trigger_work_timer', :via => :put, :as => :trigger_work_timer
-  match 'entries/copy_from_yesterday' => 'entries#copy_from_yesterday', :via => :get, :as => :copy_from_yesterdays_entry
-  resources :entries do
-    resources :work_intervals
-  
-    member do
-      post 'select_stories'
-      get 'show_work_intervals'
+    match 'entries/:id/trigger_work_timer' => 'entries#trigger_work_timer', :via => :put, :as => :trigger_work_timer
+    match 'entries/copy_from_yesterday' => 'entries#copy_from_yesterday', :via => :get, :as => :copy_from_yesterdays_entry
+    resources :entries do
+      resources :work_intervals
+    
+      member do
+        post 'select_stories'
+        get 'show_work_intervals'
+      end
     end
   end
 

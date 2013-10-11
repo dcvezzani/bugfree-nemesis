@@ -1,3 +1,49 @@
+# ===== Fri Oct 11 04:56:48 PDT 2013
+./bin/rails g scaffold Project name:string description:text
+bundle exec rake db:migrate db:migrate:status
+
+./bin/rails g migration add_project_id_to_entries project_id:integer
+./bin/rails g migration add_project_id_to_entry_stories project_id:integer
+./bin/rails g migration add_project_id_to_stories project_id:integer
+./bin/rails g migration add_project_id_to_work_intervals project_id:integer
+bundle exec rake db:migrate:status
+bundle exec rake db:migrate db:migrate:status
+
+
+puts (ActiveRecord::Migrator.migrations "db/migrate").map{|x| "#{x.version}: #{x.filename}"}
+
+ActiveRecord::Migrator.migrate "db/migrate"
+ActiveRecord::Migrator.down "db/migrate", 20131011115823
+
+      def down(migrations_paths, target_version = nil, &block)
+
+migrations_paths=
+migrations_path=
+migrate
+rollback
+forward
+up
+down
+run
+schema_migrations_table_name
+get_all_versions
+current_version
+proper_table_name
+migrations_paths
+migrations_path
+migrations
+
+puts ActiveRecord::Migrator.get_all_versions
+puts ActiveRecord::Migrator.migrations_path
+
+
+rm 20131011120140_add_project_id_to_entries.rb 20131011120153_add_project_id_to_entry_stories.rb 20131011120201_add_project_id_to_stories.rb 20131011120209_add_project_id_to_work_intervals.rb
+
+
+mvim -p app/models/entry.rb app/models/entry_story.rb app/models/story.rb app/models/work_interval.rb
+mvim -p app/views/entries/*
+mvim -p app/views/stories/*
+mvim -p app/views/work_intervals/*
 
 # ===== Wed Oct  9 12:02:05 PDT 2013
 

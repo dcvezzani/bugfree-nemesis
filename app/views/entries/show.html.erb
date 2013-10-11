@@ -18,7 +18,7 @@
 
 <p>
   <% if(@entry.recorded_for == Date.today) %>
-  <%= form_for @entry, url: trigger_work_timer_path(@entry), html: {class: "onoffswitch-container"} do |f| %>
+  <%= form_for @entry, url: trigger_work_timer_path(@project, @entry), html: {class: "onoffswitch-container"} do |f| %>
   <div class="onoffswitch">
       <input type="hidden" name="onoffswitch" value="0">
       <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" <%= @entry.active_work_interval_exists? ? "checked" : "" %>>
@@ -57,7 +57,7 @@
   <p>Related stories (due date) ... (est / worked / todo):</p>
   <ul>
   <% @entry.yesterdays_stories.each do |story| %>
-    <li><%= link_to "(#{format_date(story.due_on)}) #{story.title} : [#{story.hours_est} / #{story.hours_worked} / #{story.hours_todo}]", story %></li>
+    <li><%= link_to "(#{format_date(story.due_on)}) #{story.title} : [#{story.hours_est} / #{story.hours_worked} / #{story.hours_todo}]", [@project, story] %></li>
   <% end %>
   </ul>
 </p>
@@ -75,7 +75,7 @@
   <p>Related stories (due date) ... (est / worked / todo):</p>
   <ul>
   <% @entry.todays_stories.each do |story| %>
-    <li><%= link_to "(#{format_date(story.due_on)}) #{story.title} : [#{story.hours_est} / #{story.hours_worked} / #{story.hours_todo}]", story %></li>
+    <li><%= link_to "(#{format_date(story.due_on)}) #{story.title} : [#{story.hours_est} / #{story.hours_worked} / #{story.hours_todo}]", [@project, story] %></li>
   <% end %>
   </ul>
 </p>
@@ -92,7 +92,7 @@
   <p>Show Stoppers:</p>
   <ul>
   <% @entry.show_stopper_stories.each do |story| %>
-    <li><%= link_to "(#{format_date(story.due_on)}) #{story.title} : [#{format_date(story.stopped_since)}]", story %></li>
+    <li><%= link_to "(#{format_date(story.due_on)}) #{story.title} : [#{format_date(story.stopped_since)}]", [@project, story] %></li>
   <% end %>
   </ul>
 </p>
@@ -108,11 +108,11 @@
 </p>
 <% end %>
 
-<%= link_to 'Edit', edit_entry_path(@entry) %> |
-<%= link_to 'Back', entries_path %>
+<%= link_to 'Edit', edit_project_entry_path(@project, @entry) %> |
+<%= link_to 'Back', [@project, :entries] %>
 
 <div id="internal-references" style="display: none; ">
-<%= link_to 'show work intervals', show_work_intervals_entry_path(@entry) %>
+<%= link_to 'show work intervals', show_work_intervals_project_entry_path(@project, @entry) %>
 </div>
 
 <script type="text/javascript">

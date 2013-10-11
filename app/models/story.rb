@@ -1,5 +1,7 @@
 class Story < ActiveRecord::Base
-  attr_accessible :description, :due_on, :hours_est, :hours_todo, :hours_worked, :stopped_since, :title
+  attr_accessible :description, :due_on, :hours_est, :hours_todo, :hours_worked, :stopped_since, :title, :project_id
+
+  validates :project_id, presence: true
 
   def same_attribute_values?(attrs)
     self.attributes.each do |attr, value|

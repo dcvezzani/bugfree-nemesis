@@ -16,7 +16,7 @@
 </p>
 
 
-<%= form_for @story, url: update_hours_story_path(@story), html: {class: "update-hours"} do |f| %>
+<%= form_for @story, url: update_hours_project_story_path(@project, @story), html: {class: "update-hours"} do |f| %>
 <p>
   <b>Hours est:</b>
   <%= f.number_field :hours_est, value: format_float(@story.hours_est) %>
@@ -39,8 +39,8 @@
 </p>
 
 
-<%= link_to 'Edit', edit_story_path(@story) %> |
-<%= link_to 'Back', stories_path %>
+<%= link_to 'Edit', edit_project_story_path(@project, @story) %> |
+<%= link_to 'Back', [@project, :stories] %>
 
 <script type="text/javascript">
   $(document).ready(function(){

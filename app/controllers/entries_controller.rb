@@ -1,8 +1,9 @@
-class EntriesController < ApplicationController
+class EntriesController < ProjectController
+
   # GET /entries
   # GET /entries.json
   def index
-    @entries = Entry.order{ recorded_for.desc }
+    @entries = Entry.where{project_id == my{@project.id}}.order{ recorded_for.desc }
 
     respond_to do |format|
       format.html # index.html.erb
@@ -59,7 +60,7 @@ class EntriesController < ApplicationController
   # GET /entries/new
   # GET /entries/new.json
   def new
-    @entry = Entry.new(recorded_for: Date.today)
+    @entry = Entry.new(project_id: @project_id, recorded_for: Date.today)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -96,7 +97,7 @@ class EntriesController < ApplicationController
     respond_to do |format|
       # if @entry.save
       if saved
-        format.html { redirect_to @entry, notice: 'Entry was successfully created.' }
+        format.html { redirect_to [@project, @entry], notice: 'Entry was successfully created.' }
         format.json { render json: @entry, status: :created, location: @entry }
       else
         format.html { render action: "new" }
@@ -128,7 +129,7 @@ class EntriesController < ApplicationController
     respond_to do |format|
       # if @entry.update_attributes(params[:entry])
       if saved
-        format.html { redirect_to @entry, notice: 'Entry was successfully updated.' }
+        format.html { redirect_to [@project, @entry], notice: 'Entry was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -148,7 +149,7 @@ class EntriesController < ApplicationController
     action = nil
 
     if(work_interval.nil? or (work_interval.is_complete? and switch_on))
-      work_interval = WorkInterval.new(entry_id: @entry.id, started_at: Time.now)
+      work_interval = WorkInterval.new(project_id: @project.id, entry_id: @entry.id, started_at: Time.now)
       action = "started"
 
     elsif(work_interval.is_active? and !switch_on)
@@ -159,7 +160,7 @@ class EntriesController < ApplicationController
     notice = "Your work timer was successfully #{action}."
     respond_to do |format|
       if work_interval.save
-        format.html { redirect_to @entry, notice: notice }
+        format.html { redirect_to [@project, @entry], notice: notice }
         format.json { render json: {work_interval: work_interval, msg: notice}, status: :created, location: @entry }
         # format.json { head :no_content }
       else
@@ -176,7 +177,7 @@ class EntriesController < ApplicationController
     @entry.destroy
 
     respond_to do |format|
-      format.html { redirect_to entries_url }
+      format.html { redirect_to [@project, :entries] }
       format.json { head :no_content }
     end
   end
@@ -202,5 +203,9 @@ private
     story_ids.each do |story_id|
       klass.create!(entry_id: entry.id, story_id: story_id)
     end
+  end
+
+  def ensure_project_id
+    params[:entry][:project_id] = @project.id unless params[:entry].has_key?(:project_id)
   end
 end

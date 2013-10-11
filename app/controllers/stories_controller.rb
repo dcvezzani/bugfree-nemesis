@@ -1,10 +1,10 @@
-class StoriesController < ApplicationController
-  layout "entries"
+class StoriesController < ProjectController
+  before_filter :ensure_project_id, only: [:update, :create, :update_hours]
 
   # GET /stories
   # GET /stories.json
   def index
-    @stories = Story.order{[due_on.asc, updated_at.desc]}
+    @stories = Story.where{project_id == my{@project.id}}.order{[due_on.asc, updated_at.desc]}
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class StoriesController < ApplicationController
   end
 
   def list
-    @stories = Story.order{[due_on.asc, updated_at.desc]}
+    @stories = Story.where{project_id == my{@project.id}}.order{[due_on.asc, updated_at.desc]}
     @associated_stories = AssociatedStories.new
 
     respond_to do |format|
@@ -36,7 +36,7 @@ class StoriesController < ApplicationController
   # GET /stories/new
   # GET /stories/new.json
   def new
-    @story = Story.new(due_on: Date.today + 7)
+    @story = Story.new(project_id: @project.id, due_on: Date.today + 7)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -56,7 +56,7 @@ class StoriesController < ApplicationController
 
     respond_to do |format|
       if @story.save
-        format.html { redirect_to @story, notice: 'Story was successfully created.' }
+        format.html { redirect_to [@project, @story], notice: 'Story was successfully created.' }
         format.json { render json: @story, status: :created, location: @story }
       else
         format.html { render action: "new" }
@@ -72,7 +72,7 @@ class StoriesController < ApplicationController
 
     respond_to do |format|
       if @story.update_attributes(params[:story])
-        format.html { redirect_to @story, notice: 'Story was successfully updated.' }
+        format.html { redirect_to [@project, @story], notice: 'Story was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -102,7 +102,7 @@ class StoriesController < ApplicationController
 
     respond_to do |format|
       if no_errors 
-        format.html { redirect_to @story, notice: notice }
+        format.html { redirect_to [@project, @story], notice: notice }
         format.json { render json: {msg: notice}, status: status }
       else
         format.html { render action: "edit" }
@@ -118,8 +118,12 @@ class StoriesController < ApplicationController
     @story.destroy
 
     respond_to do |format|
-      format.html { redirect_to stories_url }
+      format.html { redirect_to [@project, :stories] }
       format.json { head :no_content }
     end
+  end
+
+  def ensure_project_id
+    params[:story][:project_id] = @project.id unless params[:story].has_key?(:project_id)
   end
 end

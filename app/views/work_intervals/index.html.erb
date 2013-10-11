@@ -16,13 +16,13 @@
     <td><%= work_interval.entry_id %></td>
     <td><%= in_time_zone(work_interval.started_at) %></td>
     <td><%= in_time_zone(work_interval.ended_at) %></td>
-    <td><%= link_to 'Show', [@entry, work_interval] %></td>
-    <td><%= link_to 'Edit', [:edit, @entry, work_interval] %></td>
-    <td><%= link_to 'Destroy', [@entry, work_interval], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Show', [@project, @entry, work_interval] %></td>
+    <td><%= link_to 'Edit', [:edit, @project, @entry, work_interval] %></td>
+    <td><%= link_to 'Destroy', [@project, @entry, work_interval], method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Work interval', [:new, @entry, :work_interval] %>
+<%= link_to 'New Work interval', [:new, @project, @entry, :work_interval] %>

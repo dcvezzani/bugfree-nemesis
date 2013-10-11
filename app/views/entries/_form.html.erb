@@ -23,7 +23,7 @@
 
 </style>
 
-<%= form_for(@entry) do |f| %>
+<%= form_for(@entry, url: [@project, @entry]) do |f| %>
   <% if @entry.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@entry.errors.count, "error") %> prohibited this entry from being saved:</h2>
@@ -55,7 +55,7 @@
   <div class="row">
     <div class="span4">
       <div class="field">
-        <%= f.label :yesterdays_log, "Yesterday's Log" %><%= link_to "Stories", list_stories_path() %> | <%= link_to "Copy from yesterday", copy_from_yesterdays_entry_path(recorded_for: "date_value_from_form") %><br />
+        <%= f.label :yesterdays_log, "Yesterday's Log" %><%= link_to "Stories", project_list_stories_path(@project) %> | <%= link_to "Copy from yesterday", project_copy_from_yesterdays_entry_path(@project, recorded_for: "date_value_from_form") %><br />
         <%= f.text_area :yesterdays_log %>
       </div>
       <ul class="related-stories" id="yesterdays_related_stories">
@@ -64,7 +64,7 @@
     </div>
     <div class="span4">
       <div class="field">
-        <%= f.label :todays_log, "Today's Goals" %><%= link_to "Stories", list_stories_path() %><br />
+        <%= f.label :todays_log, "Today's Goals" %><%= link_to "Stories", project_list_stories_path(@project) %><br />
         <%= f.text_area :todays_log %>
       </div>
       <ul class="related-stories" id="todays_related_stories">
@@ -73,7 +73,7 @@
     </div>
     <div class="span4">
       <div class="field">
-        <%= f.label :show_stopper_log, "Show-Stoppers" %><%= link_to "Stories", list_stories_path() %><br />
+        <%= f.label :show_stopper_log, "Show-Stoppers" %><%= link_to "Stories", project_list_stories_path(@project) %><br />
         <%= f.text_area :show_stopper_log %>
       </div>
       <ul class="related-stories" id="show_stopper_related_stories">

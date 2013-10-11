@@ -3,7 +3,7 @@
 <% @stories.each do |story| %>
 <div class="row story entry">
   <div class="span10"><h4>[<%= story.id %>] <%= story.title.capitalize %></h4>
-<%= link_to 'Show', story %> | <%= link_to 'Edit', edit_story_path(story) %> | <%= link_to 'Destroy', story, method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Show', [@project, story] %> | <%= link_to 'Edit', edit_project_story_path(@project, story) %> | <%= link_to 'Destroy', [@project, story], method: :delete, data: { confirm: 'Are you sure?' } %>
   
   </div>
   <div class="span2">Due: <%= format_date story.due_on %></div>
@@ -11,7 +11,7 @@
 <div class="row story entry">
   <div class="span10"><%= format_text(story.description) %></div>
   <div class="span2">
-    <%= form_for story, url: update_hours_story_path(story), html: {class: "update-hours"} do |f| %>
+    <%= form_for story, url: update_hours_project_story_path(@project, story), html: {class: "update-hours"} do |f| %>
     <ul>
 
       <li>Hrs Est: <span class="count"><%= f.number_field :hours_est, value: format_float(story.hours_est) %></span></li>
@@ -26,7 +26,7 @@
 
 <br />
 
-<%= link_to 'New Story', new_story_path %>
+<%= link_to 'New Story', new_project_story_path(@project) %>
 
 <%#= story.stopped_since %>
 
