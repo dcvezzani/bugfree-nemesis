@@ -13,7 +13,11 @@ Clf004::Application.routes.draw do
     match 'entries/copy_from_yesterday' => 'entries#copy_from_yesterday', :via => :get, :as => :copy_from_yesterdays_entry
     resources :entries do
       resources :work_intervals
-    
+   
+      collection do
+        get 'current'
+      end
+
       member do
         post 'select_stories'
         get 'show_work_intervals'
@@ -76,7 +80,7 @@ Clf004::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'welcome#index'
+  root :to => 'projects#index'
 
   # See how all your routes lay out with "rake routes"
 

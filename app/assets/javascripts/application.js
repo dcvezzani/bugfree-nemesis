@@ -25,6 +25,7 @@
 //= require ../bootstrap_wizard/prettify
 //= require ../bootstrap_wizard/jquery.bootstrap.wizard
 //= require ../jquery.ui.theme.lightness/js/jquery-ui-1.8.22.custom.min
+//= require ../jquery.timepicker/js/jquery-ui-timepicker-addon
 
 // void() stopped working?!
 function xvoid(){}

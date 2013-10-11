@@ -16,6 +16,8 @@ class Entry < ActiveRecord::Base
   has_many :show_stopper_stories, through: :show_stopper_entry_stories, source: :story
 
   has_many :work_intervals
+  has_many :sorted_work_intervals, class_name: "WorkInterval", conditions: ["ended_at is not null or started_at is not null"], order: "started_at desc"
+
   has_many :sorted_active_work_intervals, class_name: "WorkInterval", conditions: ["ended_at is null and started_at is not null"], order: "started_at desc"
   has_many :sorted_complete_work_intervals, class_name: "WorkInterval", conditions: ["ended_at is not null and started_at is not null"], order: "ended_at desc"
 
@@ -47,7 +49,17 @@ class Entry < ActiveRecord::Base
     (sorted_active_work_intervals.length > 0)
   end
 
-  def total_hours_worked
-    sorted_complete_work_intervals.inject(0.0){|a,b| a + b.delta}
+  def total_hours_worked(estimate_flag)
+    if(estimate_flag == :estimate)
+      sorted_work_intervals.inject(0.0){|a,b| 
+        b_delta = (b.ended_at.blank?) ? (b.delta(Time.zone.now)) : b.delta
+        a + b_delta
+      }
+    else
+      sorted_complete_work_intervals.inject(0.0){|a,b| 
+        b.delta
+        a + b_delta
+      }
+    end
   end
 end

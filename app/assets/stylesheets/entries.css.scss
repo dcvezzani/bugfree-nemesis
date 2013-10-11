@@ -15,3 +15,10 @@
     vertical-align: middle;
   }
 }
+
+.estimated-time-interval.active .hours-worked{
+  font-style: italic;
+}
+.estimated-time-interval.active .current-time{
+  font-style: italic;
+}

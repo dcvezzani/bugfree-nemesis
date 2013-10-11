@@ -13,12 +13,12 @@ class WorkInterval < ActiveRecord::Base
     end
   end
 
-  def is_active?
-    (entry_id and started_at and ended_at.nil?)
+  def is_active?(marked_at=ended_at)
+    (!(entry_id and started_at).nil? and marked_at.nil?)
   end
 
-  def is_complete?
-    (entry_id and started_at and ended_at)
+  def is_complete?(marked_at=ended_at)
+    !(entry_id and started_at and marked_at).nil?
   end
 
   # ##
@@ -28,17 +28,17 @@ class WorkInterval < ActiveRecord::Base
   #   # t.is_a?(DateTime) ? rounded.to_datetime : rounded
   # end
 
-  def delta
-    if(is_complete?)
-      #'%.2f' % (((ended_at - started_at) / 30.minutes) / 1.hour)
-      # interval_min = (('%.2f' % ((ended_at - started_at) / 15.minutes)).to_f / 0.25).floor * 0.25
+  def delta(marked_at=ended_at)
+    if(is_complete?(marked_at) and (marked_at > started_at))
+      #'%.2f' % (((marked_at - started_at) / 30.minutes) / 1.hour)
+      # interval_min = (('%.2f' % ((marked_at - started_at) / 15.minutes)).to_f / 0.25).floor * 0.25
       # [interval_min, interval_min * 15]
 
-      # interval_min = (('%.2f' % ((ended_at - started_at) / 30.minutes)).to_f / 0.5).ceil * 0.5
+      # interval_min = (('%.2f' % ((marked_at - started_at) / 30.minutes)).to_f / 0.5).ceil * 0.5
       # [interval_min, interval_min * 30]
       #
-      diff = ((ended_at - started_at) / 30.minutes)
-      floor = ((ended_at - started_at) / 30.minutes).floor
+      diff = ((marked_at - started_at) / 30.minutes)
+      floor = ((marked_at - started_at) / 30.minutes).floor
       radix = diff - floor
 
       res = if(radix > 0.5)

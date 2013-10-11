@@ -90,6 +90,27 @@
     ul.pager.wizard li.pull-right{
       float: right; 
     }
+
+    ul.scoped-actions{
+      list-style: none; 
+      float: right; 
+      margin-top: 7px;
+    }
+    .scoped-actions li{
+      display: inline-block;
+      margin-left: 0;
+    }
+    .scoped-actions li + li{
+      margin-left: 1em;
+    }
+    .scoped-actions li, 
+    .scoped-actions a{
+      color: #999999;
+    }
+    .scoped-actions a:hover{
+      color: white;
+      text-decoration: none; 
+    }
   </style>
 
   <!-- http://www.seabreezecomputers.com/tips/mobile-css.htm -->
@@ -109,25 +130,38 @@
       </a>
        
       <!-- Be sure to leave the brand out there if you want it shown -->
-      <%= link_to "Project name", root_path, class: "brand" %>
+      <%= link_to "Tracker", root_path, class: "brand" %>
        
       <!-- Everything you want hidden at 940px or less, place within here -->
       <div class="nav-collapse collapse">
         <!-- .nav, .navbar-search, .navbar-form, etc -->
         <ul class="nav">
-        <li><%= link_to "Home", root_path(anchor: "top-nav-home") %></li>
-        <li><%= link_to "Wizard", wizard_welcome_path(anchor: "top-nav-wizard") %></li>
-        <li><%= link_to "Wizard Bar", wizard_bar_welcome_path(anchor: "top-nav-wizard-bar") %></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
+        <li><%= link_to "UC Merced", track_project_path("uc-merced", anchor: "top-nav-home") %></li>
+        <li><%= link_to "My 401K", track_project_path("my401k", anchor: "top-nav-home") %></li>
+        <!-- <li><%#= link_to "Wizard", wizard_welcome_path(anchor: "top&#45;nav&#45;wizard") %></li> -->
+        <!-- <li><%#= link_to "Wizard Bar", wizard_bar_welcome_path(anchor: "top&#45;nav&#45;wizard&#45;bar") %></li> -->
+        <!-- <li><a href="#">Link</a></li> -->
+        <!-- <li><a href="#">Link</a></li> -->
 
-        <% if(current_user) %>
-          <li><%= link_to "Log out", destroy_user_session_path, method: :delete %></li>
-        <% else %>
-          <li><%= link_to "Log in", new_user_session_path %></li>
-        <% end -%>
+        <%# <% if(current_user) %>
+        <%#   <li><%= link_to "Log out", destroy_user_session_path, method: :delete %></li>
+        <%# <% else %>
+        <%#   <li><%= link_to "Log in", new_user_session_path %></li>
+        <%# <% end -%>
 
         </ul>
+
+        <% if @project %>
+        <ul class="scoped-actions">
+          <li><%= link_to "entries", project_entries_path(@project) %>
+          (
+          <%= link_to "new", new_project_entry_path(@project) %>
+          <%= link_to "current", [:current, @project, :entries] %>
+          )</li>
+          <li><%= link_to "stories", project_stories_path(@project) %>
+          (<%= link_to "new", new_project_story_path(@project) %>)</li>
+        </ul>
+        <% end %>
       </div>
        
       </div>
@@ -171,6 +205,17 @@
     $('[data-spy="scroll"]').each(function () {
       var $spy = $(this).scrollspy('refresh')
     });
+
+    // $(".scoped-actions a").click(function(){
+    //   var md = String(location.href).match(/\/projects\/(\d+)\//);
+    //   var href = $(this).attr("href");
+    //   if(md){
+    //     href = href.replace(/\/xxx\//, "/" + md[1] + "/");
+    //     window.location.replace(href);
+    //   }
+
+    //   return false;
+    // });
   });
 
   $(document).ready(function(){

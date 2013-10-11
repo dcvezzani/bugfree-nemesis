@@ -18,7 +18,7 @@
 
 <p>
   <% if(@entry.recorded_for == Date.today) %>
-  <%= form_for @entry, url: trigger_work_timer_path(@project, @entry), html: {class: "onoffswitch-container"} do |f| %>
+  <%= form_for @entry, url: project_trigger_work_timer_path(@project, @entry), html: {class: "onoffswitch-container"} do |f| %>
   <div class="onoffswitch">
       <input type="hidden" name="onoffswitch" value="0">
       <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" <%= @entry.active_work_interval_exists? ? "checked" : "" %>>

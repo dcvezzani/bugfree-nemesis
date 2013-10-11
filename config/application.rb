@@ -71,7 +71,7 @@ module Clf004
     config.assets.version = '1.0'
 
     # Additional paths where assets may be looked for
-    config.assets.paths %W(#{config.root}/bootstrap #{config.root}/bootstrap_wizard #{config.root}/jquery.ui.theme.lightness/css/ui-lightness)
+    config.assets.paths %W(#{config.root}/bootstrap #{config.root}/bootstrap_wizard #{config.root}/jquery.ui.theme.lightness/css/ui-lightness #{config.root}/jquery.timepicker/css)
     # #{config.root}/backbone
 
     initializer :after_append_asset_paths, 
@@ -81,6 +81,7 @@ module Clf004
        config.assets.paths.unshift Rails.root.join(config.root, "app", "assets", "bootstrap", "css").to_s
        config.assets.paths.unshift Rails.root.join(config.root, "app", "assets", "bootstrap_wizard").to_s
        config.assets.paths.unshift Rails.root.join(config.root, "app", "assets", "jquery.ui.theme.lightness", "css", "ui-lightness").to_s
+       config.assets.paths.unshift Rails.root.join(config.root, "app", "assets", "jquery.timepicker", "css").to_s
     end
 
     config.generators do |g|

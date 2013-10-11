@@ -22,6 +22,23 @@ class EntriesController < ProjectController
     end
   end
 
+  def current
+    entry = Entry.where{(project_id == my{@project.id}) & (recorded_for == my{Time.zone.now.to_date})}.select{id}.limit(1)
+    action = :show
+
+    if(entry)
+      @entry = Entry.find entry.first.id
+    else
+      @entry = Entry.new(project_id: @project_id, recorded_for: Date.today)
+      action = :new
+    end
+
+    respond_to do |format|
+      format.html { render action: action }
+      format.json { render json: @entry }
+    end
+  end
+
   def show_work_intervals
     @entry = Entry.find(params[:id])
 
@@ -161,7 +178,7 @@ class EntriesController < ProjectController
     respond_to do |format|
       if work_interval.save
         format.html { redirect_to [@project, @entry], notice: notice }
-        format.json { render json: {work_interval: work_interval, msg: notice}, status: :created, location: @entry }
+        format.json { render json: {work_interval: work_interval, msg: notice}, status: :created, location: [@project, @entry] }
         # format.json { head :no_content }
       else
         format.html { render action: "edit" }

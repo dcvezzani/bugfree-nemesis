@@ -26,7 +26,7 @@ class WorkIntervalsController < ProjectController
   # GET /work_intervals/new
   # GET /work_intervals/new.json
   def new
-    @work_interval = WorkInterval.new(project_id: @project.id, entry_id: @entry_id)
+    @work_interval = WorkInterval.new(project_id: @project.id, entry_id: @entry.id)
     @url = [@project, @entry, :work_intervals]
 
     respond_to do |format|

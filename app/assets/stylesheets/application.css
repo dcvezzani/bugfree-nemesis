@@ -14,6 +14,7 @@
  *= require ../bootstrap/css/bootstrap-responsive
  *= require ../bootstrap_wizard/prettify
  *= require ../jquery.ui.theme.lightness/css/ui-lightness/jquery-ui-1.8.22.custom
+ *= require ../jquery.timepicker/css/jquery-ui-timepicker-addon
  */
 
     .affix{
