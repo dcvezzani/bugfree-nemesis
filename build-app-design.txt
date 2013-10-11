@@ -40,10 +40,14 @@ puts ActiveRecord::Migrator.migrations_path
 rm 20131011120140_add_project_id_to_entries.rb 20131011120153_add_project_id_to_entry_stories.rb 20131011120201_add_project_id_to_stories.rb 20131011120209_add_project_id_to_work_intervals.rb
 
 
-mvim -p app/models/entry.rb app/models/entry_story.rb app/models/story.rb app/models/work_interval.rb
+mvim -p app/models/entry.rb app/models/entry_story.rb app/models/story.rb app/models/work_interval.rb app/models/project.rb
 mvim -p app/views/entries/*
 mvim -p app/views/stories/*
 mvim -p app/views/work_intervals/*
+mvim -p app/views/projects/*
+
+./bin/rails g migration add_slug_to_projects slug:string
+
 
 # ===== Wed Oct  9 12:02:05 PDT 2013
 

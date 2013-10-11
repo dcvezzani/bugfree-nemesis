@@ -1,6 +1,8 @@
 class Entry < ActiveRecord::Base
   attr_accessible :recorded_for, :show_stopper_log, :title, :todays_log, :yesterdays_log, :notes, :project_id
 
+  belongs_to :project
+
   has_many :entry_stories
   has_many :stories, through: :entry_stories
 

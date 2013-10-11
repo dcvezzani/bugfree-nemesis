@@ -21,6 +21,15 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def track
+    @project = Project.find_by_slug(params[:slug])
+
+    respond_to do |format|
+      format.html { redirect_to [@project, :entries] }
+      format.json { render json: @project.entries }
+    end
+  end
+
   # GET /projects/new
   # GET /projects/new.json
   def new

@@ -1,5 +1,6 @@
 Clf004::Application.routes.draw do
 
+   match 'track/:slug' => 'projects#track', :via => :get, :as => :track_project
   resources :projects do
     match 'stories/list' => 'stories#list', :via => :get, :as => :list_stories
     resources :stories do

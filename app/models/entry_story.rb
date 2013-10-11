@@ -3,6 +3,7 @@ class EntryStory < ActiveRecord::Base
 
   validates :project_id, presence: true
 
+  belongs_to :project
   belongs_to :entry
   belongs_to :story
 end

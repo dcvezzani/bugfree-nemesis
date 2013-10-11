@@ -1,8 +1,10 @@
 class WorkInterval < ActiveRecord::Base
   attr_accessible :ended_at, :entry_id, :started_at, :project_id
 
-  validates :project_id, :entry_id, presence: true
+  belongs_to :project
+  belongs_to :entry
 
+  validates :project_id, :entry_id, presence: true
   validate :ended_at_must_follow_started_at, unless: "ended_at.nil? or started_at.nil?"
  
   def ended_at_must_follow_started_at
