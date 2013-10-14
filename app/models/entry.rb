@@ -53,6 +53,14 @@ class Entry < ActiveRecord::Base
     provide_estimate_ended_at_date = options[:estimate_ended_at]
     current_time = Time.zone.now
 
+    if(work_intervals.length < 1)
+      if(provide_estimate_ended_at_date)
+        return [0.0, current_time]
+      else
+        0.0
+      end
+    end
+
     res = if(estimate_flag)
       sorted_work_intervals.inject(0.0){|a,b| 
         b_delta = (b.ended_at.blank?) ? (b.delta(current_time)) : b.delta

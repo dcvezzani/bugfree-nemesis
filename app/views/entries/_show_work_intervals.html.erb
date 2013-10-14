@@ -1,3 +1,5 @@
+  <% current_time = Time.zone.now %>
+  
   <div class="row">
     <div class="span4">
       <b>Hours worked:</b>
@@ -5,7 +7,6 @@
       <% entry.sorted_work_intervals.each do |interval| %>
 
         <% if interval.is_active? %>
-        <% current_time = Time.zone.now %>
         <li class="estimated-time-interval"><%= format_time_interval(interval.started_at) %> - <span class="current-time">(<%= format_time_interval(current_time) %>)</span> <span class="hours-worked">(<%= interval.delta(current_time) %> hrs)</span></li>
 
         <% else %>
@@ -20,7 +21,11 @@
       <b>Work Hours Summary:</b>
       <ul id="work-intervals-summary">
         <li><b>Total hrs:</b> <span class="hours-worked hours-worked-total">(<%= entry.total_hours_worked({estimate: true}) %> hrs)</span></li>
+
+        <% if(current_time.to_date == entry.recorded_for) %>
         <li><b>Full day ends:</b> <span class="day-end-estimate"><%= format_time_interval(entry.work_day_ends_at()) %></span></li>
+        <% end %>
+
       </ul>
     </div>
 

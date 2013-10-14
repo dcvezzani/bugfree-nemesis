@@ -11,6 +11,21 @@ class EntriesController < ProjectController
     end
   end
 
+  def report
+    week_day_str = params[:last_day]
+    # Time.zone.strptime(last_day, "%Y-%m-%d %H:%M:%S"
+    week_day_str = "2013-10-07"
+    week_day = Date.parse(week_day_str)
+    first_day = week_day.beginning_of_week
+    last_day = first_day + 5.days
+    @entries = Entry.where{(project_id == my{@project.id}) & (entries.recorded_for >= first_day) & (entries.recorded_for <= last_day)}.order{ recorded_for.desc }
+
+    respond_to do |format|
+      format.html { render action: :index }
+      format.json { render json: @projects }
+    end
+  end
+
   # GET /entries/1
   # GET /entries/1.json
   def show
@@ -23,13 +38,13 @@ class EntriesController < ProjectController
   end
 
   def current
-    entry = Entry.where{(project_id == my{@project.id}) & (recorded_for == my{Time.zone.now.to_date})}.select{id}.limit(1)
+    entry = Entry.where{(project_id == my{@project.id}) & (recorded_for == my{Time.zone.now.to_date})}.select{id}.limit(1).first
     action = :show
 
     if(entry)
-      @entry = Entry.find entry.first.id
+      @entry = Entry.find entry.id
     else
-      @entry = Entry.new(project_id: @project_id, recorded_for: Date.today)
+      @entry = Entry.new(project_id: @project.id, recorded_for: Time.zone.now.to_date)
       action = :new
     end
 
@@ -77,7 +92,7 @@ class EntriesController < ProjectController
   # GET /entries/new
   # GET /entries/new.json
   def new
-    @entry = Entry.new(project_id: @project_id, recorded_for: Date.today)
+    @entry = Entry.new(project_id: @project.id, recorded_for: Date.today)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -218,7 +233,7 @@ private
     end
 
     story_ids.each do |story_id|
-      klass.create!(entry_id: entry.id, story_id: story_id)
+      klass.create!(project_id: entry.project_id, entry_id: entry.id, story_id: story_id)
     end
   end
 

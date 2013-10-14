@@ -1,5 +1,7 @@
+                     track_project GET    /track/:slug(.:format)                                                    projects#track
               project_list_stories GET    /projects/:project_id/stories/list(.:format)                              stories#list
         update_hours_project_story PUT    /projects/:project_id/stories/:id/update_hours(.:format)                  stories#update_hours
+        mark_as_done_project_story PUT    /projects/:project_id/stories/:id/mark_as_done(.:format)                  stories#mark_as_done
                    project_stories GET    /projects/:project_id/stories(.:format)                                   stories#index
                                    POST   /projects/:project_id/stories(.:format)                                   stories#create
                  new_project_story GET    /projects/:project_id/stories/new(.:format)                               stories#new
@@ -16,6 +18,8 @@ project_copy_from_yesterdays_entry GET    /projects/:project_id/entries/copy_fro
        project_entry_work_interval GET    /projects/:project_id/entries/:entry_id/work_intervals/:id(.:format)      work_intervals#show
                                    PUT    /projects/:project_id/entries/:entry_id/work_intervals/:id(.:format)      work_intervals#update
                                    DELETE /projects/:project_id/entries/:entry_id/work_intervals/:id(.:format)      work_intervals#destroy
+           current_project_entries GET    /projects/:project_id/entries/current(.:format)                           entries#current
+            report_project_entries GET    /projects/:project_id/entries/report(.:format)                            entries#report
       select_stories_project_entry POST   /projects/:project_id/entries/:id/select_stories(.:format)                entries#select_stories
  show_work_intervals_project_entry GET    /projects/:project_id/entries/:id/show_work_intervals(.:format)           entries#show_work_intervals
                    project_entries GET    /projects/:project_id/entries(.:format)                                   entries#index
@@ -48,4 +52,4 @@ project_copy_from_yesterdays_entry GET    /projects/:project_id/entries/copy_fro
             edit_user_registration GET    /users/edit(.:format)                                                     devise/registrations#edit
                                    PUT    /users(.:format)                                                          devise/registrations#update
                                    DELETE /users(.:format)                                                          devise/registrations#destroy
-                              root        /                                                                         welcome#index
+                              root        /                                                                         projects#index
