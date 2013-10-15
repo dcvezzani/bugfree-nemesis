@@ -43,3 +43,56 @@
   font-weight: bold;
 }
 
+
+table.entries tr.entry td{
+  padding-bottom: 2em;
+}
+
+table.entries tr.entry .entry-recorded-for .work-day-date{
+  font-weight: bold;
+  font-size: 14pt;
+  color: #2D3BA3;
+}
+
+table.entries tr.entry .entry-recorded-for .work-day-date:before{
+  content: "[ ";
+}
+table.entries tr.entry .entry-recorded-for .work-day-date:after{
+  content: " ]";
+}
+
+.row.with-headings{
+  font-weight: bold; 
+}
+
+table.entries th{
+  text-align: left; 
+}
+
+div.entries{
+  font-size: 12pt;
+}
+
+div.entries, .span1{
+  position: relative; 
+}
+div.entries, .hours{
+  position: relative; 
+  float: right; 
+}
+
+.report-header{
+  width: 100%;
+  position: relative; 
+}
+.report-header h1{
+  position: relative; 
+  width: 50%;
+}
+.report-header .hrs-worked{
+  position: relative; 
+}
+
+.entries-header h3{
+  float: right; 
+}

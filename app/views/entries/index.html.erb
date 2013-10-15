@@ -53,7 +53,7 @@
     </td>
     <td><%= link_to 'Show', [@project, entry] %> | 
     <%= link_to 'Edit', edit_project_entry_path(@project, entry) %> | 
-    <%= link_to "Report", report_project_entries_path(@project, last_day: entry.recorded_for) %> | 
+    <%= link_to "Report", report_project_entries_path(@project, week_day: entry.recorded_for) %> | 
     <%= link_to 'Destroy', [@project, entry], method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>

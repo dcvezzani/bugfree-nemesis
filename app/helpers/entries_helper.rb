@@ -54,6 +54,8 @@ module EntriesHelper
   end
 
   def format_text(content)
+    return "" if(content.blank?)
+
     out = if(content.match(/<[^>]+>/))
       content
     else

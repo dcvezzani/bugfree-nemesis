@@ -68,8 +68,7 @@ class Entry < ActiveRecord::Base
       }
     else
       sorted_complete_work_intervals.inject(0.0){|a,b| 
-        b.delta
-        a + b_delta
+        a + b.delta
       }
     end
 
@@ -111,6 +110,10 @@ class Entry < ActiveRecord::Base
     hours_delta = WorkInterval.round_by((8 - hours_worked).hours)
 
     (mark_start + hours_delta.hours)
+  end
+
+  def next_work_day
+    Entry.where{(project_id == my{self.project_id}) & (recorded_for > my{self.recorded_for})}.order{ recorded_for.asc }.limit(1).first
   end
 
 end

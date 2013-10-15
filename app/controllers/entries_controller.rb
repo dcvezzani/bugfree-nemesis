@@ -12,16 +12,19 @@ class EntriesController < ProjectController
   end
 
   def report
-    week_day_str = params[:last_day]
+    week_day_str = params[:week_day]
     # Time.zone.strptime(last_day, "%Y-%m-%d %H:%M:%S"
     week_day_str = "2013-10-07"
     week_day = Date.parse(week_day_str)
-    first_day = week_day.beginning_of_week
-    last_day = first_day + 5.days
-    @entries = Entry.where{(project_id == my{@project.id}) & (entries.recorded_for >= first_day) & (entries.recorded_for <= last_day)}.order{ recorded_for.desc }
+    @first_day = week_day.beginning_of_week
+    @last_day = @first_day + 5.days
+    @entries = Entry.where{(project_id == my{@project.id}) & (entries.recorded_for >= my{@first_day}) & (entries.recorded_for <= my{@last_day})}.order{ recorded_for.asc }
+    @hrs_worked = @entries.inject(0.0){|a,b| a += b.total_hours_worked}
+
+    @stories = Story.where{(project_id == my{@project.id}) & (status != "closed")}.order{[due_on.asc, updated_at.desc]}
 
     respond_to do |format|
-      format.html { render action: :index }
+      format.html #{ render action: :index }
       format.json { render json: @projects }
     end
   end
@@ -69,7 +72,7 @@ class EntriesController < ProjectController
 
     if(recorded_for_raw.match(/^\d{4}-\d{2}-\d{2}$/))
       recorded_for_val = Date.strptime(recorded_for_raw, "%Y-%m-%d")
-      previous_entries = Entry.where{recorded_for < my{recorded_for_val}}.order{recorded_for.desc}.limit(1)
+      previous_entries = Entry.where{(project_id == my{@project.id}) & (recorded_for < my{recorded_for_val})}.order{recorded_for.desc}.limit(1)
 
       previous_entry = nil
       if(previous_entries and previous_entries.length > 0)

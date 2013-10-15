@@ -1,0 +1,90 @@
+<style type="text/css">
+  ul.work-intervals{
+    list-style: none;
+    margin: 0; 
+    margin-top: 1em; 
+    padding: 0;
+  }
+  ul.work-intervals li{
+  }
+
+  .date-times{
+    width: 150px;
+  }
+</style>
+
+<div class="entries-header">
+  <div class="row">
+  <div class="span9">
+  <h1>Weekly Report (ending <%= format_date(@last_day) %>)</h1>
+  </div>
+  <div class="span3">
+  <h3><%= @hrs_worked %> hrs</h3>
+  </div>
+  </div>
+</div>
+
+<span style="clear: both; width: 100%; height: 1em; float: left; "></span>
+
+<div class="entries">
+<div class="row with-headings">
+  <div class="span8">Story or task name</div>
+  <div class="span1">Due on</div>
+  <div class="span1">Hr Est</div>
+  <div class="span1">Hr Wrk</div>
+  <div class="span1">Hr Todo</div>
+</div>
+
+<% @stories.each do |story| %>
+  <div class="row">
+    <div class="span8"><%= link_to story.title.capitalize, [@project, story] %></div>
+    <div class="span1"><%= (story.due_on or "none") %></div>
+    <div class="span1 "><div class="hours"><%= story.hours_est %></div></div>
+    <div class="span1 "><div class="hours"><%= story.hours_worked %></div></div>
+    <div class="span1 "><div class="hours"><%= story.hours_todo %></div></div>
+  </div>
+<% end %>
+</div>
+
+<span style="clear: both; width: 100%; height: 2em; float: left; "></span>
+
+<table class="entries">
+  <tr>
+    <th class="date-times">Recorded for</th>
+    <th>Logs</th>
+    <th></th>
+  </tr>
+
+<% @entries.each do |entry| %>
+  <tr class="entry">
+    <td class="entry-recorded-for">
+      <span class="work-day-date"><%= entry.recorded_for.strftime("%a, %Y-%m-%d") %></span>
+
+      <ul class="work-intervals">
+        <%= render partial: 'show_work_intervals', locals: {entry: entry} %>
+      </ul>
+
+    </td>
+    <td>
+      <h4><%= link_to entry.title.capitalize, [@project, entry] %></h4>
+      <div style="clear: both; margin-bottom: 1em; "></div>
+
+      <p>Accomplishments</p>
+      <%= format_log entry.next_work_day.yesterdays_log %>
+      <div style="clear: both; "></div>
+
+      <% if !entry.notes.blank? %>
+      <p>Notes</p>
+      <ul>
+      <%= format_text(entry.notes) %>
+      </ul>
+      <div style="clear: both; "></div>
+      <% end %>
+
+    </td>
+    <td><%#= link_to 'Show', [@project, entry] %>
+    <%#= link_to 'Edit', edit_project_entry_path(@project, entry) %>
+    <%#= link_to 'Destroy', [@project, entry], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>

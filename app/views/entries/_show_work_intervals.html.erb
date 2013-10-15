@@ -2,7 +2,7 @@
   
   <div class="row">
     <div class="span4">
-      <b>Hours worked:</b>
+      <b><%= link_to "Hours worked:", [@project, entry, :work_intervals] %></b>
       <ul id="work-intervals">
       <% entry.sorted_work_intervals.each do |interval| %>
 

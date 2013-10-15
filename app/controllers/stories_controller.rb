@@ -7,7 +7,7 @@ class StoriesController < ProjectController
     if(params[:scope] and params[:scope] == "all")
       @stories = Story.where{(project_id == my{@project.id})}.order{[due_on.asc, updated_at.desc]}
     else
-      @stories = Story.where{(project_id == my{@project.id}) and (status != "closed")}.order{[due_on.asc, updated_at.desc]}
+      @stories = Story.where{(project_id == my{@project.id}) & (status != "closed")}.order{[due_on.asc, updated_at.desc]}
     end
 
     respond_to do |format|
@@ -40,7 +40,7 @@ class StoriesController < ProjectController
   # GET /stories/new
   # GET /stories/new.json
   def new
-    @story = Story.new(project_id: @project.id, due_on: Date.today + 7)
+    @story = Story.new(project_id: @project.id, due_on: Date.today + 7, status: Story::ACTIVE)
 
     respond_to do |format|
       format.html # new.html.erb
