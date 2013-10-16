@@ -3,6 +3,9 @@ class Entry < ActiveRecord::Base
 
   belongs_to :project
 
+  has_many :entry_notes, foreign_key: :item_id, source: :entry, dependent: :destroy
+  has_many :notes, through: :entry_notes, source: :note, dependent: :destroy
+
   has_many :entry_stories
   has_many :stories, through: :entry_stories
 

@@ -1,10 +1,12 @@
 Clf004::Application.routes.draw do
 
+
   match 'track/:slug' => 'projects#track', :via => :get, :as => :track_project
   resources :projects do
 
     match 'stories/list' => 'stories#list', :via => :get, :as => :list_stories
     resources :stories do
+      resources :notes, controller: 'story_notes'
       member do
         put 'update_hours'
         put 'mark_as_done'
@@ -14,6 +16,13 @@ Clf004::Application.routes.draw do
     match 'entries/:id/trigger_work_timer' => 'entries#trigger_work_timer', :via => :put, :as => :trigger_work_timer
     match 'entries/copy_from_yesterday' => 'entries#copy_from_yesterday', :via => :get, :as => :copy_from_yesterdays_entry
     resources :entries do
+      resources :notes, controller: 'entry_notes' do
+        member do
+          get 'edit_content'
+          put 'update_content'
+        end
+      end
+
       resources :work_intervals
    
       collection do

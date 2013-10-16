@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @note.name %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= @note.content %>
+</p>
+
+<p>
+  <b>Project:</b>
+  <%= @note.project_id %>
+</p>
+
+
+<%= link_to 'Edit', [:edit, @project, @item, @note] %> |
+<%= link_to 'Back', [@project, @item, :notes] %>

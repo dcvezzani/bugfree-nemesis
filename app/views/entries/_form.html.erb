@@ -82,7 +82,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" style="display: none; ">
     <div class="span12">
 
       <% if(@entry.notes.nil? or @entry.notes.length < 1) %>
@@ -105,24 +105,11 @@
   </div>
 <% end %>
 
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-  <h3 id="myModalLabel">Modal header</h3>
-  </div>
-  <div class="modal-body">
-  <p>One fine body…</p>
-  </div>
-  <div class="modal-footer">
-  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-  <button class="btn btn-primary">Save changes</button>
-  </div>
-</div>
-
-<div id="scratch-pad" style="display: none; "></div>
-
 <script type="text/javascript">
   $(document).ready(function(){
+    init_note_logs();
+    init_note_form();
+
     $( "#entry_recorded_for" ).datepicker();
     //$( "#entry_recorded_for" ).datepicker({dateFormat: "yy-mm-dd", altFormat: "yy-mm-dd"});
     // $( "#entry_recorded_for" ).datepicker( "option", "dateFormat", "mm/dd/yy" );

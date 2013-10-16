@@ -4,3 +4,11 @@
 
 <%= link_to 'Show', [@project, @entry] %> |
 <%= link_to 'Back', [@project, :entries] %>
+
+<div id="note-log">
+  <%= render partial: 'show_note_logs' %>
+</div>
+
+<%= link_to 'Show', [@project, @entry] %> |
+<%= link_to 'Back', [@project, :entries] %>
+

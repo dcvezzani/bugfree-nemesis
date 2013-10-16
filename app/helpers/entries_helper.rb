@@ -63,7 +63,8 @@ module EntriesHelper
         "<p>#{item}<\/p>"
       }
 
-      "<div class=\"story-description\">\n#{items.join("\n")}\n<\/div>"
+      # "<div class=\"story-description\">\n#{items.join("\n")}\n<\/div>"
+      "<div class=\"description-paragraphs\">\n#{items.join("\n")}\n<\/div>"
 
     end
 

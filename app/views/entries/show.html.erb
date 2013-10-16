@@ -81,12 +81,9 @@
 <% end %>
 
 <% if @entry.notes and @entry.notes.length > 0 %>
-<p>
-  <b>Notes:</b>
-<ul>
-  <%= format_text(@entry.notes) %>
-</ul>
-</p>
+<div id="note-log">
+  <%= render partial: 'show_note_logs' %>
+</div>
 <% end %>
 
 <%= link_to 'Edit', edit_project_entry_path(@project, @entry) %> |
@@ -99,6 +96,9 @@
 <script type="text/javascript">
   $(document).ready(function(){
     init_work_timer();
+
+    init_note_logs();
+    init_note_form();
   })
 
 </script>

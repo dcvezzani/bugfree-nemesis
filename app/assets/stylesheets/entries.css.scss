@@ -96,3 +96,20 @@ div.entries, .hours{
 .entries-header h3{
   float: right; 
 }
+
+div#note-log{
+  margin: 1em 0;
+}
+
+ul#note-log-entries{
+  list-style: none; 
+}
+
+#myModal .modal-body textarea{
+  height: 129px;
+  width: 100%; 
+}
+
+#myModal .modal-body form .actions input[name='commit']{
+  display: none; 
+}

@@ -1,3 +1,11 @@
+
+# ===== Tue Oct 15 09:11:33 PDT 2013
+
+./bin/rails g scaffold Note name:string content:text project_id:integer
+./bin/rails g model ItemNote item_id:integer note_id:integer
+./bin/rails g migration add_type_to_item_notes type:string
+
+
 # ===== Fri Oct 11 04:56:48 PDT 2013
 ./bin/rails g scaffold Project name:string description:text
 bundle exec rake db:migrate db:migrate:status
@@ -13,7 +21,7 @@ bundle exec rake db:migrate db:migrate:status
 puts (ActiveRecord::Migrator.migrations "db/migrate").map{|x| "#{x.version}: #{x.filename}"}
 
 ActiveRecord::Migrator.migrate "db/migrate"
-ActiveRecord::Migrator.down "db/migrate", 20131011115823
+ActiveRecord::Migrator.down "db/migrate", 20131015161911
 
       def down(migrations_paths, target_version = nil, &block)
 
@@ -33,6 +41,7 @@ migrations_paths
 migrations_path
 migrations
 
+puts ActiveRecord::Migrator.current_version
 puts ActiveRecord::Migrator.get_all_versions
 puts ActiveRecord::Migrator.migrations_path
 
