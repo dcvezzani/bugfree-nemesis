@@ -1,7 +1,15 @@
 module EntriesHelper
 
-  def hide_if?(expr)
-    (expr) ? raw(" style=\"display: none;\"") : ""
+  def hide_if?(expr, &blk)
+    if(block_given?)
+      yield if(expr)
+    else
+      (expr) ? raw(" style=\"display: none;\"") : ""
+    end
+  end
+
+  def show_if?(expr, &blk)
+    hide_if?(!expr, &blk)
   end
 
   def format_date(date, format="%Y-%m-%d")

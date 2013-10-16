@@ -20,5 +20,8 @@ class ProjectController < ApplicationController
     @options[:layout] = (params[:layout] == "true")
     # @options[:quiet] = (params[:quiet]) ? (params[:quiet] == "true") : true
     @options[:quiet] = (params[:quiet] == "true")
+    @options[:stand_alone] = (params[:stand_alone]) ? (params[:stand_alone] == "true") : false
+
+    @options
   end
 end

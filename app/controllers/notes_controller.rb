@@ -27,7 +27,7 @@ class NotesController < ProjectController
   # GET /notes/new.json
   def new
     @note = Note.new
-    @options.merge!({stand_alone: false, url: [@project, @item, :notes]})
+    @options.merge!({url: [@project, @item, :notes]})
 
     respond_to do |format|
       format.html { render action: 'new', layout: @options[:layout] }
@@ -38,7 +38,7 @@ class NotesController < ProjectController
   # GET /notes/1/edit
   def edit
     @note = Note.find(params[:id])
-    @options.merge!({stand_alone: false, url: [@project, @item, @note]})
+    @options.merge!({url: [@project, @item, @note]})
 
     if(@options[:render_as_partial])
        # render partial: 'notes/form', locals: {project: @project, item: @item, note: @note}
@@ -50,7 +50,7 @@ class NotesController < ProjectController
 
   def edit_content
     @note = Note.find(params[:id])
-    @options.merge!({stand_alone: false, url: [:update_content, @project, @item, @note]})
+    @options.merge!({url: [:update_content, @project, @item, @note]})
 
     if(@options[:render_as_partial])
        # render partial: 'notes/form', locals: {project: @project, item: @item, note: @note}

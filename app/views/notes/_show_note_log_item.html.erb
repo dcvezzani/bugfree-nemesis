@@ -1,5 +1,6 @@
     <li>
-    <%= link_to note.created_at, [project, item, note] %> | 
+    <%= note.created_at %>
+    <%#= link_to note.created_at, [project, item, note] %> | 
     <%= link_to 'Edit', polymorphic_path([:edit_content, project, item, note], render_as_partial: true) %> | 
     <%= link_to 'Destroy', [project, item, note], method: :delete %>
     <div class="well notes">

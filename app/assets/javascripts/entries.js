@@ -1,11 +1,18 @@
-  function init_note_logs(){
-    init_note_log_add_note("#note-log a:contains('Add note')");
-    init_note_log_edit_note("#note-log a:contains('Edit')");
+  /* notes */ 
 
-    init_note_log_items("#note-log-entries a:contains('Destroy')");
+  // popup form
+  function init_note_form(){
+    init_note_log_save_changes("#myModal .modal-footer");
   }
 
-  // button: "Update Note"
+  // inline links
+  function init_note_logs(){
+    init_note_log_add_note("#note-log");
+    init_note_log_edit_note("#note-log");
+    init_note_log_delete_note("#note-log-entries");
+  }
+
+  // input: "Update Note"
   // button: "Cancel"
   function init_note_form_content(selector){
     $(selector).find("input[value='Update Note']").click(function(){
@@ -19,7 +26,6 @@
       $.post(href, data, function(data){
         $(".alert-success").html(data["msg"]);
         $(".alert-success").fadeIn();
-
         $(button).closest(".notes.well").html(data["content"]);
 
       }, "json")
@@ -40,13 +46,18 @@
     });
   }
 
+  // a: "Edit"
   function init_note_log_edit_note(selector){
-    $(selector).click(function(){
+    $(selector).find("a:contains('Edit')").click(function(){
       var anchor = $(this);
+      var notes_well = $(anchor).closest("li").find(".notes.well");
+      if($(notes_well).find("form").length > 0){
+        return false;
+      }
+
       var href = $(anchor).attr("href");
 
       $.get(href, function(data){
-        var notes_well = $(anchor).closest("li").find(".notes.well");
         $(notes_well).find(".description-paragraphs").hide();
         $(notes_well).append(data);
 
@@ -56,8 +67,9 @@
     });
   }
 
+  // a: "Add note"
   function init_note_log_add_note(selector){
-    $(selector).click(function(){
+    $(selector).find("a:contains('Add note')").click(function(){
       var anchor = $(this);
       var href = $(anchor).attr("href");
 
@@ -65,16 +77,15 @@
         $("#myModal .modal-body").html(data);
         $("#myModalLabel").text("Add note");
         $("#myModal").modal("show");
-
-        // setTimeout(function(){ init_note_form(); }, 150);
       });
       return false;
     });
   }
 
-  function init_note_log_items(selector){
-    $(selector).click(function(){
-      if(confirm("Are you sure?")){
+  // a: "Destroy"
+  function init_note_log_delete_note(selector){
+    $(selector).find("a:contains('Destroy')").click(function(){
+      if(confirm("Are` you sure?")){
         var anchor = $(this);
         var href = $(anchor).attr("href");
         var method = $(anchor).attr("data-method");
@@ -96,11 +107,11 @@
     });
   }
 
-  function init_note_form(){
-    $("#myModal .modal-footer button:contains('Save changes')").click(function(){
+  // button: "Save changes"
+  function init_note_log_save_changes(selector){
+    $(selector).find("button:contains('Save changes')").click(function(){
       var form = $(this).closest("#myModal").find(".modal-body form");
       var href = $(form).attr("action");
-      // var method = $(anchor).attr("data-method");
       var method = "post";
       var csrf = $("meta[name='csrf-token']").attr("content");
       var data = "_method=" + method + "&authenticity_token=" + csrf + "&" + $(form).serialize();
@@ -111,11 +122,9 @@
 
         setTimeout(function(){
           var new_item = $("#note-log-entries li:last").prev();
-          var delete_anchor = $(new_item).find("a:contains('Destroy')");
-          init_note_log_items(delete_anchor);
 
-          var edit_anchor = $(new_item).find("a:contains('Edit')");
-          init_note_log_edit_note(edit_anchor)
+          init_note_log_delete_note(new_item);
+          init_note_log_edit_note(new_item)
         }, 150);
         
         
@@ -128,6 +137,9 @@
       return false;
     });
   }
+  
+
+  /* work timer */ 
 
   function init_work_timer(){
     $("#myonoffswitch").click(function(){
@@ -163,7 +175,6 @@
     });
   }
 
-
   function update_work_intervals(){
     var href = $("#internal-references a:contains('show work intervals')").attr("href");
     $.get(href, function(data){
@@ -197,4 +208,3 @@
       return false; 
     });
   }
-
