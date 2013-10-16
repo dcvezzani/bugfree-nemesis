@@ -105,6 +105,7 @@ ul#note-log-entries{
   list-style: none; 
 }
 
+.notes textarea, 
 #myModal .modal-body textarea{
   height: 129px;
   width: 100%; 
@@ -118,3 +119,4 @@ ul#note-log-entries{
 .note-date{
   text-decoration: underline;
 }
+

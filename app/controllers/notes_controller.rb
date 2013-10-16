@@ -122,7 +122,8 @@ class NotesController < ProjectController
       if @note.save
         notice = "#{Note.name} was successfully updated."
 
-        format.html { redirect_to [@project, @item, @note], notice: notice }
+        # format.html { redirect_to [@project, @item, @note], notice: notice }
+        format.html { render partial: 'update_content', locals: {content: @note.content, msg: notice} }
         format.json { render json: {content: @note.content, msg: notice} }
       else
         format.html { render action: "edit" }

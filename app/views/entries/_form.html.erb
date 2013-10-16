@@ -83,20 +83,6 @@
   </div>
 
   <div class="row" >
-    <div class="span12" style="display: none; ">
-
-      <% if(@entry.notes.nil? or @entry.notes.length < 1) %>
-        <a id="add-notes" href="javascript: return void();">Add notes</a>
-        <div class="field field-notes" style="display: none; ">
-
-      <% else %>
-        <div class="field field-notes">
-      <% end %>
-
-        <%= f.label :notes, "Notes" %><br />
-        <%= f.text_area :notes %>
-      </div>
-    </div>
     <div class="span12" style="margin-top: 1em;">
       <div class="actions">
         <%= f.submit %>

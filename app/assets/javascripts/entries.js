@@ -31,11 +31,17 @@
       var data = "_method=" + method + "&authenticity_token=" + csrf + "&" + $(form).serialize();
 
       $.post(href, data, function(data){
-        $(".alert-success").html(data["msg"]);
-        $(".alert-success").fadeIn();
-        $(button).closest(".notes.well").html(data["content"]);
+        $("#scratch-pad").html(data);
 
-      }, "json")
+        setTimeout(function(){
+          var msg = $("#scratch-pad .msg").html();
+          var content = $("#scratch-pad .content").html();
+
+          $(".alert-success").html(msg);
+          $(".alert-success").fadeIn();
+          $(button).closest(".notes.well").html(content);
+        }, 150);
+      })
       .fail(function(jqXHR, textStatus, errorThrown){
         $(".alert-error").html("Unable to delete note.");
         $(".alert-error").fadeIn();
