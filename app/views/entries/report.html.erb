@@ -70,13 +70,17 @@
       <div style="clear: both; margin-bottom: 1em; "></div>
 
       <p>Accomplishments</p>
-      <%= format_log entry.next_work_day.yesterdays_log %>
+      <% tomorrow = entry.next_work_day %>
+      <%= format_log tomorrow.yesterdays_log unless tomorrow.nil? %>
       <div style="clear: both; "></div>
 
       <% if !entry.notes.blank? %>
       <p>Notes</p>
       <ul>
-      <%= format_text(entry.notes) %>
+      <% entry.notes.each do |note| %>
+        <p class="note-date"><%= note.created_at %></p>
+        <%= format_text(note.content) %>
+      <% end %>
       </ul>
       <div style="clear: both; "></div>
       <% end %>

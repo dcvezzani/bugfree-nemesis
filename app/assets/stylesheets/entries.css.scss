@@ -110,6 +110,11 @@ ul#note-log-entries{
   width: 100%; 
 }
 
-#myModal .modal-body form .actions input[name='commit']{
+#myModal .modal-body form .actions input[name='commit'], 
+#myModal .modal-body form .actions button[name='cancel']{
   display: none; 
+}
+
+.note-date{
+  text-decoration: underline;
 }

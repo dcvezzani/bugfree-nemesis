@@ -40,7 +40,7 @@
     <div class="span3">
       <div class="field">
         <%= f.label :recorded_for %><br />
-        <%= f.text_field :recorded_for, value: format_date(@entry.recorded_for, "%m/%d/%Y") %>
+        <%= f.text_field :recorded_for, value: format_date(@entry.recorded_for, "%Y-%m-%d") %>
       </div>
     </div>
 
@@ -82,8 +82,8 @@
     </div>
   </div>
 
-  <div class="row" style="display: none; ">
-    <div class="span12">
+  <div class="row" >
+    <div class="span12" style="display: none; ">
 
       <% if(@entry.notes.nil? or @entry.notes.length < 1) %>
         <a id="add-notes" href="javascript: return void();">Add notes</a>
@@ -110,11 +110,7 @@
     init_note_logs();
     init_note_form();
 
-    $( "#entry_recorded_for" ).datepicker();
-    //$( "#entry_recorded_for" ).datepicker({dateFormat: "yy-mm-dd", altFormat: "yy-mm-dd"});
-    // $( "#entry_recorded_for" ).datepicker( "option", "dateFormat", "mm/dd/yy" );
-    // $( "#entry_recorded_for" ).datepicker( "option", "altFormat", "yy-mm-dd" );
-    $( "#entry_recorded_for" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+    $( "#entry_recorded_for" ).datepicker({dateFormat: "yy-mm-dd"});
 
     $("#add-notes").click(function(){
       $(this).parent().find(".field-notes").fadeIn(); 

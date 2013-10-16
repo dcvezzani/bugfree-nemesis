@@ -4,4 +4,7 @@
 
 <%= render 'form' %>
 
+<% show_if?(!@options[:stand_alone]) do %>
 <%= link_to 'Back', [@project, @item, :notes] %>
+<% end %>
+

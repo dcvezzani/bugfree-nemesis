@@ -14,7 +14,7 @@ class EntriesController < ProjectController
   def report
     week_day_str = params[:week_day]
     # Time.zone.strptime(last_day, "%Y-%m-%d %H:%M:%S"
-    week_day_str = "2013-10-07"
+    # week_day_str = "2013-10-07"
     week_day = Date.parse(week_day_str)
     @first_day = week_day.beginning_of_week
     @last_day = @first_day + 5.days

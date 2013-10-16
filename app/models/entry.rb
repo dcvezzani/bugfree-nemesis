@@ -1,5 +1,5 @@
 class Entry < ActiveRecord::Base
-  attr_accessible :recorded_for, :show_stopper_log, :title, :todays_log, :yesterdays_log, :notes, :project_id
+  attr_accessible :recorded_for, :show_stopper_log, :title, :todays_log, :yesterdays_log, :project_id
 
   belongs_to :project
 

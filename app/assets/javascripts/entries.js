@@ -1,5 +1,10 @@
   /* notes */ 
 
+  function reset_alerts(){
+    $(".alert-success").fadeOut();
+    $(".alert-error").fadeOut();
+  }
+
   // popup form
   function init_note_form(){
     init_note_log_save_changes("#myModal .modal-footer");
@@ -16,6 +21,8 @@
   // button: "Cancel"
   function init_note_form_content(selector){
     $(selector).find("input[value='Update Note']").click(function(){
+      reset_alerts();
+
       var button = $(this);
       var form = $(button).closest("form");
       var href = $(form).attr("action");
@@ -49,6 +56,8 @@
   // a: "Edit"
   function init_note_log_edit_note(selector){
     $(selector).find("a:contains('Edit')").click(function(){
+      reset_alerts();
+
       var anchor = $(this);
       var notes_well = $(anchor).closest("li").find(".notes.well");
       if($(notes_well).find("form").length > 0){
@@ -70,6 +79,8 @@
   // a: "Add note"
   function init_note_log_add_note(selector){
     $(selector).find("a:contains('Add note')").click(function(){
+      reset_alerts();
+
       var anchor = $(this);
       var href = $(anchor).attr("href");
 
@@ -85,6 +96,8 @@
   // a: "Destroy"
   function init_note_log_delete_note(selector){
     $(selector).find("a:contains('Destroy')").click(function(){
+      reset_alerts();
+
       if(confirm("Are` you sure?")){
         var anchor = $(this);
         var href = $(anchor).attr("href");
@@ -110,6 +123,8 @@
   // button: "Save changes"
   function init_note_log_save_changes(selector){
     $(selector).find("button:contains('Save changes')").click(function(){
+      reset_alerts();
+
       var form = $(this).closest("#myModal").find(".modal-body form");
       var href = $(form).attr("action");
       var method = "post";
