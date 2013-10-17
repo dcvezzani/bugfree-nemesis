@@ -76,7 +76,7 @@ class WorkInterval < ActiveRecord::Base
         # ended_at = us_pacific.parse(attrs[:ended_at]) if(!attrs[:ended_at].empty?)
 
         self.started_at = us_pacific.parse(attrs[:started_at]) if(!attrs[:started_at].empty?)
-        self.ended_at = us_pacific.parse(attrs[:ended_at]) if(!attrs[:ended_at].empty?)
+        self.ended_at = (attrs[:ended_at].empty?) ? nil : us_pacific.parse(attrs[:ended_at])
         res = save
       end
 

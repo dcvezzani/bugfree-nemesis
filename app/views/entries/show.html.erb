@@ -18,6 +18,7 @@
 <div class="row">
   <div class="span2">
     <b>Recorded for:</b>
+    <%= hidden_field_tag :entry_id, @entry.id %>
     <%= @entry.recorded_for %>
   </div>
   <div class="span8">
@@ -36,10 +37,8 @@
 <ul>
 <p>
   <p>Related stories (due date) ... (est / worked / todo):</p>
-  <ul>
-  <% @entry.yesterdays_stories.each do |story| %>
-    <li><%= link_to "(#{format_date(story.due_on)}) #{story.title} : [#{story.hours_est} / #{story.hours_worked} / #{story.hours_todo}]", [@project, story] %></li>
-  <% end %>
+  <ul id="story-list-yesterday" class="story-list">
+  <%= render partial: 'yesterdays_stories', locals: {project: @project, entry: @entry}%>
   </ul>
 </p>
 </ul>
@@ -54,10 +53,8 @@
 <ul>
 <p>
   <p>Related stories (due date) ... (est / worked / todo):</p>
-  <ul>
-  <% @entry.todays_stories.each do |story| %>
-    <li><%= link_to "(#{format_date(story.due_on)}) #{story.title} : [#{story.hours_est} / #{story.hours_worked} / #{story.hours_todo}]", [@project, story] %></li>
-  <% end %>
+  <ul id="story-list-today" class="story-list">
+  <%= render partial: 'todays_stories', locals: {project: @project, entry: @entry}%>
   </ul>
 </p>
 </ul>
@@ -71,23 +68,19 @@
 <ul>
 <p>
   <p>Show Stoppers:</p>
-  <ul>
-  <% @entry.show_stopper_stories.each do |story| %>
-    <li><%= link_to "(#{format_date(story.due_on)}) #{story.title} : [#{format_date(story.stopped_since)}]", [@project, story] %></li>
-  <% end %>
+  <ul id="story-list-show-stopper" class="story-list">
+  <%= render partial: 'show_stopper_stories', locals: {project: @project, entry: @entry}%>
   </ul>
 </p>
 </ul>
 <% end %>
 
-<% if @entry.notes and @entry.notes.length > 0 %>
+<%= link_to 'Edit', edit_project_entry_path(@project, @entry) %> |
+<%= link_to 'Back', [@project, :entries] %>
+
 <div id="note-log">
   <%= render partial: 'show_note_logs' %>
 </div>
-<% end %>
-
-<%= link_to 'Edit', edit_project_entry_path(@project, @entry) %> |
-<%= link_to 'Back', [@project, :entries] %>
 
 <div id="internal-references" style="display: none; ">
 <%= link_to 'show work intervals', show_work_intervals_project_entry_path(@project, @entry) %>
@@ -99,6 +92,7 @@
 
     init_note_logs();
     init_note_form();
+    init_mark_as_done("a:contains('Mark as Done')");
   })
 
 </script>

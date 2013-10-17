@@ -4,6 +4,7 @@
 ./bin/rails g scaffold Note name:string content:text project_id:integer
 ./bin/rails g model ItemNote item_id:integer note_id:integer
 ./bin/rails g migration add_type_to_item_notes type:string
+./bin/rails g migration remove_notes_from_entries notes:text
 
 
 # ===== Fri Oct 11 04:56:48 PDT 2013

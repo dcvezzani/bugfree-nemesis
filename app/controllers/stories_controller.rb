@@ -117,11 +117,21 @@ class StoriesController < ProjectController
 
   def mark_as_done
     @story = Story.find(params[:id])
+    response_type = params[:response_type]
 
     respond_to do |format|
       # if @story.update_attributes(params[:story])
       if @story.close
-        format.html { redirect_to [@project, :stories], notice: 'Story was successfully marked as closed.' }
+        notice = 'Story was successfully marked as closed.'
+
+        format.html { 
+          if(response_type == "msg-content")
+            entry = Entry.find(params[:entry_id])
+            render partial: 'mark_as_done', locals: {project: @project, entry: entry, msg: notice }
+          else
+            redirect_to [@project, :stories], notice: notice 
+          end
+        }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

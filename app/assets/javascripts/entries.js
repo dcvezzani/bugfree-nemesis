@@ -17,6 +17,43 @@
     init_note_log_delete_note("#note-log-entries");
   }
 
+  function init_mark_as_done(selector){
+    $(selector).click(function(){
+      reset_alerts();
+
+      var anchor = $(this);
+      var href = $(anchor).attr("href");
+      var method = "put";
+      var csrf = $("meta[name='csrf-token']").attr("content");
+      var entry_id = $("#entry_id").val();
+      var data = "_method=" + method + "&authenticity_token=" + csrf + "&entry_id=" + entry_id + "&response_type=msg-content"
+
+      $.post(href, data, function(data){
+        $("#scratch-pad").html(data);
+
+        setTimeout(function(){
+          var yesterdays_stories = $("#scratch-pad .content .story-list-yesterday").html();
+          var todays_stories = $("#scratch-pad .content .story-list-today").html();
+          var show_stopper_stories = $("#scratch-pad .content .story-list-show-stopper").html();
+
+          $("#story-list-yesterday").html(yesterdays_stories).effect("highlight", {}, 1500);
+          $("#story-list-today").html(todays_stories).effect("highlight", {}, 1500);
+
+          var msg = $("#scratch-pad .msg").html();
+          $(".alert-success").html(msg);
+          $(".alert-success").fadeIn();
+        }, 150);
+      })
+      .fail(function(jqXHR, textStatus, errorThrown){
+        $(".alert-error").html("Unable to mark story as complete.");
+        $(".alert-error").fadeIn();
+      });
+
+      
+      return false;
+    });
+  }
+
   // input: "Update Note"
   // button: "Cancel"
   function init_note_form_content(selector){

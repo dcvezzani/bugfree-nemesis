@@ -2,11 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.story-controls{
+  display: block; 
+  float: right; 
+}
+
 .story-status{
   font-weight: bold;
   color: #2F3DA8;
-  display: block; 
-  float: right; 
 }
 
 .story-status-closed{

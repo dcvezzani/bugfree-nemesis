@@ -1,0 +1,22 @@
+      <div class="response">
+
+        <div class="content">
+          <div class="story-list-yesterday">
+            <%= render partial: 'entries/yesterdays_stories', locals: {project: project, entry: entry} %>
+          </div>
+
+          <div class="story-list-today">
+            <%= render partial: 'entries/todays_stories', locals: {project: project, entry: entry} %>
+          </div>
+
+          <div class="story-list-show-stopper">
+            <%= render partial: 'entries/show_stopper_stories', locals: {project: project, entry: entry} %>
+          </div>
+        </div>
+
+        <div class="msg">
+      <%= msg %>
+        </div>
+      </div>
+
+
