@@ -45,9 +45,16 @@
 <%= link_to 'Edit', edit_project_story_path(@project, @story) %> |
 <%= link_to 'Back', [@project, :stories] %>
 
+<div id="note-log">
+  <%= render partial: 'shared/show_note_logs', locals: {item: @story} %>
+</div>
+
 <script type="text/javascript">
   $(document).ready(function(){
     init_hour_updater();
+
+    init_note_logs();
+    init_note_form();
   });
 </script>
 

@@ -9,8 +9,8 @@ class Story < ActiveRecord::Base
   has_many :entry_stories
   has_many :entries, through: :entry_stories
 
-  has_many :story_notes, foreign_key: :item_id, source: :story
-  has_many :notes, through: :story_notes, source: :story
+  has_many :story_notes, foreign_key: :item_id, source: :story, dependent: :destroy
+  has_many :notes, through: :story_notes, source: :note, dependent: :destroy
 
   validates :project_id, :status, presence: true
 

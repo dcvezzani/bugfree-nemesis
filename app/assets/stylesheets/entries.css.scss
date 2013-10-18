@@ -97,15 +97,10 @@ div.entries, .hours{
   float: right; 
 }
 
-div#note-log{
-  margin: 1em 0;
-}
-
 ul#note-log-entries{
   list-style: none; 
 }
 
-.notes textarea, 
 #myModal .modal-body textarea{
   height: 129px;
   width: 100%; 
@@ -116,7 +111,4 @@ ul#note-log-entries{
   display: none; 
 }
 
-.note-date{
-  text-decoration: underline;
-}
 

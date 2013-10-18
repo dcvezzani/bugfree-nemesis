@@ -4,3 +4,8 @@
 
 <%= link_to 'Show', [@project, @story] %> |
 <%= link_to 'Back', [@project, :stories] %>
+
+<div id="note-log">
+  <%= render partial: 'shared/show_note_logs', locals: {item: @story} %>
+</div>
+

@@ -1,0 +1,8 @@
+<b>Notes:</b>
+<ul id="note-log-items">
+  <% item.notes.each do |note| %>
+    <%= render partial: 'notes/show_note_log_item', locals: {project: @project, item: item, note: note} %>
+  <% end %>
+    <li><%= link_to 'Add note', polymorphic_url([:new, @project, item, :note], layout: false) %></li>
+</ul>
+

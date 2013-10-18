@@ -6,7 +6,13 @@ Clf004::Application.routes.draw do
 
     match 'stories/list' => 'stories#list', :via => :get, :as => :list_stories
     resources :stories do
-      resources :notes, controller: 'story_notes'
+      resources :notes, controller: 'story_notes' do
+        member do
+          get 'edit_content'
+          put 'update_content'
+        end
+      end
+
       member do
         put 'update_hours'
         put 'mark_as_done'

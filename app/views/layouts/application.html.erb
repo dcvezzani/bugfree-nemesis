@@ -138,6 +138,7 @@
         <ul class="nav">
         <li><%= link_to "UC Merced", track_project_path("uc-merced", anchor: "top-nav-home") %></li>
         <li><%= link_to "My 401K", track_project_path("my401k", anchor: "top-nav-home") %></li>
+        <li><%= link_to "Time Tracker", track_project_path("time-tracker", anchor: "top-nav-home") %></li>
         <!-- <li><%#= link_to "Wizard", wizard_welcome_path(anchor: "top&#45;nav&#45;wizard") %></li> -->
         <!-- <li><%#= link_to "Wizard Bar", wizard_bar_welcome_path(anchor: "top&#45;nav&#45;wizard&#45;bar") %></li> -->
         <!-- <li><a href="#">Link</a></li> -->
@@ -151,7 +152,7 @@
 
         </ul>
 
-        <% if @project %>
+        <% if @project and !@project.new_record? %>
         <ul class="scoped-actions">
           <li><%= link_to "entries", project_entries_path(@project) %>
           (

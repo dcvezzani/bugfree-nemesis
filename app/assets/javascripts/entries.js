@@ -14,7 +14,7 @@
   function init_note_logs(){
     init_note_log_add_note("#note-log");
     init_note_log_edit_note("#note-log");
-    init_note_log_delete_note("#note-log-entries");
+    init_note_log_delete_note("#note-log-entries, #note-log-items");
   }
 
   function init_mark_as_done(selector){
@@ -131,6 +131,11 @@
         $("#myModal .modal-body").html(data);
         $("#myModalLabel").text("Add note");
         $("#myModal").modal("show");
+
+        setTimeout(function(){
+        $("#myModal .modal-body").find("input:visible, textarea:visible").first().focus();
+        }, 500);
+
       });
       return false;
     });
@@ -175,11 +180,11 @@
       var data = "_method=" + method + "&authenticity_token=" + csrf + "&" + $(form).serialize();
       
       $.post(href, data, function(data){
-        $("#note-log-entries li:last").before(data);
+        $("#note-log-entries, #note-log-items").find("li:last").before(data);
         $("#myModal").modal("hide");
 
         setTimeout(function(){
-          var new_item = $("#note-log-entries li:last").prev();
+          var new_item = $("#note-log-entries, #note-log-items").find("li:last").prev();
 
           init_note_log_delete_note(new_item);
           init_note_log_edit_note(new_item)
