@@ -3,11 +3,16 @@ class ApplicationController < ActionController::Base
 
   # before_filter :authenticate_user!, except: [:sign_in, :sign_out]
   before_filter :set_time_zone
+  before_filter :set_email_report_preferences
 
   def set_time_zone
     #current user is a devise method see https://github.com/plataformatec/devise
     # Time.zone = current_user.time_zone if current_user
     us_pacific = ActiveSupport::TimeZone.us_zones.find{|x| x.name == "Pacific Time (US & Canada)"}
     Time.zone = us_pacific
+  end
+
+  def set_email_report_preferences
+    @email = Email.new(manager: "bkoehmstedt@ucmerced.edu", subject: "Goals for #{Time.zone.now.strftime("%a, %m/%d")}")
   end
 end

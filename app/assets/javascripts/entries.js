@@ -54,6 +54,44 @@
     });
   }
 
+  function gather_yesterdays_goals(){
+    return gather_goals(".yesterdays-goals");
+  }
+
+  function gather_todays_goals(){
+    return gather_goals(".todays-goals");
+  }
+
+  function gather_goals(selector){
+    var title = $(selector).find("p:first b:first").text();
+
+    var todays_log = $(selector).find("ul:first li").map(function(i, item){
+      return $(item).text();
+    });
+
+    var related_stories_legend = $(selector).find(".story-list").prev().text();
+    var related_stories = $(selector).find(".story-list li").find("a:first").map(function(i, _anchor){
+      return $(_anchor).text();
+    });
+
+    var body_lines = [title, "====================================", "", "- " + todays_log.toArray().join("\n- "), "", related_stories_legend, "", "- " + related_stories.toArray().join("\n- ")];
+
+    // var body = $(anchor).closest(".todays-goals").text();
+    var body = body_lines.join("\n");
+    return body;
+  }
+
+  function init_email_goals_to_manager(selector){
+    $(selector).click(function(){
+      var anchor = $(this);
+      var href = $(anchor).attr("href");
+
+      window.location.href = href + escape("\n\n") + escape(gather_yesterdays_goals()) + escape("\n\n\n") + escape(gather_todays_goals()) + escape("\n\n");
+
+      return false;
+    });
+  }
+
   // input: "Update Note"
   // button: "Cancel"
   function init_note_form_content(selector){

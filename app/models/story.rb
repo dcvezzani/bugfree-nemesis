@@ -30,7 +30,7 @@ class Story < ActiveRecord::Base
   def close
     # if(is_open?)
       self.status = CLOSED
-      self.hours_worked += self.hours_todo
+      # self.hours_worked += self.hours_todo
       self.hours_todo = 0.0
       save
     # end

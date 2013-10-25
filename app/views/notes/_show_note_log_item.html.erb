@@ -1,9 +1,20 @@
+    <% edit_controls ||= :enabled %>
+
     <li>
     <%= note.created_at %>
+
+    <% if edit_controls == :enabled %>
     <%#= link_to note.created_at, [project, item, note] %> | 
     <%= link_to 'Edit', polymorphic_path([:edit_content, project, item, note], render_as_partial: true) %> | 
     <%= link_to 'Destroy', [project, item, note], method: :delete %>
+
+    <% else %>
+    <%= link_to "Story", [project, note.stories.first] %>
+    <% end %>
+
     <div class="well notes">
+      <% story = note.stories.first %>
+      <h4>(<%= story.id %>) <%= story.title %></h4>
       <%= format_text(note.content) %>
     </div>
     </li>

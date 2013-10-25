@@ -10,13 +10,13 @@ class Entry < ActiveRecord::Base
   has_many :stories, through: :entry_stories
 
   has_many :yesterday_entry_stories
-  has_many :yesterdays_stories, through: :yesterday_entry_stories, source: :story
+  has_many :yesterdays_stories, through: :yesterday_entry_stories, source: :story, order: "due_on asc"
 
   has_many :today_entry_stories
-  has_many :todays_stories, through: :today_entry_stories, source: :story
+  has_many :todays_stories, through: :today_entry_stories, source: :story, order: "due_on asc"
 
   has_many :show_stopper_entry_stories
-  has_many :show_stopper_stories, through: :show_stopper_entry_stories, source: :story
+  has_many :show_stopper_stories, through: :show_stopper_entry_stories, source: :story, order: "due_on asc"
 
   has_many :work_intervals
   has_many :sorted_work_intervals, class_name: "WorkInterval", conditions: ["ended_at is not null or started_at is not null"], order: "started_at asc"
@@ -117,6 +117,14 @@ class Entry < ActiveRecord::Base
 
   def next_work_day
     Entry.where{(project_id == my{self.project_id}) & (recorded_for > my{self.recorded_for})}.order{ recorded_for.asc }.limit(1).first
+  end
+
+  def story_notes
+    puts ">>> self.updated_at: " + self.updated_at.inspect
+    # _date = DateTime.strptime("2013-10-21 00:00:00 -0700", '%Y-%m-%d %H:%M:%S %z')
+    _stories = Entry.joins{stories}.where{id == my{self.id}}
+    _note_assocs = StoryNote.where{item_id.in(_stories.select{distinct(stories.id)})}
+    _notes = Note.where{id.in(_note_assocs.select{distinct(item_notes.id)}) & (updated_at >= my{self.updated_at.beginning_of_day}) & (updated_at <= my{self.updated_at.end_of_day})}
   end
 
 end

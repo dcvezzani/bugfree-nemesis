@@ -97,8 +97,24 @@ div.entries, .hours{
   float: right; 
 }
 
+ul#related-story-note-log-entries, 
 ul#note-log-entries{
   list-style: none; 
+}
+
+ul#related-story-note-log-entries .well.notes {
+  position: relative; 
+}
+
+ul#related-story-note-log-entries .well.notes h4 {
+  color: #C0C0C0;
+  font-size: 10pt;
+  font-style: italic;
+  font-weight: normal;
+  position: absolute;
+  right: 4px;
+  text-align: right;
+  top: -11px;
 }
 
 #myModal .modal-body textarea{

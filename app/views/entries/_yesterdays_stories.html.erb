@@ -1,5 +1,5 @@
   <% entry.yesterdays_stories.each do |story| %>
-    <li><%= link_to "(#{format_date(story.due_on)}) #{story.title} : [#{story.hours_est} / #{story.hours_worked} / #{story.hours_todo}]", [project, story] %>
+    <li><%= link_to "(#{completion_status(story)}) #{story.title} : [#{story.hours_est} / #{story.hours_worked} / #{story.hours_todo}]", [project, story] %>
     <% if story.is_open? %>
     | <%= link_to 'Mark as Done', [:mark_as_done, project, story], method: :put, data: { confirm: 'Are you sure?' } %>
     <% end %>

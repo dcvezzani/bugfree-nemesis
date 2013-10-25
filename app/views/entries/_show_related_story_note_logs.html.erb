@@ -1,0 +1,7 @@
+<b>Related Story Notes:</b>
+<ul id="related-story-note-log-entries">
+  <% @entry.story_notes.each do |note| %>
+    <%= render partial: 'notes/show_note_log_item', locals: {project: @project, item: @entry, note: note, edit_controls: :disabled} %>
+  <% end %>
+</ul>
+
