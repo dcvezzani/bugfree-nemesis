@@ -13,8 +13,11 @@
     <% end %>
 
     <div class="well notes">
+    <% if edit_controls != :enabled %>
       <% story = note.stories.first %>
       <h4>(<%= story.id %>) <%= story.title %></h4>
+    <% end %>
+
       <%= format_text(note.content) %>
     </div>
     </li>

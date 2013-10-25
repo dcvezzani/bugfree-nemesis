@@ -1,0 +1,13 @@
+      <p><%= title %></p>
+      <ul>
+      <% notes.each do |note| %>
+        <p class="note-date"><%= note.created_at %></p>
+        <% if note.stories.length > 0 %>
+        <p class="related-story"><%= note.stories.first.title %></p>
+        <% end %>
+
+        <%= format_text(note.content) %>
+      <% end %>
+      </ul>
+      <div style="clear: both; "></div>
+

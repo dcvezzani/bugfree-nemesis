@@ -74,15 +74,18 @@
       <%= format_log tomorrow.yesterdays_log unless tomorrow.nil? %>
       <div style="clear: both; "></div>
 
-      <% if !entry.notes.blank? %>
-      <p>Notes</p>
-      <ul>
-      <% entry.notes.each do |note| %>
-        <p class="note-date"><%= note.created_at %></p>
-        <%= format_text(note.content) %>
+      <% entry_notes = entry.notes %>
+      <% if !entry_notes.blank? %>
+        <div class="simple-notes entry-notes">
+        <%= render partial: 'simple_notes', locals: {title: "Notes", notes: entry_notes} %>
+        </div>
       <% end %>
-      </ul>
-      <div style="clear: both; "></div>
+
+      <% story_notes = entry.story_notes %>
+      <% if !story_notes.blank? %>
+        <div class="simple-notes story-notes">
+        <%= render partial: 'simple_notes', locals: {title: "Story Notes", notes: story_notes} %>
+        </div>
       <% end %>
 
     </td>

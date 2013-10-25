@@ -81,12 +81,31 @@
     return body;
   }
 
+  function gather_notes(){
+    var log_entries = $("ul#note-log-entries .well.notes .description-paragraphs").map(function(i,item){
+      return $(item).text().replace(/^\s+|\s+$/, "");
+    }).toArray();
+
+    var story_log_entries = $("ul#related-story-note-log-entries .well.notes").map(function(i,item){
+      var story_name = $(item).find("h4").text().replace(/^\s+|\s+$/, "");
+      var note_content = $(item).find(".description-paragraphs").text().replace(/^\s+|\s+$/, "");
+      return story_name + ": " + note_content;
+    }).toArray();
+
+    var out = []
+
+    if(log_entries.length > 0){ out[out.length] = "Notes" + "\n" + "====================================" + "\n\n" + "- " + log_entries.join("- \n");}
+    if(story_log_entries.length > 0){ out[out.length] = "Story notes" + "\n" + "====================================" + "\n\n" + "- " + story_log_entries.join("- \n");}
+
+    return out.join("\n\n");
+  }
+
   function init_email_goals_to_manager(selector){
     $(selector).click(function(){
       var anchor = $(this);
       var href = $(anchor).attr("href");
 
-      window.location.href = href + escape("\n\n") + escape(gather_yesterdays_goals()) + escape("\n\n\n") + escape(gather_todays_goals()) + escape("\n\n");
+      window.location.href = href + escape("\n\n") + escape(gather_yesterdays_goals()) + escape("\n\n\n") + escape(gather_todays_goals()) + escape("\n\n\n") + escape(gather_notes()) + escape("\n\n");
 
       return false;
     });
