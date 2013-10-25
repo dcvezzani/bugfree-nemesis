@@ -36,7 +36,7 @@
 </div>
 
 <% @stories.each do |story| %>
-  <div class="row">
+  <div class="row <%= highlight_if_done(story, 'story-summary') %>">
     <div class="span8"><%= link_to story.title.capitalize, [@project, story] %></div>
     <div class="span1"><%= (story.due_on or "none") %></div>
     <div class="span1 "><div class="hours"><%= story.hours_est %></div></div>

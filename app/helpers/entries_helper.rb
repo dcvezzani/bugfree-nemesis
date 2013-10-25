@@ -1,5 +1,9 @@
 module EntriesHelper
 
+  def highlight_if_done(story, css_selector)
+    (!story.is_open?) ? css_selector : ""
+  end
+
   def hide_if?(expr, &blk)
     if(block_given?)
       yield if(expr)

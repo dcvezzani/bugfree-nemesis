@@ -14,14 +14,17 @@ class EntriesController < ProjectController
   def report
     week_day_str = params[:week_day]
     # Time.zone.strptime(last_day, "%Y-%m-%d %H:%M:%S"
-    # week_day_str = "2013-10-07"
+    # week_day_str = "2013-10-25"
     week_day = Date.parse(week_day_str)
-    @first_day = week_day.beginning_of_week
-    @last_day = @first_day + 5.days
+    @first_day = week_day.beginning_of_week.to_time
+    # @last_day = (@first_day + 5.days).end_of_week
+    @last_day = week_day.end_of_week.to_time.end_of_day
     @entries = Entry.where{(project_id == my{@project.id}) & (entries.recorded_for >= my{@first_day}) & (entries.recorded_for <= my{@last_day})}.order{ recorded_for.asc }
     @hrs_worked = @entries.inject(0.0){|a,b| a += b.total_hours_worked}
 
-    @stories = Story.where{(project_id == my{@project.id}) & (status != "closed")}.order{[due_on.asc, updated_at.desc]}
+    active_stories = Story.active_stories(@project.id)
+    current_completed_stories = Story.current_completed_stories(@project.id, @first_day, @last_day)
+    @stories = active_stories + current_completed_stories
 
     respond_to do |format|
       format.html #{ render action: :index }
