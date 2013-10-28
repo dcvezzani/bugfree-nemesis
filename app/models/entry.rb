@@ -10,13 +10,13 @@ class Entry < ActiveRecord::Base
   has_many :stories, through: :entry_stories
 
   has_many :yesterday_entry_stories
-  has_many :yesterdays_stories, through: :yesterday_entry_stories, source: :story, order: "due_on asc"
+  has_many :yesterdays_stories, through: :yesterday_entry_stories, source: :story, order: "completed_at asc, due_on asc"
 
   has_many :today_entry_stories
-  has_many :todays_stories, through: :today_entry_stories, source: :story, order: "due_on asc"
+  has_many :todays_stories, through: :today_entry_stories, source: :story, order: "completed_at asc, due_on asc"
 
   has_many :show_stopper_entry_stories
-  has_many :show_stopper_stories, through: :show_stopper_entry_stories, source: :story, order: "due_on asc"
+  has_many :show_stopper_stories, through: :show_stopper_entry_stories, source: :story, order: "completed_at asc, due_on asc"
 
   has_many :work_intervals
   has_many :sorted_work_intervals, class_name: "WorkInterval", conditions: ["ended_at is not null or started_at is not null"], order: "started_at asc"
