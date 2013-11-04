@@ -52,7 +52,7 @@ gem 'thin'
 gem 'numbers_and_words'
 
 # pdf generation
-gem "prawnto_2", :require => "prawnto"
+# gem "prawnto_2", :require => "prawnto"
 gem 'prawn'
 #gem 'prawn', :git => "git://github.com/sandal/prawn.git", :tag => '0.10.2', :submodules => true
 gem 'pdf-reader'

@@ -55,7 +55,7 @@
   <div class="row">
     <div class="span4">
       <div class="field">
-        <%= f.label :yesterdays_log, "Yesterday's Log" %><%= link_to "Stories", project_list_stories_path(@project) %> | <%= link_to "Copy from yesterday", project_copy_from_yesterdays_entry_path(@project, recorded_for: "date_value_from_form") %><br />
+        <%= f.label :yesterdays_log, "Yesterday's Log" %><%= link_to "Stories", project_list_stories_path(@project) %> | <%= link_to "Copy from last work day", project_copy_from_yesterdays_entry_path(@project, recorded_for: "date_value_from_form") %><br />
         <%= f.text_area :yesterdays_log %>
       </div>
       <ul class="related-stories" id="yesterdays_related_stories">
@@ -108,7 +108,7 @@
     $("#entry_title").focus();
     $("#entry_title").select();
 
-    $("a:contains('Copy from yesterday')").click(function(){
+    $("a:contains('Copy from last work day')").click(function(){
       var anchor = $(this);
       var current_entry = $("#entry_yesterdays_log").val();
       var current_related_stories = $("#yesterdays_related_stories").html().replace(/^[\s\r\n]+$/, "")

@@ -39,6 +39,7 @@
 <p>
   <p>Related stories (due date) ... (est / worked / todo):</p>
   <ul id="story-list-yesterday" class="story-list">
+  <li><%= link_to "Total hours worked: #{@entry.last_work_day.total_hours_worked} hrs", project_entry_work_intervals_path(@project, @entry.last_work_day) %></li>
   <%= render partial: 'yesterdays_stories', locals: {project: @project, entry: @entry}%>
   </ul>
 </p>

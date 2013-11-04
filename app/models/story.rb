@@ -14,7 +14,21 @@ class Story < ActiveRecord::Base
 
   validates :project_id, :status, presence: true
 
+  scope :for_week_including, ->(_project_id, entry_date) { 
+    # _project_id = 1
+    # entry_date = Time.zone.now.to_date
+    _start_date = entry_date.to_date.beginning_of_week
+    _end_date = entry_date.to_date.end_of_week
+
+    week_days = Entry.where{(project_id == _project_id) & (recorded_for >= _start_date) & (recorded_for <= _end_date)}; week_days.count
+
+    _stories = Story.joins{entries}.where{entries.id.in(week_days.select{id})}.select{distinct(stories.id)}
+
+    Story.where{id.in(_stories)}.order{[status.desc, due_on.asc, updated_at.desc]}
+  }
+
   scope :active_stories, ->(_project_id) { where{(project_id == my{_project_id}) & (status != "closed")}.order{[due_on.asc, updated_at.desc]} }
+
   scope :current_completed_stories, ->(_project_id, _begin_week, _end_week) { where{(project_id == my{_project_id}) & (status == "closed") & (completed_at >= my{_begin_week}) & (completed_at <= my{_end_week})}.order{[due_on.asc, updated_at.desc]} }
 
   def is_open?

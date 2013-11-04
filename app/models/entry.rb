@@ -119,6 +119,10 @@ class Entry < ActiveRecord::Base
     Entry.where{(project_id == my{self.project_id}) & (recorded_for > my{self.recorded_for})}.order{ recorded_for.asc }.limit(1).first
   end
 
+  def last_work_day
+    Entry.where{(project_id == my{self.project_id}) & (recorded_for < my{self.recorded_for})}.order{ recorded_for.desc }.limit(1).first
+  end
+
   def story_notes
     puts ">>> self.updated_at: " + self.updated_at.inspect
     # _date = DateTime.strptime("2013-10-21 00:00:00 -0700", '%Y-%m-%d %H:%M:%S %z')
