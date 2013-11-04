@@ -124,7 +124,7 @@ class Entry < ActiveRecord::Base
   end
 
   def story_notes
-    puts ">>> self.updated_at: " + self.updated_at.inspect
+    # puts ">>> self.updated_at: " + self.updated_at.inspect
     # _date = DateTime.strptime("2013-10-21 00:00:00 -0700", '%Y-%m-%d %H:%M:%S %z')
     _stories = Entry.joins{stories}.where{id == my{self.id}}
     _note_assocs = StoryNote.where{item_id.in(_stories.select{distinct(stories.id)})}

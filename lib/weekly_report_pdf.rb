@@ -11,6 +11,11 @@ class WeeklyReportPdf
     @section_offset = 20
   end
 
+  # def highlight
+  #   @highlight ||= lambda{|the_pdf|HighlightCallback.new(:color => 'FFFFAA', :document => the_pdf)}
+  #   @highlight.call(pdf)
+  # end  
+
   def self.generate(options={})
     report = WeeklyReportPdf.new(options)
     pdf = report.pdf
@@ -19,6 +24,11 @@ class WeeklyReportPdf
     Rails.logger.debug(">>> pdf type: " + pdf.class.name)
 
     report.generate_stories(options[:stories], {})
+
+    hrs_worked = options[:hrs_worked]
+    report.pdf.formatted_text([{text: "Total hours worked for the week: "}, {text: hrs_worked.to_s, size: 14, styles: [:bold]}])#{hrs_worked}"
+    report.pdf.move_down report.section_offset
+    
     report.generate_entries(options[:entries], {})
 
     return pdf
@@ -28,7 +38,10 @@ class WeeklyReportPdf
   def generate_stories(the_stories, options={})
     # STORIES
 
-    pdf.text "Story Summary"
+    pdf.font("Helvetica", size: 16, style: :bold) do
+      pdf.text "Story Summary"
+    end
+    # pdf.stroke do; pdf.horizontal_rule; end
     pdf.move_down section_offset
 
     story_summary = the_stories.map do |story|
@@ -51,11 +64,18 @@ class WeeklyReportPdf
         elsif(c.row > 0 and !the_stories[c.row-1].is_open?)
           c.background_color = "AAFFAA"
         end
+
+        if(c.column >= 2)
+          c.align = :right
+        end
       end
     end
     pdf.move_down section_offset
 
-    pdf.text "Weekly Entries"
+    pdf.font("Helvetica", size: 16, style: :bold) do
+      pdf.text "Weekly Entries"
+    end
+    # pdf.stroke do; pdf.horizontal_rule; end
     pdf.move_down section_offset
 
     pdf
