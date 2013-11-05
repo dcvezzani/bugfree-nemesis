@@ -17,7 +17,7 @@ class StoriesController < ProjectController
   end
 
   def list
-    @stories = Story.where{project_id == my{@project.id}}.order{[due_on.asc, updated_at.desc]}
+    @stories = Story.where{(project_id == my{@project.id}) & (status == "active")}.order{[due_on.asc, updated_at.desc]}
     @associated_stories = AssociatedStories.new
 
     respond_to do |format|
