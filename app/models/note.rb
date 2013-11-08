@@ -6,5 +6,9 @@ class Note < ActiveRecord::Base
 
   has_many :story_notes, foreign_key: :note_id, source: :story
   has_many :stories, through: :story_notes, source: :story
+
+  def plain_content
+    content.gsub(/<[^>]+>/, "")
+  end
   
 end

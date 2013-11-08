@@ -157,7 +157,12 @@
           <li><%= link_to "entries", project_entries_path(@project) %>
           (
           <%= link_to "new", new_project_entry_path(@project) %> | 
-          <% if @entry and !@entry.new_record? %><%= link_to "hours", project_entry_work_intervals_path(@project, @entry) %> | <% end %>
+
+          <% if @entry and !@entry.new_record? %>
+            <%= link_to "hours", project_entry_work_intervals_path(@project, @entry) %> | 
+            <%= link_to "report", report_project_entries_path(@project, week_day: @entry.recorded_for) %> | 
+          <% end %>
+
           <%= link_to "current", [:current, @project, :entries] %>
           )</li>
           <li><%= link_to "stories", project_stories_path(@project) %>

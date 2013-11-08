@@ -32,7 +32,7 @@ module ReportPdf
     entry_notes = entry.notes
     if !entry_notes.blank?
       entry_notes = entry_notes.map do |note|
-        ["-", note.content]
+        ["-", note.plain_content]
       end
     else
       entry_notes = []
@@ -41,7 +41,7 @@ module ReportPdf
     story_notes = entry.story_notes
     if !story_notes.blank?
       story_notes =story_notes.map do |note|
-        ["-", note.content]
+        ["-", [note.created_at, note.stories.first.title, "", note.plain_content].join("\n")]
       end
     else
       story_notes = []
