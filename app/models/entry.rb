@@ -128,7 +128,7 @@ class Entry < ActiveRecord::Base
     # _date = DateTime.strptime("2013-10-21 00:00:00 -0700", '%Y-%m-%d %H:%M:%S %z')
     _stories = Entry.joins{stories}.where{id == my{self.id}}
     _note_assocs = StoryNote.where{item_id.in(_stories.select{distinct(stories.id)})}
-    _notes = Note.where{id.in(_note_assocs.select{distinct(item_notes.id)}) & (updated_at >= my{self.updated_at.beginning_of_day}) & (updated_at <= my{self.updated_at.end_of_day})}.order{created_at.asc}
+    _notes = Note.where{id.in(_note_assocs.select{distinct(item_notes.id)}) & (updated_at >= my{self.recorded_for.beginning_of_day}) & (updated_at <= my{self.recorded_for.end_of_day})}.order{created_at.asc}
   end
 
 end

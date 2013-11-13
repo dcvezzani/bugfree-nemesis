@@ -113,4 +113,6 @@ group :development, :test do
 
   gem 'cmess', git: 'http://github.com/fac/cmess.git'
   gem 'nokogiri'
+
+  gem 'wirble'
 end
