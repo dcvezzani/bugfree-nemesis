@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Hours:</b>
+  <%= @work_hour.hours %>
+</p>
+
+<p>
+  <b>Entry story:</b>
+  <%= @work_hour.entry_story %>
+</p>
+
+
+<%= link_to 'Edit', edit_work_hour_path(@work_hour) %> |
+<%= link_to 'Back', work_hours_path %>

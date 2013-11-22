@@ -19,3 +19,5 @@ doc-tutorials
 *.log
 public/assets
 *.session
+
+ucjrn_development.back*

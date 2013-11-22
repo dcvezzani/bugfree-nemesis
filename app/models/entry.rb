@@ -1,5 +1,5 @@
 class Entry < ActiveRecord::Base
-  attr_accessible :recorded_for, :show_stopper_log, :title, :todays_log, :yesterdays_log, :project_id
+  attr_accessible :recorded_for, :show_stopper_log, :title, :todays_log, :yesterdays_log, :project_id, :project
 
   belongs_to :project
 
@@ -18,7 +18,7 @@ class Entry < ActiveRecord::Base
   has_many :show_stopper_entry_stories
   has_many :show_stopper_stories, through: :show_stopper_entry_stories, source: :story, order: "completed_at asc, due_on asc"
 
-  has_many :work_intervals
+  has_many :work_intervals, dependent: :destroy
   has_many :sorted_work_intervals, class_name: "WorkInterval", conditions: ["ended_at is not null or started_at is not null"], order: "started_at asc"
   has_many :sorted_active_work_intervals, class_name: "WorkInterval", conditions: ["ended_at is null and started_at is not null"], order: "started_at asc"
   has_many :sorted_complete_work_intervals, class_name: "WorkInterval", conditions: ["ended_at is not null and started_at is not null"], order: "ended_at asc"

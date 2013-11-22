@@ -1,6 +1,8 @@
 Clf004::Application.routes.draw do
 
 
+  resources :work_hours
+
   match 'track/:slug' => 'projects#track', :via => :get, :as => :track_project
   resources :projects do
 

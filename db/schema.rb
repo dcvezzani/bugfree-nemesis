@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131011183311) do
+ActiveRecord::Schema.define(:version => 20131122185952) do
 
   create_table "entries", :force => true do |t|
     t.date     "recorded_for"
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(:version => 20131011183311) do
     t.text     "show_stopper_log"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
-    t.text     "notes"
     t.integer  "project_id"
   end
 
@@ -32,6 +31,22 @@ ActiveRecord::Schema.define(:version => 20131011183311) do
     t.datetime "updated_at", :null => false
     t.string   "type"
     t.integer  "project_id"
+  end
+
+  create_table "item_notes", :force => true do |t|
+    t.integer  "item_id"
+    t.integer  "note_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "type"
+  end
+
+  create_table "notes", :force => true do |t|
+    t.string   "name"
+    t.text     "content"
+    t.integer  "project_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "projects", :force => true do |t|
@@ -54,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20131011183311) do
     t.datetime "updated_at",    :null => false
     t.integer  "project_id"
     t.string   "status"
+    t.datetime "completed_at"
   end
 
   create_table "users", :force => true do |t|
@@ -74,6 +90,15 @@ ActiveRecord::Schema.define(:version => 20131011183311) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "work_hours", :force => true do |t|
+    t.float    "hours"
+    t.integer  "entry_story_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "work_hours", ["entry_story_id"], :name => "index_work_hours_on_entry_story_id"
 
   create_table "work_intervals", :force => true do |t|
     t.integer  "entry_id"
