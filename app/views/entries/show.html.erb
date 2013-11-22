@@ -72,14 +72,18 @@
   <b>Show-stoppers:</b>
   <%= format_log(@entry.show_stopper_log) %>
 </p>
+
+<% if(@entry.show_stopper_stories.length > 0) %>
 <ul>
 <p>
-  <p>Show Stoppers:</p>
+  <p>Related stories (due date) ... (est / worked / todo):</p>
   <ul id="story-list-show-stopper" class="story-list">
   <%= render partial: 'show_stopper_stories', locals: {project: @project, entry: @entry}%>
   </ul>
 </p>
 </ul>
+<% end %>
+
 </div>
 <% end %>
 

@@ -36,7 +36,7 @@ class EntriesController < ProjectController
         pdf = WeeklyReportPdf.generate({entries: @entries, stories: @stories, hrs_worked: @hrs_worked})
         report_name = "Weekly Report (week ending #{@last_day.to_s})"
 
-        send_data pdf.render, filename: report_name.gsub(/[^\w\d]+/, "-").gsub(/^-|-$/, ""), type: "application/pdf", disposition: "inline"
+        send_data pdf.render, filename: "#{report_name.gsub(/[^\w\d]+/, "-").gsub(/^-|-$/, "")}.pdf", type: "application/pdf", disposition: "inline"
         # send_data renders the pdf on the client side rather than saving it on the server filesystem.
         # Inline disposition renders it in the browser rather than making it a file download.
       end
