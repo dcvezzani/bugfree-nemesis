@@ -1,5 +1,5 @@
 class WorkHour < ActiveRecord::Base
-  attr_accessible :hours
+  attr_accessible :hours, :note
 
   belongs_to :entry_story
 

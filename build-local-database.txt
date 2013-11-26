@@ -7,6 +7,7 @@ CREATE DATABASE ucjrn_development OWNER ucjrn_admin;
 GRANT ALL ON DATABASE ucjrn_development TO ucjrn_admin; 
 
 # create test user and test database that can run with rspec tests
+#DROP DATABASE ucjrn_test;
 CREATE USER rails with SUPERUSER CREATEDB password 'rails.pass13!#';
 CREATE DATABASE ucjrn_test OWNER rails;
 GRANT ALL ON DATABASE ucjrn_test TO rails; 

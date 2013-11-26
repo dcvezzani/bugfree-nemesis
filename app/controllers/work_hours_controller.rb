@@ -1,4 +1,6 @@
-class WorkHoursController < ApplicationController
+class WorkHoursController < ProjectController
+  before_filter :load_item
+
   # GET /work_hours
   # GET /work_hours.json
   def index
@@ -25,9 +27,10 @@ class WorkHoursController < ApplicationController
   # GET /work_hours/new.json
   def new
     @work_hour = WorkHour.new
+    @options.merge!({url: [@project, @item, :work_hours]})
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render action: 'new', layout: @options[:layout] }
       format.json { render json: @work_hour }
     end
   end
@@ -80,4 +83,9 @@ class WorkHoursController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def load_item
+    @item = Story.find(params[:story_id])
+  end
+  
 end

@@ -1,8 +1,5 @@
 Clf004::Application.routes.draw do
 
-
-  resources :work_hours
-
   match 'track/:slug' => 'projects#track', :via => :get, :as => :track_project
   resources :projects do
 
@@ -13,6 +10,9 @@ Clf004::Application.routes.draw do
           get 'edit_content'
           put 'update_content'
         end
+      end
+
+      resources :work_hours do
       end
 
       member do
