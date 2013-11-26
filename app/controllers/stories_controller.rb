@@ -1,5 +1,7 @@
 class StoriesController < ProjectController
   before_filter :ensure_project_id, only: [:update, :create, :update_hours]
+  before_filter :load_entry, only: [:add_hours_worked, :mark_as_done]
+  before_filter :load_response_type, only: [:add_hours_worked, :mark_as_done]
 
   # GET /stories
   # GET /stories.json
@@ -115,9 +117,30 @@ class StoriesController < ProjectController
     end
   end
 
+  def add_hours_worked
+    @story = Story.find(params[:id])
+    work_hours = WorkHour.new(params[:work_hour]);
+
+    respond_to do |format|
+      if @story.add_hours_worked(work_hours)
+        format.html { 
+          if(@response_type == "msg-content")
+            render partial: 'mark_as_done', locals: {project: @project, entry: @entry, msg: notice }
+          else
+            redirect_to [@project, :stories], notice: notice 
+          end
+        }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @story.errors, status: :unprocessable_entity }
+      end
+    end
+
+  end
+
   def mark_as_done
     @story = Story.find(params[:id])
-    response_type = params[:response_type]
 
     respond_to do |format|
       # if @story.update_attributes(params[:story])
@@ -125,9 +148,8 @@ class StoriesController < ProjectController
         notice = 'Story was successfully marked as closed.'
 
         format.html { 
-          if(response_type == "msg-content")
-            entry = Entry.find(params[:entry_id])
-            render partial: 'mark_as_done', locals: {project: @project, entry: entry, msg: notice }
+          if(@response_type == "msg-content")
+            render partial: 'mark_as_done', locals: {project: @project, entry: @entry, msg: notice }
           else
             redirect_to [@project, :stories], notice: notice 
           end
@@ -155,5 +177,13 @@ class StoriesController < ProjectController
 
   def ensure_project_id
     params[:story][:project_id] = @project.id unless params[:story].has_key?(:project_id)
+  end
+
+  def load_entry
+    @entry = Entry.find(params[:entry_id])
+  end
+
+  def load_response_type
+    @response_type = params[:response_type]
   end
 end

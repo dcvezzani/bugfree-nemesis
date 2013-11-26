@@ -42,6 +42,8 @@ Clf004::Application.routes.draw do
         post 'select_stories'
         get 'show_work_intervals'
       end
+
+      match 'stories/:id/add_hours_worked' => 'stories#add_hours_worked', :via => :put, :as => :story_add_hours_worked
     end
   end
 

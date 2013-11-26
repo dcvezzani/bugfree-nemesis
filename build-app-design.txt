@@ -1,3 +1,9 @@
+# ===== Tue Nov 26 09:35:22 PST 2013
+
+./bin/rails g migration add_note_to_work_hours note:string
+./bin/rails g model StoryWorkHour story_id:integer work_hour_id:integer
+
+
 # ===== Fri Nov 22 10:24:40 PST 2013
 
 ./bin/rails g scaffold WorkHour hours:float entry_story:references

@@ -11,23 +11,24 @@
     </div>
   <% end %>
 
-  <div class="field" style="">
-    <%= f.label :project_id %><br />
-    <%= f.text_field :project_id %>
-  </div>
-  <div class="field" style="">
-    <%= f.label :item_id %><br />
-    <%= f.text_field :item_id %>
-  </div>
-  <div class="field">
-    <%= f.label :hours %><br />
-    <%= f.text_field :hours %>
-  </div>
-  <div class="field">
+  <%= hidden_field_tag :render_as_partial, true %>
+
+  <div class="field" <%= hide_if?(!@options[:stand_alone]) %>>
     <%= f.label :entry_story %><br />
     <%= f.text_field :entry_story %>
   </div>
+
+  <div class="field">
+    <span <%= hide_if?(@options[:quiet]) %>><%= f.label :hours %></span><br />
+    <%= f.text_field :hours %>
+  </div>
+  <div class="field">
+    <span <%= hide_if?(@options[:quiet]) %>><%= f.label :note %></span><br />
+    <%= f.text_area :note %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
+    <%= button_tag("Cancel", name: "cancel", type: 'button') %>
   </div>
 <% end %>

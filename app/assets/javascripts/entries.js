@@ -17,17 +17,8 @@
     init_note_log_delete_note("#note-log-entries, #note-log-items");
   }
 
-  function init_mark_as_done(selector){
-    $(selector).click(function(){
-      reset_alerts();
-
-      var anchor = $(this);
-      var href = $(anchor).attr("href");
-      var method = "put";
-      var csrf = $("meta[name='csrf-token']").attr("content");
-      var entry_id = $("#entry_id").val();
-      var data = "_method=" + method + "&authenticity_token=" + csrf + "&entry_id=" + entry_id + "&response_type=msg-content"
-
+  // submit form (AJAX) and update all story summaries
+  function post_form_and_update_story_summaries(href, data, error_message){
       $.post(href, data, function(data){
         $("#scratch-pad").html(data);
 
@@ -45,10 +36,24 @@
         }, 150);
       })
       .fail(function(jqXHR, textStatus, errorThrown){
-        $(".alert-error").html("Unable to mark story as complete.");
+        $(".alert-error").html(error_message);
         $(".alert-error").fadeIn();
       });
+  }
 
+  // mark a story as complete and update all story summaries
+  function init_mark_as_done(selector){
+    $(selector).click(function(){
+      reset_alerts();
+
+      var anchor = $(this);
+      var href = $(anchor).attr("href");
+      var method = "put";
+      var csrf = $("meta[name='csrf-token']").attr("content");
+      var entry_id = $("#entry_id").val();
+      var data = "_method=" + method + "&authenticity_token=" + csrf + "&entry_id=" + entry_id + "&response_type=msg-content"
+
+      post_form_and_update_story_summaries(href, data, "Unable to mark story as complete.");
       
       return false;
     });

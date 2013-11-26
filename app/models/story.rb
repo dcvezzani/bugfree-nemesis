@@ -6,13 +6,14 @@ class Story < ActiveRecord::Base
   attr_accessible :description, :due_on, :hours_est, :hours_todo, :hours_worked, :stopped_since, :title, :project_id, :status, :completed_at, :project
 
   belongs_to :project
+
   has_many :entry_stories
   has_many :entries, through: :entry_stories
 
   has_many :story_notes, foreign_key: :item_id, source: :story, dependent: :destroy
   has_many :notes, through: :story_notes, source: :note, dependent: :destroy, order: "created_at asc"
 
-  has_many :work_hours, through: :entry_stories
+  has_many :work_hours, through: :entry_stories, source: :work_hours
 
   validates :project_id, :status, presence: true
 
@@ -54,6 +55,12 @@ class Story < ActiveRecord::Base
       self.hours_todo = 0.0
       save
     # end
+  end
+
+  def add_hours_worked(work_hours)
+    Story.transaction do
+      
+    end
   end
 end
 

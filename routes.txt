@@ -1,80 +1,81 @@
-                     track_project GET    /track/:slug(.:format)                                                     projects#track
-              project_list_stories GET    /projects/:project_id/stories/list(.:format)                               stories#list
-   edit_content_project_story_note GET    /projects/:project_id/stories/:story_id/notes/:id/edit_content(.:format)   story_notes#edit_content
- update_content_project_story_note PUT    /projects/:project_id/stories/:story_id/notes/:id/update_content(.:format) story_notes#update_content
-               project_story_notes GET    /projects/:project_id/stories/:story_id/notes(.:format)                    story_notes#index
-                                   POST   /projects/:project_id/stories/:story_id/notes(.:format)                    story_notes#create
-            new_project_story_note GET    /projects/:project_id/stories/:story_id/notes/new(.:format)                story_notes#new
-           edit_project_story_note GET    /projects/:project_id/stories/:story_id/notes/:id/edit(.:format)           story_notes#edit
-                project_story_note GET    /projects/:project_id/stories/:story_id/notes/:id(.:format)                story_notes#show
-                                   PUT    /projects/:project_id/stories/:story_id/notes/:id(.:format)                story_notes#update
-                                   DELETE /projects/:project_id/stories/:story_id/notes/:id(.:format)                story_notes#destroy
-          project_story_work_hours GET    /projects/:project_id/stories/:story_id/work_hours(.:format)               work_hours#index
-                                   POST   /projects/:project_id/stories/:story_id/work_hours(.:format)               work_hours#create
-       new_project_story_work_hour GET    /projects/:project_id/stories/:story_id/work_hours/new(.:format)           work_hours#new
-      edit_project_story_work_hour GET    /projects/:project_id/stories/:story_id/work_hours/:id/edit(.:format)      work_hours#edit
-           project_story_work_hour GET    /projects/:project_id/stories/:story_id/work_hours/:id(.:format)           work_hours#show
-                                   PUT    /projects/:project_id/stories/:story_id/work_hours/:id(.:format)           work_hours#update
-                                   DELETE /projects/:project_id/stories/:story_id/work_hours/:id(.:format)           work_hours#destroy
-        update_hours_project_story PUT    /projects/:project_id/stories/:id/update_hours(.:format)                   stories#update_hours
-        mark_as_done_project_story PUT    /projects/:project_id/stories/:id/mark_as_done(.:format)                   stories#mark_as_done
-                   project_stories GET    /projects/:project_id/stories(.:format)                                    stories#index
-                                   POST   /projects/:project_id/stories(.:format)                                    stories#create
-                 new_project_story GET    /projects/:project_id/stories/new(.:format)                                stories#new
-                edit_project_story GET    /projects/:project_id/stories/:id/edit(.:format)                           stories#edit
-                     project_story GET    /projects/:project_id/stories/:id(.:format)                                stories#show
-                                   PUT    /projects/:project_id/stories/:id(.:format)                                stories#update
-                                   DELETE /projects/:project_id/stories/:id(.:format)                                stories#destroy
-        project_trigger_work_timer PUT    /projects/:project_id/entries/:id/trigger_work_timer(.:format)             entries#trigger_work_timer
-project_copy_from_yesterdays_entry GET    /projects/:project_id/entries/copy_from_yesterday(.:format)                entries#copy_from_yesterday
-   edit_content_project_entry_note GET    /projects/:project_id/entries/:entry_id/notes/:id/edit_content(.:format)   entry_notes#edit_content
- update_content_project_entry_note PUT    /projects/:project_id/entries/:entry_id/notes/:id/update_content(.:format) entry_notes#update_content
-               project_entry_notes GET    /projects/:project_id/entries/:entry_id/notes(.:format)                    entry_notes#index
-                                   POST   /projects/:project_id/entries/:entry_id/notes(.:format)                    entry_notes#create
-            new_project_entry_note GET    /projects/:project_id/entries/:entry_id/notes/new(.:format)                entry_notes#new
-           edit_project_entry_note GET    /projects/:project_id/entries/:entry_id/notes/:id/edit(.:format)           entry_notes#edit
-                project_entry_note GET    /projects/:project_id/entries/:entry_id/notes/:id(.:format)                entry_notes#show
-                                   PUT    /projects/:project_id/entries/:entry_id/notes/:id(.:format)                entry_notes#update
-                                   DELETE /projects/:project_id/entries/:entry_id/notes/:id(.:format)                entry_notes#destroy
-      project_entry_work_intervals GET    /projects/:project_id/entries/:entry_id/work_intervals(.:format)           work_intervals#index
-                                   POST   /projects/:project_id/entries/:entry_id/work_intervals(.:format)           work_intervals#create
-   new_project_entry_work_interval GET    /projects/:project_id/entries/:entry_id/work_intervals/new(.:format)       work_intervals#new
-  edit_project_entry_work_interval GET    /projects/:project_id/entries/:entry_id/work_intervals/:id/edit(.:format)  work_intervals#edit
-       project_entry_work_interval GET    /projects/:project_id/entries/:entry_id/work_intervals/:id(.:format)       work_intervals#show
-                                   PUT    /projects/:project_id/entries/:entry_id/work_intervals/:id(.:format)       work_intervals#update
-                                   DELETE /projects/:project_id/entries/:entry_id/work_intervals/:id(.:format)       work_intervals#destroy
-           current_project_entries GET    /projects/:project_id/entries/current(.:format)                            entries#current
-            report_project_entries GET    /projects/:project_id/entries/report(.:format)                             entries#report
-      select_stories_project_entry POST   /projects/:project_id/entries/:id/select_stories(.:format)                 entries#select_stories
- show_work_intervals_project_entry GET    /projects/:project_id/entries/:id/show_work_intervals(.:format)            entries#show_work_intervals
-                   project_entries GET    /projects/:project_id/entries(.:format)                                    entries#index
-                                   POST   /projects/:project_id/entries(.:format)                                    entries#create
-                 new_project_entry GET    /projects/:project_id/entries/new(.:format)                                entries#new
-                edit_project_entry GET    /projects/:project_id/entries/:id/edit(.:format)                           entries#edit
-                     project_entry GET    /projects/:project_id/entries/:id(.:format)                                entries#show
-                                   PUT    /projects/:project_id/entries/:id(.:format)                                entries#update
-                                   DELETE /projects/:project_id/entries/:id(.:format)                                entries#destroy
-                          projects GET    /projects(.:format)                                                        projects#index
-                                   POST   /projects(.:format)                                                        projects#create
-                       new_project GET    /projects/new(.:format)                                                    projects#new
-                      edit_project GET    /projects/:id/edit(.:format)                                               projects#edit
-                           project GET    /projects/:id(.:format)                                                    projects#show
-                                   PUT    /projects/:id(.:format)                                                    projects#update
-                                   DELETE /projects/:id(.:format)                                                    projects#destroy
-                     welcome_index GET    /welcome/index(.:format)                                                   welcome#index
-                    wizard_welcome GET    /welcome/wizard(.:format)                                                  welcome#wizard
-                wizard_bar_welcome GET    /welcome/wizard_bar(.:format)                                              welcome#wizard_bar
-                  new_user_session GET    /users/sign_in(.:format)                                                   devise/sessions#new
-                      user_session POST   /users/sign_in(.:format)                                                   devise/sessions#create
-              destroy_user_session DELETE /users/sign_out(.:format)                                                  devise/sessions#destroy
-                     user_password POST   /users/password(.:format)                                                  devise/passwords#create
-                 new_user_password GET    /users/password/new(.:format)                                              devise/passwords#new
-                edit_user_password GET    /users/password/edit(.:format)                                             devise/passwords#edit
-                                   PUT    /users/password(.:format)                                                  devise/passwords#update
-          cancel_user_registration GET    /users/cancel(.:format)                                                    devise/registrations#cancel
-                 user_registration POST   /users(.:format)                                                           devise/registrations#create
-             new_user_registration GET    /users/sign_up(.:format)                                                   devise/registrations#new
-            edit_user_registration GET    /users/edit(.:format)                                                      devise/registrations#edit
-                                   PUT    /users(.:format)                                                           devise/registrations#update
-                                   DELETE /users(.:format)                                                           devise/registrations#destroy
-                              root        /                                                                          projects#index
+                     track_project GET    /track/:slug(.:format)                                                         projects#track
+              project_list_stories GET    /projects/:project_id/stories/list(.:format)                                   stories#list
+   edit_content_project_story_note GET    /projects/:project_id/stories/:story_id/notes/:id/edit_content(.:format)       story_notes#edit_content
+ update_content_project_story_note PUT    /projects/:project_id/stories/:story_id/notes/:id/update_content(.:format)     story_notes#update_content
+               project_story_notes GET    /projects/:project_id/stories/:story_id/notes(.:format)                        story_notes#index
+                                   POST   /projects/:project_id/stories/:story_id/notes(.:format)                        story_notes#create
+            new_project_story_note GET    /projects/:project_id/stories/:story_id/notes/new(.:format)                    story_notes#new
+           edit_project_story_note GET    /projects/:project_id/stories/:story_id/notes/:id/edit(.:format)               story_notes#edit
+                project_story_note GET    /projects/:project_id/stories/:story_id/notes/:id(.:format)                    story_notes#show
+                                   PUT    /projects/:project_id/stories/:story_id/notes/:id(.:format)                    story_notes#update
+                                   DELETE /projects/:project_id/stories/:story_id/notes/:id(.:format)                    story_notes#destroy
+          project_story_work_hours GET    /projects/:project_id/stories/:story_id/work_hours(.:format)                   work_hours#index
+                                   POST   /projects/:project_id/stories/:story_id/work_hours(.:format)                   work_hours#create
+       new_project_story_work_hour GET    /projects/:project_id/stories/:story_id/work_hours/new(.:format)               work_hours#new
+      edit_project_story_work_hour GET    /projects/:project_id/stories/:story_id/work_hours/:id/edit(.:format)          work_hours#edit
+           project_story_work_hour GET    /projects/:project_id/stories/:story_id/work_hours/:id(.:format)               work_hours#show
+                                   PUT    /projects/:project_id/stories/:story_id/work_hours/:id(.:format)               work_hours#update
+                                   DELETE /projects/:project_id/stories/:story_id/work_hours/:id(.:format)               work_hours#destroy
+        update_hours_project_story PUT    /projects/:project_id/stories/:id/update_hours(.:format)                       stories#update_hours
+        mark_as_done_project_story PUT    /projects/:project_id/stories/:id/mark_as_done(.:format)                       stories#mark_as_done
+                   project_stories GET    /projects/:project_id/stories(.:format)                                        stories#index
+                                   POST   /projects/:project_id/stories(.:format)                                        stories#create
+                 new_project_story GET    /projects/:project_id/stories/new(.:format)                                    stories#new
+                edit_project_story GET    /projects/:project_id/stories/:id/edit(.:format)                               stories#edit
+                     project_story GET    /projects/:project_id/stories/:id(.:format)                                    stories#show
+                                   PUT    /projects/:project_id/stories/:id(.:format)                                    stories#update
+                                   DELETE /projects/:project_id/stories/:id(.:format)                                    stories#destroy
+        project_trigger_work_timer PUT    /projects/:project_id/entries/:id/trigger_work_timer(.:format)                 entries#trigger_work_timer
+project_copy_from_yesterdays_entry GET    /projects/:project_id/entries/copy_from_yesterday(.:format)                    entries#copy_from_yesterday
+   edit_content_project_entry_note GET    /projects/:project_id/entries/:entry_id/notes/:id/edit_content(.:format)       entry_notes#edit_content
+ update_content_project_entry_note PUT    /projects/:project_id/entries/:entry_id/notes/:id/update_content(.:format)     entry_notes#update_content
+               project_entry_notes GET    /projects/:project_id/entries/:entry_id/notes(.:format)                        entry_notes#index
+                                   POST   /projects/:project_id/entries/:entry_id/notes(.:format)                        entry_notes#create
+            new_project_entry_note GET    /projects/:project_id/entries/:entry_id/notes/new(.:format)                    entry_notes#new
+           edit_project_entry_note GET    /projects/:project_id/entries/:entry_id/notes/:id/edit(.:format)               entry_notes#edit
+                project_entry_note GET    /projects/:project_id/entries/:entry_id/notes/:id(.:format)                    entry_notes#show
+                                   PUT    /projects/:project_id/entries/:entry_id/notes/:id(.:format)                    entry_notes#update
+                                   DELETE /projects/:project_id/entries/:entry_id/notes/:id(.:format)                    entry_notes#destroy
+      project_entry_work_intervals GET    /projects/:project_id/entries/:entry_id/work_intervals(.:format)               work_intervals#index
+                                   POST   /projects/:project_id/entries/:entry_id/work_intervals(.:format)               work_intervals#create
+   new_project_entry_work_interval GET    /projects/:project_id/entries/:entry_id/work_intervals/new(.:format)           work_intervals#new
+  edit_project_entry_work_interval GET    /projects/:project_id/entries/:entry_id/work_intervals/:id/edit(.:format)      work_intervals#edit
+       project_entry_work_interval GET    /projects/:project_id/entries/:entry_id/work_intervals/:id(.:format)           work_intervals#show
+                                   PUT    /projects/:project_id/entries/:entry_id/work_intervals/:id(.:format)           work_intervals#update
+                                   DELETE /projects/:project_id/entries/:entry_id/work_intervals/:id(.:format)           work_intervals#destroy
+           current_project_entries GET    /projects/:project_id/entries/current(.:format)                                entries#current
+            report_project_entries GET    /projects/:project_id/entries/report(.:format)                                 entries#report
+      select_stories_project_entry POST   /projects/:project_id/entries/:id/select_stories(.:format)                     entries#select_stories
+ show_work_intervals_project_entry GET    /projects/:project_id/entries/:id/show_work_intervals(.:format)                entries#show_work_intervals
+                                          /projects/:project_id/entries/:entry_id/stories/:id/add_hours_worked(.:format) projects/:project_id/entries/:entry_id/stories/:id#add_hours_worked
+                   project_entries GET    /projects/:project_id/entries(.:format)                                        entries#index
+                                   POST   /projects/:project_id/entries(.:format)                                        entries#create
+                 new_project_entry GET    /projects/:project_id/entries/new(.:format)                                    entries#new
+                edit_project_entry GET    /projects/:project_id/entries/:id/edit(.:format)                               entries#edit
+                     project_entry GET    /projects/:project_id/entries/:id(.:format)                                    entries#show
+                                   PUT    /projects/:project_id/entries/:id(.:format)                                    entries#update
+                                   DELETE /projects/:project_id/entries/:id(.:format)                                    entries#destroy
+                          projects GET    /projects(.:format)                                                            projects#index
+                                   POST   /projects(.:format)                                                            projects#create
+                       new_project GET    /projects/new(.:format)                                                        projects#new
+                      edit_project GET    /projects/:id/edit(.:format)                                                   projects#edit
+                           project GET    /projects/:id(.:format)                                                        projects#show
+                                   PUT    /projects/:id(.:format)                                                        projects#update
+                                   DELETE /projects/:id(.:format)                                                        projects#destroy
+                     welcome_index GET    /welcome/index(.:format)                                                       welcome#index
+                    wizard_welcome GET    /welcome/wizard(.:format)                                                      welcome#wizard
+                wizard_bar_welcome GET    /welcome/wizard_bar(.:format)                                                  welcome#wizard_bar
+                  new_user_session GET    /users/sign_in(.:format)                                                       devise/sessions#new
+                      user_session POST   /users/sign_in(.:format)                                                       devise/sessions#create
+              destroy_user_session DELETE /users/sign_out(.:format)                                                      devise/sessions#destroy
+                     user_password POST   /users/password(.:format)                                                      devise/passwords#create
+                 new_user_password GET    /users/password/new(.:format)                                                  devise/passwords#new
+                edit_user_password GET    /users/password/edit(.:format)                                                 devise/passwords#edit
+                                   PUT    /users/password(.:format)                                                      devise/passwords#update
+          cancel_user_registration GET    /users/cancel(.:format)                                                        devise/registrations#cancel
+                 user_registration POST   /users(.:format)                                                               devise/registrations#create
+             new_user_registration GET    /users/sign_up(.:format)                                                       devise/registrations#new
+            edit_user_registration GET    /users/edit(.:format)                                                          devise/registrations#edit
+                                   PUT    /users(.:format)                                                               devise/registrations#update
+                                   DELETE /users(.:format)                                                               devise/registrations#destroy
+                              root        /                                                                              projects#index
