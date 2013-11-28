@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @work_hour %> |
-<%= link_to 'Back', work_hours_path %>
+<%= link_to 'Show', [@project, @story, @work_hour] %> |
+<%= link_to 'Back', [@project, @story, :work_hours] %>

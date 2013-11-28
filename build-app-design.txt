@@ -1,7 +1,13 @@
+# ===== Wed Nov 27 15:23:16 EST 2013
+
+./bin/rails g model EntryStoryWorkHour entry_story_id:integer work_hour_id:integer
+
+
 # ===== Tue Nov 26 09:35:22 PST 2013
 
 ./bin/rails g migration add_note_to_work_hours note:string
 ./bin/rails g model StoryWorkHour story_id:integer work_hour_id:integer
+./bin/rails g migration remove_entry_story_id_from_work_hours entry_story_id:integer
 
 
 # ===== Fri Nov 22 10:24:40 PST 2013

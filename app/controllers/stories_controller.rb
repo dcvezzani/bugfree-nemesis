@@ -55,6 +55,11 @@ class StoriesController < ProjectController
     @story = Story.find(params[:id])
   end
 
+  def fetch_work_hours
+    @story = Story.find(params[:id])
+    render partial: 'work_hours', locals: { story: @story }
+  end
+
   # POST /stories
   # POST /stories.json
   def create
@@ -118,11 +123,13 @@ class StoriesController < ProjectController
   end
 
   def add_hours_worked
-    @story = Story.find(params[:id])
+    # @entry = Entry.find(params[:entry_id])
+    # @story = Story.find(params[:id])
+    today_entry_story = TodayEntryStory.where{ (entry_id == my{@entry.id}) & (story_id == my{params[:id]}) }.first
     work_hours = WorkHour.new(params[:work_hour]);
 
     respond_to do |format|
-      if @story.add_hours_worked(work_hours)
+      if today_entry_story.add_hours_worked(work_hours)
         format.html { 
           if(@response_type == "msg-content")
             render partial: 'mark_as_done', locals: {project: @project, entry: @entry, msg: notice }

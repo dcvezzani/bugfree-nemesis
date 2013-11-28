@@ -18,7 +18,8 @@
   }
 
   // submit form (AJAX) and update all story summaries
-  function post_form_and_update_story_summaries(href, data, error_message){
+  function post_form_and_update_story_summaries(href, data, error_message, post_func){
+    var root_arguments = arguments;
       $.post(href, data, function(data){
         $("#scratch-pad").html(data);
 
@@ -33,6 +34,8 @@
           var msg = $("#scratch-pad .msg").html();
           $(".alert-success").html(msg);
           $(".alert-success").fadeIn();
+
+          if(root_arguments.length > 3){ post_func(); }
         }, 150);
       })
       .fail(function(jqXHR, textStatus, errorThrown){
@@ -236,6 +239,8 @@
 
   // button: "Save changes"
   function init_note_log_save_changes(selector){
+    $(selector).find("button:contains('Save changes')").unbind("click");
+
     $(selector).find("button:contains('Save changes')").click(function(){
       reset_alerts();
 
@@ -282,8 +287,6 @@
       var href = $(form).attr("action");
       var data = $(form).serialize();
 
-      console.log("href: " + href);
-      console.log("data: " + data);
       $.post(href, data, function(data){
         $(".alert-success").html(data["msg"]);
         $(".alert-success").fadeIn();

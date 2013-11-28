@@ -27,8 +27,34 @@
 
 <p>
   <b>Hours worked:</b>
-  <%= f.number_field :hours_worked, value: format_float(@story.hours_worked) %>
 </p>
+
+<ul>
+  <p>
+    Hours worked (cached):
+    <%= format_float(@story.hours_worked) %>
+  </p>
+
+  <div class="story-work-hours">
+    <div class="row total">
+      <div class="span2"><%= @story.work_hours_total.to_f %></div>
+      <div class="span4">Total hours from entries</div>
+      <div class="span4">
+        <%= link_to "Details", fetch_work_hours_project_story_path(@project, @story), class: "btn get-hours" %>
+      </div>
+    </div>
+
+    <div class="details">
+    </div>
+  </div>
+
+  <!-- 
+    <div class="row total">
+      <div class="span2"><%#= @story.work_hours_billable_total.to_f %></div>
+      <div class="span4">Total hours from entries</div>
+    </div>
+  -->
+</ul>
 
 <p>
   <b>Hours todo:</b>
@@ -55,6 +81,10 @@
 
     init_note_logs();
     init_note_form();
+
+    //init_work_hours_log_add_work_hours("a:contains('Add hours worked')");
+
+    init_story_work_hours(".story-work-hours", ".story-work-hours .details");
   });
 </script>
 

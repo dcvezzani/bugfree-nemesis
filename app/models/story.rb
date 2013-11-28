@@ -8,12 +8,13 @@ class Story < ActiveRecord::Base
   belongs_to :project
 
   has_many :entry_stories
-  has_many :entries, through: :entry_stories
+  #has_many :entries, through: :entry_stories
 
   has_many :story_notes, foreign_key: :item_id, source: :story, dependent: :destroy
   has_many :notes, through: :story_notes, source: :note, dependent: :destroy, order: "created_at asc"
 
-  has_many :work_hours, through: :entry_stories, source: :work_hours
+  # has_many :story_work_hours, dependent: :destroy
+  # has_many :work_hours, through: :story_work_hours, dependent: :destroy
 
   validates :project_id, :status, presence: true
 
@@ -57,11 +58,28 @@ class Story < ActiveRecord::Base
     # end
   end
 
-  def add_hours_worked(work_hours)
-    Story.transaction do
-      
-    end
+  def work_hours
+    entry_story_work_hours = EntryStory.joins{ work_hours }.where{ story_id == my{self.id} }.select{ work_hours.id }
+    WorkHour.where{ id.in( entry_story_work_hours ) }
+    
+    # tes = TodayEntryStory.joins{ work_hours }.where{ (story_id == my{self.id}) }.select{ sum(work_hours.hours).as(work_hours_total) }.first
+    # (tes and tes.work_hours_total.to_f)
+
+    # TodayEntryStory.joins{ work_hours }.where{ (entry_id == my{e.id}) & (story_id == my{s.id}) }.select{ sum(work_hours.hours).as(work_hours_total) }.first.work_hours_total.to_f
   end
+
+  # def work_hours_total_from_entries
+  #   Story.joins{ work_hours }.where{ id == my{self.id} }.select{ sum(work_hours.hours).as(total_work_hours) }.first.total_work_hours.to_f
+  #   # Story.joins{ entry_stories }.where{ id == my{self.id} }.select{ entry_stories.id }
+  # end
+
+  def work_hours_total
+    work_hours.inject(0.0){|a,b| a + b.hours}
+  end
+
+  # def work_hours_total
+  #   work_hours_billable_total + self.hours_worked
+  # end
 end
 
 =begin

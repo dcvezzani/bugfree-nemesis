@@ -13,11 +13,6 @@
 
   <%= hidden_field_tag :render_as_partial, true %>
 
-  <div class="field" <%= hide_if?(!@options[:stand_alone]) %>>
-    <%= f.label :entry_story %><br />
-    <%= f.text_field :entry_story %>
-  </div>
-
   <div class="field">
     <span <%= hide_if?(@options[:quiet]) %>><%= f.label :hours %></span><br />
     <%= f.text_field :hours %>

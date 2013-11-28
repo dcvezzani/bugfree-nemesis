@@ -6,10 +6,10 @@
 </p>
 
 <p>
-  <b>Entry story:</b>
-  <%= @work_hour.entry_story %>
+  <b>Note:</b>
+  <%= @work_hour.note %>
 </p>
 
 
-<%= link_to 'Edit', edit_work_hour_path(@work_hour) %> |
-<%= link_to 'Back', work_hours_path %>
+<%= link_to 'Edit', [:edit, @project, @story, @work_hour] %> |
+<%= link_to 'Back', [@project, @story, :work_hours] %>

@@ -18,6 +18,7 @@ Clf004::Application.routes.draw do
       member do
         put 'update_hours'
         put 'mark_as_done'
+        get 'fetch_work_hours'
       end
     end
 
@@ -43,7 +44,12 @@ Clf004::Application.routes.draw do
         get 'show_work_intervals'
       end
 
-      match 'stories/:id/add_hours_worked' => 'stories#add_hours_worked', :via => :put, :as => :story_add_hours_worked
+      resources :stories do
+        resources :work_hours do
+        end
+      end
+
+      match 'stories/:id/add_hours_worked' => 'stories#add_hours_worked', :via => :post, :as => :story_add_hours_worked
     end
   end
 

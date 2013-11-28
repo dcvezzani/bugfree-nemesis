@@ -1,5 +1,6 @@
 class WorkHoursController < ProjectController
-  before_filter :load_item
+  before_filter :load_entry
+  before_filter :load_story
 
   # GET /work_hours
   # GET /work_hours.json
@@ -27,7 +28,7 @@ class WorkHoursController < ProjectController
   # GET /work_hours/new.json
   def new
     @work_hour = WorkHour.new
-    @options.merge!({url: [@project, @item, :work_hours]})
+    @options.merge!({url: [@project, @entry, @story, :add_hours_worked]})
 
     respond_to do |format|
       format.html { render action: 'new', layout: @options[:layout] }
@@ -38,6 +39,12 @@ class WorkHoursController < ProjectController
   # GET /work_hours/1/edit
   def edit
     @work_hour = WorkHour.find(params[:id])
+    @options.merge!({url: [@project, @entry, @story, @work_hour]})
+
+    respond_to do |format|
+      format.html { render action: 'edit', layout: @options[:layout] }
+      format.json { render json: @work_hour }
+    end
   end
 
   # POST /work_hours
@@ -79,13 +86,15 @@ class WorkHoursController < ProjectController
     @work_hour.destroy
 
     respond_to do |format|
-      format.html { redirect_to work_hours_url }
+      format.html { redirect_to [@project, @entry, @story, :work_hours] }
       format.json { head :no_content }
     end
   end
 
-  def load_item
-    @item = Story.find(params[:story_id])
+  def load_entry
+    @entry = Entry.find(params[:entry_id]) if params[:entry_id]
   end
-  
+  def load_story
+    @story = Story.find(params[:story_id]) if params[:story_id]
+  end
 end
