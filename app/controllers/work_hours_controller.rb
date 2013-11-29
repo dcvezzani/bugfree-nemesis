@@ -19,7 +19,7 @@ class WorkHoursController < ProjectController
     @work_hour = WorkHour.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render action: 'show', layout: @options[:layout] }
       format.json { render json: @work_hour }
     end
   end
@@ -84,10 +84,11 @@ class WorkHoursController < ProjectController
   def destroy
     @work_hour = WorkHour.find(params[:id])
     @work_hour.destroy
+    notice = "#{WorkHour.name} was successfully removed."
 
     respond_to do |format|
       format.html { redirect_to [@project, @entry, @story, :work_hours] }
-      format.json { head :no_content }
+      format.json { render json: {msg: notice} }
     end
   end
 

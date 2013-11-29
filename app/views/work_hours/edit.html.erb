@@ -1,6 +1,11 @@
+<% show_if?(!@options[:stand_alone]) do %>
 <h1>Editing work_hour</h1>
+<% end %>
 
 <%= render 'form' %>
 
+<% show_if?(!@options[:stand_alone]) do %>
 <%= link_to 'Show', [@project, @story, @work_hour] %> |
 <%= link_to 'Back', [@project, @story, :work_hours] %>
+<% end %>
+

@@ -1,4 +1,6 @@
+<% show_if?(!@options[:stand_alone]) do %>
 <p id="notice"><%= notice %></p>
+<% end %>
 
 <p>
   <b>Hours:</b>
@@ -11,5 +13,8 @@
 </p>
 
 
+<% show_if?(!@options[:stand_alone]) do %>
 <%= link_to 'Edit', [:edit, @project, @story, @work_hour] %> |
 <%= link_to 'Back', [@project, @story, :work_hours] %>
+<% end %>
+

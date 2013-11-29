@@ -31,49 +31,6 @@
     });
   }
 
-
-  // // input: "Update Note"
-  // // button: "Cancel"
-  // function init_note_form_content(selector){
-  //   $(selector).find("input[value='Save Changes']").click(function(){
-  //     reset_alerts();
-
-  //     var button = $(this);
-  //     var form = $(button).closest("form");
-  //     var href = $(form).attr("action");
-  //     var method = "put";
-  //     var csrf = $("meta[name='csrf-token']").attr("content");
-  //     var data = "_method=" + method + "&authenticity_token=" + csrf + "&" + $(form).serialize();
-
-  //     $.post(href, data, function(data){
-  //       $("#scratch-pad").html(data);
-
-  //       setTimeout(function(){
-  //         var msg = $("#scratch-pad .msg").html();
-  //         var content = $("#scratch-pad .content").html();
-
-  //         $(".alert-success").html(msg);
-  //         $(".alert-success").fadeIn();
-  //         $(button).closest(".notes.well").html(content);
-  //       }, 150);
-  //     })
-  //     .fail(function(jqXHR, textStatus, errorThrown){
-  //       $(".alert-error").html("Unable to delete note.");
-  //       $(".alert-error").fadeIn();
-  //     });
-
-  //     return false;
-  //   });
-
-  //   $(selector).find("button:contains('Cancel')").click(function(){
-  //     var notes_well = $(".notes.well");
-  //     $(this).closest("form").remove();
-  //     $(notes_well).find(".description-paragraphs").show();
-
-  //     return false;
-  //   });
-  // }
-
   // button: "Save changes"
   function init_work_hours_log_save_changes(selector){
     $(selector).find("button:contains('Save changes')").unbind("click");
@@ -94,6 +51,104 @@
     });
   }
 
+  // a: Actions
+  function init_story_work_hours_actions(selector){
+    console.log("asdf");
+    init_story_work_hours_show(selector);
+    init_story_work_hours_edit(selector);
+    init_story_work_hours_destroy(selector);
+  }
+
+  $('#myModal').on('hidden', function () {
+    $(this).find(".modal-footer button:contains('Save changes')").show();
+  })
+
+  function modal_show(options){
+    var mutable = (options["mutable"] == null) ? true : (options["mutable"] == true);
+    console.log("mutable: " + mutable);
+
+    if(mutable){
+      $("#myModal .modal-footer button:contains('Save changes')").show();
+    } else {
+      $("#myModal .modal-footer button:contains('Save changes')").hide();
+    }
+
+    $("#myModal").modal("show");
+  }
+
+  // a: "Show"
+  function init_story_work_hours_show(selector){
+    $(selector).find("a:contains('Show')").click(function(){
+      reset_alerts();
+
+      var anchor = $(this);
+      var href = $(anchor).attr("href");
+
+      $.get(href, function(data){
+        $("#myModal .modal-body").html(data);
+        $("#myModalLabel").text("Show work hour segment");
+        $("#myModal").modal("show");
+        modal_show({mutable: false});
+
+        setTimeout(function(){
+        $("#myModal .modal-body").find("input:visible, textarea:visible").first().focus();
+        }, 500);
+
+      });
+      return false;
+    });
+  }
+
+  // a: "Edit"
+  function init_story_work_hours_edit(selector){
+    $(selector).find("a:contains('Edit')").click(function(){
+      reset_alerts();
+
+      var anchor = $(this);
+      var href = $(anchor).attr("href");
+
+      $.get(href, function(data){
+        $("#myModal .modal-body").html(data);
+        $("#myModalLabel").text("Edit work hour segment");
+        // $("#myModal").modal("show");
+        modal_show({mutable: true});
+
+        setTimeout(function(){
+        $("#myModal .modal-body").find("input:visible, textarea:visible").first().focus();
+        }, 500);
+
+      });
+      return false;
+    });
+  }
+
+  // a: "Destroy"
+  function init_story_work_hours_destroy(selector){
+    $(selector).find("a:contains('Destroy')").click(function(){
+      reset_alerts();
+
+      if(confirm("Are you sure?!")){
+        var anchor = $(this);
+        var href = $(anchor).attr("href");
+        var method = $(anchor).attr("data-method");
+        var csrf = $("meta[name='csrf-token']").attr("content");
+        var data = "_method=" + method + "&authenticity_token=" + csrf;
+
+        $.post(href, data, function(data){
+          $(".alert-success").html(data["msg"]);
+          $(".alert-success").fadeIn();
+          $(anchor).closest(".row").fadeOut();
+
+        }, "json")
+        .fail(function(jqXHR, textStatus, errorThrown){
+          $(".alert-error").html("Unable to delete work hour segment.");
+          $(".alert-error").fadeIn();
+        });
+      }
+      return false;
+    });
+  }
+
 
   // button: "Get work hours for story"
   function init_story_work_hours(selector_src, selector_dest){
@@ -103,7 +158,10 @@
       var anchor = $(this);
 
       if($(anchor).text().match(/Details/)){
-        show_details(anchor, selector_dest);
+        show_details(anchor, selector_dest, function(){
+          var row = $(selector_dest).find(".row");
+          init_story_work_hours_actions(row);
+        });
       } else {
         hide_details(anchor, selector_dest);
       }
@@ -112,12 +170,14 @@
     });
   }
 
-  function show_details(anchor, selector_dest){
+  function show_details(anchor, selector_dest, post_func){
       var href = $(anchor).attr("href");
 
       $.get(href, function(data){
         $(anchor).text("Hide details");
         $(selector_dest).html(data);
+
+        setTimeout(function(){ post_func(); }, 150);
       });
   }
 
