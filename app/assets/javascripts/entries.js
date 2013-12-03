@@ -18,30 +18,28 @@
   }
 
   // submit form (AJAX) and update all story summaries
-  function post_form_and_update_story_summaries(href, data, error_message, post_func){
-    var root_arguments = arguments;
-      $.post(href, data, function(data){
-        $("#scratch-pad").html(data);
+  function post_form_and_update_story_summaries(href, data, error_message){
+    $.post(href, data, function(data){
+      $("#scratch-pad").html(data);
 
-        setTimeout(function(){
-          var yesterdays_stories = $("#scratch-pad .content .story-list-yesterday").html();
-          var todays_stories = $("#scratch-pad .content .story-list-today").html();
-          var show_stopper_stories = $("#scratch-pad .content .story-list-show-stopper").html();
+      setTimeout(function(){
+        _callbacks["modal"]["save_work_hours"]();
+        // var yesterdays_stories = $("#scratch-pad .content .story-list-yesterday").html();
+        // var todays_stories = $("#scratch-pad .content .story-list-today").html();
+        // var show_stopper_stories = $("#scratch-pad .content .story-list-show-stopper").html();
 
-          $("#story-list-yesterday").html(yesterdays_stories).effect("highlight", {}, 1500);
-          $("#story-list-today").html(todays_stories).effect("highlight", {}, 1500);
+        // $("#story-list-yesterday").html(yesterdays_stories).effect("highlight", {}, 1500);
+        // $("#story-list-today").html(todays_stories).effect("highlight", {}, 1500);
 
-          var msg = $("#scratch-pad .msg").html();
-          $(".alert-success").html(msg);
-          $(".alert-success").fadeIn();
-
-          if(root_arguments.length > 3){ post_func(); }
-        }, 150);
-      })
-      .fail(function(jqXHR, textStatus, errorThrown){
-        $(".alert-error").html(error_message);
-        $(".alert-error").fadeIn();
-      });
+        var msg = $("#scratch-pad .msg").html();
+        $(".alert-success").html(msg);
+        $(".alert-success").fadeIn();
+      }, 150);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown){
+      $(".alert-error").html(error_message);
+      $(".alert-error").fadeIn();
+    });
   }
 
   // mark a story as complete and update all story summaries

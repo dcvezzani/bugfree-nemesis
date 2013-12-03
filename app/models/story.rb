@@ -8,7 +8,7 @@ class Story < ActiveRecord::Base
   belongs_to :project
 
   has_many :entry_stories
-  #has_many :entries, through: :entry_stories
+  has_many :entries, through: :entry_stories, order: "updated_at asc"
 
   has_many :story_notes, foreign_key: :item_id, source: :story, dependent: :destroy
   has_many :notes, through: :story_notes, source: :note, dependent: :destroy, order: "created_at asc"

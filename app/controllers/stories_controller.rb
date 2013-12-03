@@ -1,7 +1,9 @@
 class StoriesController < ProjectController
   before_filter :ensure_project_id, only: [:update, :create, :update_hours]
+
   before_filter :load_entry, only: [:add_hours_worked, :mark_as_done]
   before_filter :load_response_type, only: [:add_hours_worked, :mark_as_done]
+  before_filter :load_subject, only: [:add_hours_worked, :mark_as_done]
 
   # GET /stories
   # GET /stories.json
@@ -57,6 +59,8 @@ class StoriesController < ProjectController
 
   def fetch_work_hours
     @story = Story.find(params[:id])
+
+    load_latest_entry(@story)
     render partial: 'work_hours', locals: { story: @story }
   end
 
@@ -123,16 +127,24 @@ class StoriesController < ProjectController
   end
 
   def add_hours_worked
-    # @entry = Entry.find(params[:entry_id])
-    # @story = Story.find(params[:id])
     today_entry_story = TodayEntryStory.where{ (entry_id == my{@entry.id}) & (story_id == my{params[:id]}) }.first
+
+    today_entry_story = TodayEntryStory.new(project_id: @project.id, entry_id: @entry.id, story_id: params[:id]) unless today_entry_story
+
     work_hours = WorkHour.new(params[:work_hour]);
 
     respond_to do |format|
-      if today_entry_story.add_hours_worked(work_hours)
+      if today_entry_story.add_hours_worked!(work_hours)
+        notice = 'Hours were successfully added to story.'
+
         format.html { 
-          if(@response_type == "msg-content")
+          if(@response_type == "msg-content" and @subject == "entry")
             render partial: 'mark_as_done', locals: {project: @project, entry: @entry, msg: notice }
+          elsif(@response_type == "msg-content" and @subject == "story")
+            today_entry_story.story.reload
+            load_latest_entry(today_entry_story.story)
+            render partial: 'story_work_hours', locals: { story: today_entry_story.story, status: "show-details" }
+
           else
             redirect_to [@project, :stories], notice: notice 
           end
@@ -143,7 +155,6 @@ class StoriesController < ProjectController
         format.json { render json: @story.errors, status: :unprocessable_entity }
       end
     end
-
   end
 
   def mark_as_done

@@ -1,0 +1,20 @@
+    <% status ||= "hide-details" %>
+    <% btn_label = (status == "hide-details") ? "Details" : "Hide details" %>
+
+    <p style="display: none; ">
+      Hours worked (cached):
+      <%#= format_float(story.hours_worked) %>
+    </p>
+
+    <div class="row total">
+      <div class="span2"><%= format_float(story.work_hours_total) %></div>
+      <div class="span4">Total hours from entries</div>
+      <div class="span4">
+        <%= link_to btn_label, fetch_work_hours_project_story_path(@project, story), class: "btn get-hours" %>
+      </div>
+    </div>
+
+    <div class="details">
+      <%= render(partial: 'stories/work_hours', locals: { story: story }) if (status != "hide-details") %>
+    </div>
+

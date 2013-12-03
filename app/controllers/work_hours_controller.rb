@@ -2,6 +2,8 @@ class WorkHoursController < ProjectController
   before_filter :load_entry
   before_filter :load_story
 
+  before_filter :load_subject, only: [:new, :destroy]
+
   # GET /work_hours
   # GET /work_hours.json
   def index
@@ -83,12 +85,31 @@ class WorkHoursController < ProjectController
   # DELETE /work_hours/1.json
   def destroy
     @work_hour = WorkHour.find(params[:id])
-    @work_hour.destroy
-    notice = "#{WorkHour.name} was successfully removed."
+    entry_story = @work_hour.entry_stories.last
+
 
     respond_to do |format|
-      format.html { redirect_to [@project, @entry, @story, :work_hours] }
-      format.json { render json: {msg: notice} }
+      if(entry_story.remove_hours_worked!(@work_hour) and @story.reload)
+        notice = "#{WorkHour.name} was successfully removed."
+
+        format.html { 
+          if(@subject == "story")
+            entry_story.story.reload
+            load_latest_entry(entry_story.story)
+            render partial: 'stories/story_work_hours', locals: { story: entry_story.story, status: "show-details" }
+        
+          else
+            redirect_to [@project, @entry, @story, :work_hours], notice: notice 
+          end
+        }
+        format.json { render json: {msg: notice} }
+
+      else
+        alert = "Unable to remove #{WorkHour.name}."
+
+        format.html { redirect_to [@project, @entry, @story, :work_hours], alert: alert }
+        format.json { head :no_content }
+      end
     end
   end
 

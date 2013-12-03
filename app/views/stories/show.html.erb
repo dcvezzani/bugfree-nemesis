@@ -30,22 +30,8 @@
 </p>
 
 <ul>
-  <p>
-    Hours worked (cached):
-    <%= format_float(@story.hours_worked) %>
-  </p>
-
   <div class="story-work-hours">
-    <div class="row total">
-      <div class="span2"><%= @story.work_hours_total.to_f %></div>
-      <div class="span4">Total hours from entries</div>
-      <div class="span4">
-        <%= link_to "Details", fetch_work_hours_project_story_path(@project, @story), class: "btn get-hours" %>
-      </div>
-    </div>
-
-    <div class="details">
-    </div>
+    <%= render partial: 'stories/story_work_hours', locals: { story: @story, state: "hide-details" } %>
   </div>
 
   <!-- 
@@ -76,6 +62,7 @@
 </div>
 
 <script type="text/javascript">
+
   $(document).ready(function(){
     init_hour_updater();
 
@@ -83,8 +70,43 @@
     init_note_form();
 
     //init_work_hours_log_add_work_hours("a:contains('Add hours worked')");
-
-    init_story_work_hours(".story-work-hours", ".story-work-hours .details");
+    _callbacks["a"]["btn_details"]();
   });
+
+  var _callbacks = {
+    a: {
+      show_details: function(){
+        var row = $(".story-work-hours .details").find(".row");
+        init_story_work_hours_actions(row);
+      }, 
+
+      btn_details: function(){
+        console.log("btn_details: reg");
+        init_story_work_hours(".story-work-hours", ".story-work-hours .details");
+      }, 
+
+      add_work_hours: function(){
+        init_work_hours_log_add_work_hours("a:contains('Add hours worked')");
+      }
+    }, 
+
+    modal: {
+      add_work_hours: function(){
+        var details = $(".story-work-hours .details");
+        setTimeout(function(){ init_work_hours_form(details); }, 150);
+      }, 
+
+      save_work_hours: function(){
+        // var content = $("#scratch-pad .content").html();
+        var content = $("#scratch-pad").html();
+        $(".story-work-hours").html(content).effect("highlight", {}, 1500);
+
+        setTimeout(function(){
+          _callbacks["a"]["show_details"]();
+          _callbacks["a"]["btn_details"]();
+        }, 150);
+      }
+    }
+  }
 </script>
 

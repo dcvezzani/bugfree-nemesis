@@ -12,6 +12,7 @@
   <% end %>
 
   <%= hidden_field_tag :render_as_partial, true %>
+  <%= hidden_field_tag(:subject, @subject) if @subject %>
 
   <div class="field">
     <span <%= hide_if?(@options[:quiet]) %>><%= f.label :hours %></span><br />

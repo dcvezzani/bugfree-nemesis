@@ -112,4 +112,23 @@
     init_email_goals_to_manager(".email-goals-to-manager a");
   })
 
+  var _callbacks = {
+    modal: {
+      add_work_hours: function(){
+        var story_list_today = $("#story-list-today");
+        setTimeout(function(){ init_work_hours_form(story_list_today); }, 150);
+      }, 
+
+      save_work_hours: function(){
+        var yesterdays_stories = $("#scratch-pad .content .story-list-yesterday").html();
+        var todays_stories = $("#scratch-pad .content .story-list-today").html();
+        var show_stopper_stories = $("#scratch-pad .content .story-list-show-stopper").html();
+
+        $("#story-list-yesterday").html(yesterdays_stories).effect("highlight", {}, 1500);
+        $("#story-list-today").html(todays_stories).effect("highlight", {}, 1500);
+      }
+      
+    }
+  }
+
 </script>

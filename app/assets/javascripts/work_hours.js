@@ -18,9 +18,7 @@
         $("#myModalLabel").text("Add hours worked");
         $("#myModal").modal("show");
 
-        var story_list_today = $("#story-list-today");
-
-        setTimeout(function(){ init_work_hours_form(story_list_today); }, 150);
+        _callbacks["modal"]["add_work_hours"]();
         
         setTimeout(function(){
         $("#myModal .modal-body").find("input:visible, textarea:visible").first().focus();
@@ -53,7 +51,6 @@
 
   // a: Actions
   function init_story_work_hours_actions(selector){
-    console.log("asdf");
     init_story_work_hours_show(selector);
     init_story_work_hours_edit(selector);
     init_story_work_hours_destroy(selector);
@@ -137,9 +134,12 @@
         $.post(href, data, function(data){
           $(".alert-success").html(data["msg"]);
           $(".alert-success").fadeIn();
-          $(anchor).closest(".row").fadeOut();
+          $("#scratch-pad").html(data);
 
-        }, "json")
+          // $(anchor).closest(".row").fadeOut();
+          _callbacks["modal"]["save_work_hours"]();
+
+        })
         .fail(function(jqXHR, textStatus, errorThrown){
           $(".alert-error").html("Unable to delete work hour segment.");
           $(".alert-error").fadeIn();
@@ -158,10 +158,11 @@
       var anchor = $(this);
 
       if($(anchor).text().match(/Details/)){
-        show_details(anchor, selector_dest, function(){
-          var row = $(selector_dest).find(".row");
-          init_story_work_hours_actions(row);
-        });
+        show_details(anchor, selector_dest);
+        //   var row = $(selector_dest).find(".row");
+        //   init_story_work_hours_actions(row);
+        // });
+
       } else {
         hide_details(anchor, selector_dest);
       }
@@ -170,14 +171,17 @@
     });
   }
 
-  function show_details(anchor, selector_dest, post_func){
+  function show_details(anchor, selector_dest){
       var href = $(anchor).attr("href");
 
       $.get(href, function(data){
         $(anchor).text("Hide details");
         $(selector_dest).html(data);
 
-        setTimeout(function(){ post_func(); }, 150);
+        setTimeout(function(){
+          _callbacks["a"]["show_details"]();
+          _callbacks["a"]["add_work_hours"]();
+        }, 150);
       });
   }
 

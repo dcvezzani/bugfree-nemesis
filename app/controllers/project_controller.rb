@@ -24,4 +24,23 @@ class ProjectController < ApplicationController
 
     @options
   end
+
+  def load_latest_entry(story)
+    @latest_entry = if(story.entries.length > 0)
+      story.entries.last
+      
+    else
+      todays_entry = Entry.where{ recorded_for == my{Time.zone.now.to_date} }.first
+
+      if(!todays_entry)
+        todays_entry = Entry.create!(recorded_for: Time.zone.now, title: "Adjust hours worked on story", project: @project)
+      end
+
+      todays_entry
+    end
+  end
+
+  def load_subject
+    @subject = (params[:subject] or "entry")
+  end
 end
