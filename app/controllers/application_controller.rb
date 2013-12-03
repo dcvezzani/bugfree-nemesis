@@ -9,11 +9,11 @@ class ApplicationController < ActionController::Base
     #current user is a devise method see https://github.com/plataformatec/devise
     # Time.zone = current_user.time_zone if current_user
 
-    # us_pacific = ActiveSupport::TimeZone.us_zones.find{|x| x.name == "Pacific Time (US & Canada)"}
-    # Time.zone = us_pacific
 
+    us_pacific = ActiveSupport::TimeZone.us_zones.find{|x| x.name == "Pacific Time (US & Canada)"}
     us_atlantic = ActiveSupport::TimeZone.us_zones.find{|x| x.name == "Eastern Time (US & Canada)"}
-    Time.zone = us_atlantic
+    Time.zone = us_pacific
+    # Time.zone = us_atlantic
   end
 
   def set_email_report_preferences

@@ -69,10 +69,12 @@ class WorkHoursController < ProjectController
   # PUT /work_hours/1.json
   def update
     @work_hour = WorkHour.find(params[:id])
+    entry_story = @work_hour.entry_stories.last
 
     respond_to do |format|
-      if @work_hour.update_attributes(params[:work_hour])
-        format.html { redirect_to @work_hour, notice: 'Work hour was successfully updated.' }
+      # if @work_hour.update_attributes(params[:work_hour])
+      if(entry_story.update_hours_worked!(@work_hour, params[:work_hour]))
+        format.html { redirect_to [@project, @entry, @story, @work_hour], notice: 'Work hour was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -111,6 +113,12 @@ class WorkHoursController < ProjectController
         format.json { head :no_content }
       end
     end
+  end
+
+  def ensure_project_id
+    # params[:work_hour][:project_id] = @project.id unless params[:work_hour].has_key?(:project_id)
+    params[:work_hour].delete(:project_id)
+    params[:work_hour]
   end
 
   def load_entry

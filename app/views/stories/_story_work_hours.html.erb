@@ -7,8 +7,8 @@
     </p>
 
     <div class="row total">
-      <div class="span2"><%= format_float(story.work_hours_total) %></div>
-      <div class="span4">Total hours from entries</div>
+      <div class="span1"><%= format_float(story.work_hours_total) %></div>
+      <div class="span5">Total hours from entries</div>
       <div class="span4">
         <%= link_to btn_label, fetch_work_hours_project_story_path(@project, story), class: "btn get-hours" %>
       </div>

@@ -50,5 +50,24 @@ class EntryStory < ActiveRecord::Base
 
     return res
   end
-  
+
+  def update_hours_worked!(work_hour, work_hour_attrs)
+    res = false
+
+    begin
+      EntryStory.transaction do
+        raise "Unable to update EntryStory record" unless work_hour.update_attributes(work_hour_attrs)
+        
+        self.story.hours_worked = self.story.work_hours_total
+        self.story.save!
+      end
+      res = true
+
+    rescue Exception => e
+      Rails.logger.debug e.message
+      # do nothing; transaction will roll back if there was a problem
+    end
+
+    return res
+  end
 end

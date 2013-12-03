@@ -4,8 +4,8 @@
   
   <% story.work_hours.each do |work_hour| %>
     <div class="row">
-      <div class="span2"><%= work_hour.hours.to_f %></div>
-      <div class="span4"><%= work_hour.note %></div>
+      <div class="span1"><%= work_hour.hours.to_f %></div>
+      <div class="span5"><%= link_to work_hour.note, [@project, work_hour.entry] %></div>
       <div><%= link_to 'Show', [@project, story, work_hour] %>
       | <%= link_to 'Edit', polymorphic_path([:edit, @project, story, work_hour], layout: false) %>
       | <%= link_to 'Destroy', polymorphic_path([@project, story, work_hour], subject: "story"), method: :delete, data: { confirm: 'Are you sure?' } %></div>

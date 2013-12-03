@@ -29,6 +29,10 @@ class WeeklyReportPdf
     report.pdf.formatted_text([{text: "Total hours worked for the week: "}, {text: hrs_worked.to_s, size: 14, styles: [:bold]}])#{hrs_worked}"
     report.pdf.move_down report.section_offset
     
+    # TODO: need to do checks based on accomplishments
+    # and then on each individual note and related story note.
+    # Otherwise there is some very strange wrapping between pages.
+    report.pdf.start_new_page 
     report.generate_entries(options[:entries], {})
 
     return pdf
@@ -93,7 +97,7 @@ class WeeklyReportPdf
 
     Rails.logger.debug(">>> pdf.cursor, block_height_plus_offset: (#{pdf.cursor} < #{block_height_plus_offset})")
     if(pdf.cursor < block_height_plus_offset)
-      Rails.logger.debug(">>> starting new page")
+      Rails.logger.debug(">>> starting new page: #{entry.class.name}, #{entry.id}")
       pdf.start_new_page 
     end
 
