@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131122185952) do
+ActiveRecord::Schema.define(:version => 20131127202349) do
 
   create_table "entries", :force => true do |t|
     t.date     "recorded_for"
@@ -31,6 +31,13 @@ ActiveRecord::Schema.define(:version => 20131122185952) do
     t.datetime "updated_at", :null => false
     t.string   "type"
     t.integer  "project_id"
+  end
+
+  create_table "entry_story_work_hours", :force => true do |t|
+    t.integer  "entry_story_id"
+    t.integer  "work_hour_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "item_notes", :force => true do |t|
@@ -72,6 +79,13 @@ ActiveRecord::Schema.define(:version => 20131122185952) do
     t.datetime "completed_at"
   end
 
+  create_table "story_work_hours", :force => true do |t|
+    t.integer  "story_id"
+    t.integer  "work_hour_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false
@@ -93,12 +107,10 @@ ActiveRecord::Schema.define(:version => 20131122185952) do
 
   create_table "work_hours", :force => true do |t|
     t.float    "hours"
-    t.integer  "entry_story_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "note"
   end
-
-  add_index "work_hours", ["entry_story_id"], :name => "index_work_hours_on_entry_story_id"
 
   create_table "work_intervals", :force => true do |t|
     t.integer  "entry_id"

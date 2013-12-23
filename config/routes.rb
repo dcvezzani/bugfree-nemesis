@@ -45,6 +45,10 @@ Clf004::Application.routes.draw do
       end
 
       resources :stories do
+        member do
+          put 'mark_as_done', controller: :stories
+        end
+
         resources :work_hours do
         end
       end

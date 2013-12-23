@@ -1,5 +1,5 @@
 # log in as super user
-psql -d postgres -U davidvezzani
+psql -d postgres -U dvezzani
 
 # create user and database
 create user ucjrn_admin with password 'pass13!#';

@@ -194,7 +194,7 @@ class StoriesController < ProjectController
   end
 
   def ensure_project_id
-    # params[:project_id] = @project.id unless params.has_key?(:project_id)
+    params[:story][:project_id] = @project.id unless params[:story].has_key?(:project_id)
   end
 
   def load_entry

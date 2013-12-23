@@ -72,6 +72,11 @@
     return gather_goals(".show-stoppers");
   }
 
+  function has_goals(selector){
+    var entries = $(selector).find("ul:first li");
+    return (entries.length > 0);
+  }
+
   function gather_goals(selector){
     var title = $(selector).find("p:first b:first").text();
 
@@ -115,7 +120,15 @@
       var anchor = $(this);
       var href = $(anchor).attr("href");
 
-      window.location.href = href + escape("\n\n") + escape(gather_yesterdays_goals()) + escape("\n\n\n") + escape(gather_todays_goals()) + escape("\n\n\n") + escape(gather_show_stoppers()) + escape("\n\n\n") + escape(gather_notes()) + escape("\n\n");
+      var email_content = escape(gather_yesterdays_goals()) + escape("\n\n\n") + escape(gather_todays_goals()) + escape("\n\n\n");
+      
+      console.log(has_goals(".show-stoppers"));
+      if(has_goals(".show-stoppers")){
+        email_content = email_content + escape(gather_show_stoppers()) + escape("\n\n\n") + escape(gather_notes()) + escape("\n\n");
+      }
+
+      window.location.href = href + escape("\n\n") + email_content;
+      
 
       return false;
     });
