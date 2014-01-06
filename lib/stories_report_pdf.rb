@@ -25,7 +25,7 @@ class StoriesReportPdf
     report.pdf.formatted_text([{text: "TOC", size: 14, styles: [:normal]}])
     report.pdf.indent 20 do
       the_stories.each do |story|
-        report.pdf.formatted_text([{text: "- #{story.title}", size: 10, styles: [:normal]}])
+        report.pdf.formatted_text([{text: "#{8226.chr} #{story.title}", size: 10, styles: [:normal]}])
       end
     end
     
