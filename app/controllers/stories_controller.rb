@@ -17,8 +17,17 @@ class StoriesController < ProjectController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @stories }
+
+      format.pdf do
+        pdf = StoriesReportPdf.generate({stories: @stories})
+        report_name = "UCPath Stories"
+
+        send_data pdf.render, filename: "ucpath-stories.pdf", type: "application/pdf", disposition: "inline"
+      end
     end
   end
+
+  
 
   def list
     @stories = Story.where{(project_id == my{@project.id}) & (status == "active")}.order{[due_on.asc, updated_at.desc]}
